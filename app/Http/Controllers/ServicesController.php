@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Product;
 use Illuminate\Http\Request;
+use App\Service;
 
-class ProductsController extends Controller
+class ServicesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,8 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
-        return view('products.index', compact('products'));
+        $services = Service::all();
+        return view('services.index', compact('services'));
     }
 
     /**
@@ -25,13 +25,13 @@ class ProductsController extends Controller
      */
     public function create()
     {
-        return view('products.create');
+        return view('services.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -39,64 +39,63 @@ class ProductsController extends Controller
         $this->validate($request, [
             'code' => 'required',
             'name' => 'required',
-            'cost' => 'required',
-            'price' => 'required',
-            'stock' => 'required'
+            'hh' => 'required',
         ]);
-        Product::create($request->all());
 
-        return redirect()->route('products.index')->with('success', 'Se ha registrado de manera exitosa!');
+        Service::create($request->all());
+
+        return redirect()->route('services.index')->with('success', 'Se ha registrado de manera exitosa!');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $product = Product::find($id);
-        return view('products.show', compact('product'));
+        $service = Service::find($id);
+        return view('services.show', compact('service'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $product = Product::find($id);
-        return view('products.edit', compact('product'));
+        $service = Service::find($id);
+        return view('services.edit', compact('service'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        $product = Product::find($id);
-        $product->update($request->all());
+        $service = Service::find($id);
+        $service->update($request->all());
 
-        return redirect()->route('products.index')->with('success', 'Se ha actualizado de manera exitosa!');
+        return redirect()->route('services.index')->with('success', 'Se ha actualizado de manera exitosa!');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        Product::destroy($id);
+        Service::destroy($id);
 
-        return redirect()->route('products.index')->with('success', 'Se ha eleminado de manera exitosa!');
+        return redirect()->route('services.index')->with('success', 'Se ha eleminado de manera exitosa!');
     }
 }

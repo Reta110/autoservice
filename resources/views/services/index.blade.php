@@ -1,18 +1,18 @@
 @extends('layouts.admin')
 
-@section('title', 'Listado de productos')
+@section('title', 'Listado de servicios')
 
 @section('contenido')
     <div class="box">
         @include('common.success')
         <div class="box-header with-border">
             <h3 class="box-title">
-                Listado de productos
+                Listado de servicios
             </h3>
             <div class="box-tools">
 
                 <div class="text-center">
-                    <a class="btn btn-danger btn-sm" href="{{ route('products.create') }}">
+                    <a class="btn btn-danger btn-sm" href="{{ route('services.create') }}">
                         NUEVO REGISTRO
                     </a>
                     {{--  <a class="btn btn-success btn-sm" href="{{route('export')}}">
@@ -32,46 +32,34 @@
                                 <th>ID</th>
                                 <th>CODIGO</th>
                                 <th>NOMBRE</th>
-                                <th>COSTO</th>
-                                <th>MARCA</th>
-                                <th>MODELO</th>
-                                <th>DISPONIBLE</th>
+                                <th>PRECIO REFERENCIA</th>
                                 <th>ACCIONES</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($products as $product)
+                            @foreach($services as $service)
                                 <tr>
                                     <td>
-                                        {{ $product->id }}
+                                        {{ $service->id }}
                                     </td>
                                     <td>
-                                        {{ $product->code }}
+                                        {{ $service->code }}
                                     </td>
                                     <td>
-                                        {{ $product->name }}
+                                        {{ $service->name }}
                                     </td>
                                     <td>
-                                        {{ $product->price }}
+                                        {{ $service->hh }}
                                     </td>
                                     <td>
-                                        {{ $product->brand }}
-                                    </td>
-                                    <td>
-                                        {{ $product->model }}
-                                    </td>
-                                    <td>
-                                        {{ $product->stock }}
-                                    </td>
-                                    <td>
-                                        {!! Form::open(['route' => ['products.destroy',$product ], 'method' => 'DELETE']) !!}
+                                        {!! Form::open(['route' => ['services.destroy',$service ], 'method' => 'DELETE']) !!}
                                         <div class="form-group">
-                                            <a href="{{ route('products.show', $product) }}">
+                                            <a href="{{ route('services.show', $service) }}">
                                                 <i class="fa fa-eye" aria-hidden="true"></i>
                                             </a>
                                         </div>
                                         <div class="form-group">
-                                            <a href="{{ route('products.edit', $product) }}">
+                                            <a href="{{ route('services.edit', $service) }}">
                                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                             </a>
                                         </div>

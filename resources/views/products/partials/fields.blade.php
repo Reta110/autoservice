@@ -13,12 +13,12 @@
                     {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => '', 'required']) !!}
                 </div>
                 <div class="form-group">
-                    {!! Form::label('price', 'Precio Referencia') !!}
-                    {!! Form::text('price', null, ['class' => 'form-control', 'placeholder' => '', 'required']) !!}
+                    {!! Form::label('cost', 'Costo') !!}
+                    {!! Form::text('cost', null, ['class' => 'form-control', 'placeholder' => '', 'required']) !!}
                 </div>
                 <div class="form-group">
-                    {!! Form::label('price_to_use', 'Precio a usar') !!}
-                    {!! Form::text('price_to_use', null, ['class' => 'form-control', 'placeholder' => '', 'required']) !!}
+                    {!! Form::label('price', 'Precio referencia') !!}
+                    {!! Form::text('price', null, ['class' => 'form-control', 'placeholder' => '', 'required']) !!}
                 </div>
 
             </div>

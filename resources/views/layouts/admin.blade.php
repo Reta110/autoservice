@@ -53,9 +53,8 @@ folder instead of downloading all of them to reduce the load. -->
             <!-- logo for regular state and mobile devices -->
             <span class="logo-lg">
                         <b>
-                            Admin
+                            Automec
                         </b>
-                        LTE
                     </span>
         </a>
         <!-- Header Navbar: style can be found in header.less -->
@@ -94,9 +93,9 @@ folder instead of downloading all of them to reduce the load. -->
                                         <!-- start message -->
                                         <a href="#">
                                             <div class="pull-left">
-                                                <img alt="User Image" class="img-circle"
+                                                {{--<img alt="User Image" class="img-circle"
                                                      src="../../dist/img/user2-160x160.jpg">
-                                                </img>
+                                                </img>--}}
                                             </div>
                                             <h4>
                                                 Support Team
@@ -202,23 +201,27 @@ folder instead of downloading all of them to reduce the load. -->
                     <!-- User Account: style can be found in dropdown.less -->
                     <li class="dropdown user user-menu">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <img alt="User Image" class="user-image" src="../../dist/img/user2-160x160.jpg">
+                            {{--<img alt="User Image" class="user-image" src="../../dist/img/user2-160x160.jpg">
+                             </img>--}}
                             <span class="hidden-xs">
                                             Alexander Pierce
                                         </span>
-                            </img>
+
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
                             <li class="user-header">
-                                <img alt="User Image" class="img-circle" src="../../dist/img/user2-160x160.jpg">
+                                {{--<img alt="User Image" class="img-circle" src="../../dist/img/user2-160x160.jpg">
+
+                                </img>--}}
+
                                 <p>
                                     Alexander Pierce - Web Developer
                                     <small>
                                         Member since Nov. 2012
                                     </small>
                                 </p>
-                                </img>
+
                             </li>
                             <!-- Menu Body -->
                             <li class="user-body">
@@ -275,8 +278,9 @@ folder instead of downloading all of them to reduce the load. -->
             <!-- Sidebar user panel -->
             <div class="user-panel">
                 <div class="pull-left image">
-                    <img alt="User Image" class="img-circle" src="../../dist/img/user2-160x160.jpg">
-                    </img>
+                    {{--<img alt="User Image" class="img-circle" src="../../dist/img/user2-160x160.jpg">
+                    </img>--}}
+                    <br><br>
                 </div>
                 <div class="pull-left info">
                     <p>
@@ -328,6 +332,13 @@ folder instead of downloading all of them to reduce the load. -->
                                 Productos
                             </a>
                         </li>
+                        <li>
+                            <a href="{{route('services.index')}}">
+                                <i class="fa fa-circle-o">
+                                </i>
+                                Servicios
+                            </a>
+                        </li>
                     </ul>
                 </li>
             </ul>
@@ -340,9 +351,7 @@ folder instead of downloading all of them to reduce the load. -->
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Blank page
                 <small>
-                    it all starts here
                 </small>
             </h1>
             <ol class="breadcrumb">
@@ -373,14 +382,13 @@ folder instead of downloading all of them to reduce the load. -->
     <footer class="main-footer">
         <div class="pull-right hidden-xs">
             <b>
-                Version
             </b>
-            2.3.8
+            AUTOMEC
         </div>
         <strong>
-            Copyright © 2014-2016
-            <a href="http://almsaeedstudio.com">
-                Almsaeed Studio
+            Copyright © 2017
+            <a href="http://http://automec.cl/">
+                Automec
             </a>
             .
         </strong>
