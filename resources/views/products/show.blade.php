@@ -39,12 +39,12 @@
                             <td>{{ $product->name }}</td>
                         </tr>
                         <tr>
-                            <td>Precio referencia:</td>
-                            <td>{{ $product->price }}</td>
+                            <td>Costo:</td>
+                            <td>{{ $product->cost }}</td>
                         </tr>
                         <tr>
-                            <td>Precio a usar:</td>
-                            <td>{{ $product->price_to_use }}</td>
+                            <td>Precio:</td>
+                            <td>{{ $product->price }}</td>
                         </tr>
                         <tr>
                             <td>Marca:</td>

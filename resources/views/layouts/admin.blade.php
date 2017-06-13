@@ -384,6 +384,7 @@ folder instead of downloading all of them to reduce the load. -->
             <b>
             </b>
             AUTOMEC
+            AUTOMEC
         </div>
         <strong>
             Copyright © 2017

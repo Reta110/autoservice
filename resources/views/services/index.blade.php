@@ -32,7 +32,7 @@
                                 <th>ID</th>
                                 <th>CODIGO</th>
                                 <th>NOMBRE</th>
-                                <th>PRECIO REFERENCIA</th>
+                                <th>PRECIO</th>
                                 <th>ACCIONES</th>
                             </tr>
                             </thead>

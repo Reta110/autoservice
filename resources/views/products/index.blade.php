@@ -33,6 +33,7 @@
                                 <th>CODIGO</th>
                                 <th>NOMBRE</th>
                                 <th>COSTO</th>
+                                <th>PRECIO</th>
                                 <th>MARCA</th>
                                 <th>MODELO</th>
                                 <th>DISPONIBLE</th>
@@ -50,6 +51,9 @@
                                     </td>
                                     <td>
                                         {{ $product->name }}
+                                    </td>
+                                    <td>
+                                        {{ $product->cost }}
                                     </td>
                                     <td>
                                         {{ $product->price }}
