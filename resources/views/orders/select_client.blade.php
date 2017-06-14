@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Listado de productos')
+@section('title', 'Seleccionar cliente')
 
 @section('contenido')
     <section class="content-header">
@@ -33,7 +33,7 @@
         @include('common.success')
         <div class="box-header with-border">
             <h3 class="box-title">
-                Listado de productos
+                Seleccionar cliente a utlizar
             </h3>
             <div class="box-tools">
 
@@ -56,61 +56,46 @@
                             <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>CODIGO</th>
                                 <th>NOMBRE</th>
-                                <th>COSTO</th>
-                                <th>PRECIO</th>
-                                <th>MARCA</th>
-                                <th>MODELO</th>
-                                <th>DISPONIBLE</th>
+                                <th>APELLIDO</th>
+                                <th>RUT</th>
+                                <th>TELEFONO</th>
+                                <th>DIRECCION</th>
+                                <th>EMAIL</th>
                                 <th>ACCIONES</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($products as $product)
+                            @foreach($clients as $client)
                                 <tr>
                                     <td>
-                                        {{ $product->id }}
+                                        {{ $client->id }}
                                     </td>
                                     <td>
-                                        {{ $product->code }}
+                                        {{ $client->name }}
                                     </td>
                                     <td>
-                                        {{ $product->name }}
+                                        {{ $client->last_name }}
                                     </td>
                                     <td>
-                                        {{ $product->cost }}
+                                        {{ $client->rut }}
                                     </td>
                                     <td>
-                                        {{ $product->price }}
+                                        {{ $client->phone }}
                                     </td>
                                     <td>
-                                        {{ $product->brand }}
+                                        {{ $client->address }}
                                     </td>
                                     <td>
-                                        {{ $product->model }}
+                                        {{ $client->email }}
                                     </td>
-                                    <td>
-                                        {{ $product->stock }}
-                                    </td>
-                                    <td>
-                                        {!! Form::open(['route' => ['products.destroy',$product ], 'method' => 'DELETE']) !!}
+                                    <td class="text-center">
                                         <div class="form-group">
-                                            <a href="{{ route('products.show', $product) }}">
-                                                <i class="fa fa-eye" aria-hidden="true"></i>
+                                            <a href="{{ route('select-vehicle', $client) }}">
+                                                Siguiente
+                                                <i class="glyphicon glyphicon-user" aria-hidden="true"></i>
                                             </a>
                                         </div>
-                                        <div class="form-group">
-                                            <a href="{{ route('products.edit', $product) }}">
-                                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                            </a>
-                                        </div>
-                                        <div class="form-group">
-                                            <button type="submit" class="btn btn-link">
-                                                <i class="fa fa-trash" aria-hidden="true"></i>
-                                            </button>
-                                        </div>
-                                        {!! Form::close() !!}
                                     </td>
                                 </tr>
                             @endforeach

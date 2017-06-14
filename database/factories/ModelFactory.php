@@ -17,6 +17,11 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 
     return [
         'name' => $faker->name,
+        'last_name' => $faker->lastName,
+        'phone' => $faker->phoneNumber,
+        'address' => $faker->address,
+        'rut' => $faker->randomNumber(5),
+        'role' => $faker->randomElement(['admin','user','client']),
         'email' => $faker->unique()->safeEmail,
         'password' => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10),
@@ -42,5 +47,14 @@ $factory->define(App\Service::class, function (Faker\Generator $faker) {
         'name' => $faker->words(5,true),
         'hh' => $faker->randomNumber(2),
         'description' => $faker->paragraph
+    ];
+});
+
+$factory->define(App\Vehicle::class, function (Faker\Generator $faker) {
+    return [
+        'brand' => $faker->word,
+        'model' => $faker->word,
+        'year' => $faker->date('Y'),
+        'vin' => $faker->randomNumber(8),
     ];
 });
