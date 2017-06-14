@@ -29,71 +29,73 @@
     <!-- Main content -->
     <section class="content">
 
-    <div class="box">
-        <div class="box-header with-border">
-            <h3 class="box-title">
-                Detalles del producto
-            </h3>
-            <div class="box-tools">
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title">
+                    Detalles del producto
+                </h3>
+                <div class="box-tools">
 
-                <div class="text-center">
-                    <a class="btn btn-success btn-sm" href="{{ route('products.index') }}">
-                        Volver
-                    </a>
-                </div>
-
-            </div>
-        </div>
-        <div class="box-body">
-            <div class="col-md-6 col-md-offset-3">
-                <div class="box box-solid box-primary">
-                    <div class="box-header with-border">
-                        @include('common.errors')
+                    <div class="text-center">
+                        <a class="btn btn-success btn-sm" href="{{ route('products.index') }}">
+                            Volver
+                        </a>
                     </div>
-                    <table class="table table-striped">
-                        <tbody>
-                        <tr>
-                            <td>Id:</td>
-                            <td>{{ $product->id }}</td>
-                        </tr>
-                        <tr>
-                            <td>Código:</td>
-                            <td>{{ $product->code }}</td>
-                        </tr>
-                        <tr>
-                            <td>Nombre:</td>
-                            <td>{{ $product->name }}</td>
-                        </tr>
-                        <tr>
-                            <td>Costo:</td>
-                            <td>{{ $product->cost }}</td>
-                        </tr>
-                        <tr>
-                            <td>Precio:</td>
-                            <td>{{ $product->price }}</td>
-                        </tr>
-                        <tr>
-                            <td>Marca:</td>
-                            <td>{{ $product->brand }}</td>
-                        </tr>
-                        <tr>
-                            <td>Modelo:</td>
-                            <td>{{ $product->model }}</td>
-                        </tr>
-                        <tr>
-                            <td>Stock:</td>
-                            <td>{{ $product->stock }}</td>
-                        </tr>
-                        </tbody>
-                    </table>
 
                 </div>
             </div>
+            <div class="box-body">
+                <div class="col-md-6 col-md-offset-3">
+                    <div class="box box-solid box-primary">
+                        <div class="box-header with-border">
+                            @include('common.errors')
+                        </div>
+                        <table class="table table-striped">
+                            <tbody>
+                            <tr>
+                                <td>Id:</td>
+                                <td>{{ $product->id }}</td>
+                            </tr>
+                            <tr>
+                                <td>Código:</td>
+                                <td>{{ $product->code }}</td>
+                            </tr>
+                            <tr>
+                                <td>Nombre:</td>
+                                <td>{{ $product->name }}</td>
+                            </tr>
+                            <tr>
+                                <td>Costo:</td>
+                                <td>{{ $product->cost }}</td>
+                            </tr>
+                            <tr>
+                                <td>Precio:</td>
+                                <td>{{ $product->price }}</td>
+                            </tr>
+                            <tr>
+                                <td>Marca:</td>
+                                <td>{{ $product->brand }}</td>
+                            </tr>
+                            <tr>
+                                <td>Modelo:</td>
+                                <td>{{ $product->model }}</td>
+                            </tr>
+                            <tr>
+                                <td>Stock:</td>
+                                <td>{{ $product->stock }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="for text-center">
-        <a class="btn btn-success btn-sm" href="{{ route('products.index') }}">
-            Regresar
-        </a>
-    </div>
+        <div class="for text-center">
+            <a class="btn btn-success btn-sm" href="{{ route('products.index') }}">
+                Regresar
+            </a>
+        </div>
+    </section>
+
 @endsection

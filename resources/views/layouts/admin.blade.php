@@ -351,7 +351,7 @@ folder instead of downloading all of them to reduce the load. -->
         <!-- Content Header (Page header) -->
 
             @yield('contenido')
-        </section>
+
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
