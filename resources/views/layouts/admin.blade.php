@@ -317,6 +317,28 @@ folder instead of downloading all of them to reduce the load. -->
                         <i class="fa fa-dashboard">
                         </i>
                         <span>
+                                    Trabajo
+                                </span>
+                        <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right">
+                                    </i>
+                                </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li>
+                            <a href="{{route('select-client')}}">
+                                <i class="fa fa-circle-o">
+                                </i>
+                                Nuevo
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-dashboard">
+                        </i>
+                        <span>
                                     Dashboard
                                 </span>
                         <span class="pull-right-container">

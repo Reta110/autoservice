@@ -5,9 +5,9 @@
 @section('contenido')
     <section class="content-header">
         <h1>
-            <span class="text-blue">Cliente:</span> {{$client->name.' '.$client->lastname}}
-
+            Nuevo trabajo
             <small>
+                <span class="text-blue">Cliente:</span> {{$client->name.' '.$client->lastname}}
             </small>
         </h1>
         <ol class="breadcrumb">
@@ -48,6 +48,8 @@
                                 <th>MARCA</th>
                                 <th>MODELO</th>
                                 <th>VIN</th>
+                                <th>PATENTE</th>
+                                <th>MOTOR</th>
                                 <th>AÑO</th>
                                 <th></th>
                             </tr>
@@ -56,6 +58,8 @@
                                     <td>{{$vehicle->brand}}</td>
                                     <td>{{$vehicle->model}}</td>
                                     <td>{{$vehicle->vin}}</td>
+                                    <td>{{$vehicle->patente}}</td>
+                                    <td>{{$vehicle->motor}}</td>
                                     <td>{{$vehicle->year}}</td>
                                     <td class="text-center">
                                         <div class="form-group">

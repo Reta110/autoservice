@@ -1,11 +1,10 @@
 @extends('layouts.admin')
 
-@section('title', 'Seleccionar cliente')
+@section('title', 'Listado de ordenes')
 
 @section('contenido')
     <section class="content-header">
         <h1>
-            Nuevo Trabajo
             <small>
             </small>
         </h1>
@@ -34,12 +33,12 @@
             @include('common.success')
             <div class="box-header with-border">
                 <h3 class="box-title">
-                    Seleccionar cliente
+                    Listado de ordenes
                 </h3>
                 <div class="box-tools">
 
                     <div class="text-center">
-                        <a class="btn btn-danger btn-sm" href="{{ route('products.create') }}">
+                        <a class="btn btn-danger btn-sm" href="{{ route('select-client') }}">
                             NUEVO REGISTRO
                         </a>
                         {{--  <a class="btn btn-success btn-sm" href="{{route('export')}}">
@@ -57,46 +56,61 @@
                                 <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>NOMBRE</th>
-                                    <th>APELLIDO</th>
-                                    <th>RUT</th>
-                                    <th>TELEFONO</th>
-                                    <th>DIRECCION</th>
-                                    <th>EMAIL</th>
+                                    <th>TITULO</th>
+                                    <th>COSTO TOTAL</th>
+                                    <th>IVA</th>
+                                    <th>TOTAL</th>
+                                    <th>STATUS</th>
+                                    <th>FECHA INICIO</th>
+                                    <th>FECHA FINALIZADO</th>
                                     <th>ACCIONES</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($clients as $client)
+                                @foreach($orders as $order)
                                     <tr>
                                         <td>
-                                            {{ $client->id }}
+                                            {{ $order->id }}
                                         </td>
                                         <td>
-                                            {{ $client->name }}
+                                            {{ $order->title }}
                                         </td>
                                         <td>
-                                            {{ $client->last_name }}
+                                            {{ $order->total_cost }}
                                         </td>
                                         <td>
-                                            {{ $client->rut }}
+                                            {{ $order->iva }}
                                         </td>
                                         <td>
-                                            {{ $client->phone }}
+                                            {{ $order->total }}
                                         </td>
                                         <td>
-                                            {{ $client->address }}
+                                            {{ $order->status }}
                                         </td>
                                         <td>
-                                            {{ $client->email }}
+                                            {{ $order->start_date }}
                                         </td>
-                                        <td class="text-center">
+                                        <td>
+                                            {{ $order->ended_date }}
+                                        </td>
+                                        <td>
+                                            {!! Form::open(['route' => ['orders.destroy',$order ], 'method' => 'DELETE']) !!}
                                             <div class="form-group">
-                                                <a href="{{ route('select-vehicle', $client) }}">
-                                                    Siguiente
-                                                    <i class="glyphicon glyphicon-user" aria-hidden="true"></i>
+                                                <a href="{{ route('orders.show', $order) }}">
+                                                    <i class="fa fa-eye" aria-hidden="true"></i>
                                                 </a>
                                             </div>
+                                            <div class="form-group">
+                                                <a href="{{ route('orders.edit', $order) }}">
+                                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                                </a>
+                                            </div>
+                                            <div class="form-group">
+                                                <button type="submit" class="btn btn-link">
+                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                                </button>
+                                            </div>
+                                            {!! Form::close() !!}
                                         </td>
                                     </tr>
                                 @endforeach
