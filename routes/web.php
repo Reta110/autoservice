@@ -23,6 +23,7 @@ Route::resource('/products', 'ProductsController');
 Route::resource('/services', 'ServicesController');
 
 Route::get('/orders/select-client', 'OrdersController@selectClient')->name('select-client');
-Route::get('/orders/select-vehicle/{id}', 'OrdersController@selectVehicle')->name('select-vehicle');
+Route::get('/orders/select-vehicle/user/{user}', 'OrdersController@selectVehicle')->name('select-vehicle');
+Route::get('/orders/select-vehicle/user/{user}/vehicle/{vehicle}', 'OrdersController@create')->name('add-order');
 
 Route::resource('/orders', 'OrdersController');

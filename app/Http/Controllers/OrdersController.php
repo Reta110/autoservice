@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Vehicle;
 use Illuminate\Http\Request;
 
 class OrdersController extends Controller
@@ -34,9 +35,9 @@ class OrdersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function selectVehicle($id)
+    public function selectVehicle($user)
     {
-        $client = User::where('role','client')->find($id);
+        $client = User::where('role','client')->find($user);
 
         return view('orders.select_vehicle', compact('client'));
     }
@@ -46,9 +47,12 @@ class OrdersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($user, $vehicle)
     {
-        //
+        $client = User::where('role','client')->find($user);
+        $vehicle = Vehicle::find($vehicle);
+
+        return view('orders.create', compact('client','vehicle'));
     }
 
     /**
