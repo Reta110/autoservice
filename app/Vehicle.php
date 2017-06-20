@@ -14,8 +14,9 @@ class Vehicle extends Model
         return $this->belongsTo('App\User');
     }
 
-    public function orders()
+    public function order()
     {
-        return $this->belongsToMany('App\Order');
+        return $this->hasMany('App\Order');
+
     }
 }

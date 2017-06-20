@@ -55,6 +55,9 @@
         {!! Form::close() !!}
     </section>
 
+    @include('orders.modals.product-modal')
+    @include('orders.modals.service-modal')
+
 @endsection
 
 @section('js')

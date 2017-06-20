@@ -45,7 +45,7 @@ $factory->define(App\Service::class, function (Faker\Generator $faker) {
     return [
         'code' => $faker->randomNumber(8),
         'name' => $faker->words(5,true),
-        'hh' => $faker->randomNumber(2),
+        'hh' => $faker->randomFloat(1,0,2),
         'description' => $faker->paragraph
     ];
 });

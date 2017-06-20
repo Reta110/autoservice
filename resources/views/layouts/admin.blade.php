@@ -205,7 +205,7 @@ folder instead of downloading all of them to reduce the load. -->
                             {{--<img alt="User Image" class="user-image" src="../../dist/img/user2-160x160.jpg">
                              </img>--}}
                             <span class="hidden-xs">
-                                            Alexander Pierce
+                                            Automec
                                         </span>
 
                         </a>
@@ -217,9 +217,7 @@ folder instead of downloading all of them to reduce the load. -->
                                 </img>--}}
 
                                 <p>
-                                    Alexander Pierce - Web Developer
                                     <small>
-                                        Member since Nov. 2012
                                     </small>
                                 </p>
 
@@ -285,7 +283,7 @@ folder instead of downloading all of them to reduce the load. -->
                 </div>
                 <div class="pull-left info">
                     <p>
-                        Alexander Pierce
+                        Automec
                     </p>
                     <a href="#">
                         <i class="fa fa-circle text-success">
@@ -300,8 +298,7 @@ folder instead of downloading all of them to reduce the load. -->
                     <input class="form-control" name="q" placeholder="Buscar..." type="text">
                     <span class="input-group-btn">
                                     <button class="btn btn-flat" id="search-btn" name="search" type="submit">
-                                        <i class="fa fa-search">
-                                        </i>
+                                        <i class="fa fa-search"></i>
                                     </button>
                                 </span>
                     </input>
@@ -321,8 +318,7 @@ folder instead of downloading all of them to reduce the load. -->
                                     Estadísticas
                                 </span>
                         <span class="pull-right-container">
-                                    <i class="fa fa-angle-left pull-right">
-                                    </i>
+                                    <i class="fa fa-angle-left pull-right"></i>
                                 </span>
                     </a>
                 </li>
@@ -332,25 +328,22 @@ folder instead of downloading all of them to reduce the load. -->
                         <i class="fa fa-dashboard">
                         </i>
                         <span>
-                                    Trabajo
+                                    Trabajos
                                 </span>
                         <span class="pull-right-container">
-                                    <i class="fa fa-angle-left pull-right">
-                                    </i>
+                                    <i class="fa fa-angle-left pull-right"></i>
                                 </span>
                     </a>
                     <ul class="treeview-menu">
                         <li>
                             <a href="{{route('select-client')}}">
-                                <i class="fa fa-circle-o">
-                                </i>
+                                <i class="fa fa-circle-o"> </i>
                                 Nuevo
                             </a>
                         </li>
                         <li>
                             <a href="{{route('orders.index')}}">
-                                <i class="fa fa-circle-o">
-                                </i>
+                                <i class="fa fa-circle-o"></i>
                                 Listado
                             </a>
                         </li>
@@ -361,7 +354,54 @@ folder instead of downloading all of them to reduce the load. -->
                         <i class="fa fa-dashboard">
                         </i>
                         <span>
-                                    Inventario
+                                    Clientes
+                                </span>
+                        <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li>
+                            <a href="{{route('clients.index')}}">
+                                <i class="fa fa-circle-o"></i>
+                                Listado
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-dashboard">
+                        </i>
+                        <span>
+                                    Productos
+                                </span>
+                        <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li>
+                            <a href="{{ route('products.create') }}">
+                                <i class="fa fa-circle-o"></i>
+                                Nuevo
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{route('products.index')}}">
+                                <i class="fa fa-circle-o"></i>
+                                Listado
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-dashboard">
+                        </i>
+                        <span>
+                                    Servicios
                                 </span>
                         <span class="pull-right-container">
                                     <i class="fa fa-angle-left pull-right">
@@ -370,17 +410,17 @@ folder instead of downloading all of them to reduce the load. -->
                     </a>
                     <ul class="treeview-menu">
                         <li>
-                            <a href="{{route('products.index')}}">
+                            <a href="{{route('services.create')}}">
                                 <i class="fa fa-circle-o">
                                 </i>
-                                Productos
+                                Nuevo
                             </a>
                         </li>
                         <li>
                             <a href="{{route('services.index')}}">
                                 <i class="fa fa-circle-o">
                                 </i>
-                                Servicios
+                                Listado
                             </a>
                         </li>
                     </ul>

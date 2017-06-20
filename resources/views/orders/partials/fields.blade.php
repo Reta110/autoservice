@@ -2,6 +2,21 @@
 <div class="box-body">
     <div class="row">
         <div class="col-md-12">
+            <div class="box box-info">
+                <div class="box-header">
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Título</label>
+
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control"
+                                   placeholder="Titulo" name="title" id="title" required>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
             <!-- right column -->
             <div class="col-md-6">
                 <!-- Horizontal Form -->
@@ -149,6 +164,11 @@
             <div class="box box-info">
                 <div class="box-header">
                     <h3 class="box-title">Agregue los servicios</h3>
+                    <div class="pull-right">
+                        {{--<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myServiceModal">--}}
+                            {{--Nuevo Servicio--}}
+                        {{--</button>--}}
+                    </div>
                 </div>
                 <div class="contacts">
 
@@ -156,14 +176,14 @@
                         <div class="col-md-6">
                             <div class="input-group-btn input-group-select">
                                 <div class="form-group">
-                                    {!! Form::select('service_id[]', $services, null, ['class' => 'form-control', 'placeholder' => '--- Indique servicio ---']) !!}
+                                    {!! Form::select('service_id[]', $services, null, ['class' => 'form-control select-service', 'placeholder' => '--- Indique servicio ---']) !!}
                                 </div>
                             </div>
                         </div>
 
                         <div class="col-md-2">
 
-                            {!! Form::text('service_hh[]', null, ['class' => 'form-control', 'placeholder' => 'Horas', 'required' => 'true']) !!}
+                            {!! Form::text('service_hh[]', null, ['class' => 'form-control', 'placeholder' => 'Horas']) !!}
                         </div>
                         <div class="col-md-2">
                         <span class="input-group-btn">
@@ -178,6 +198,11 @@
             <div class="box box-info">
                 <div class="box-header">
                     <h3 class="box-title">Seleccione producto y cantidad</h3>
+                    <div class="pull-right">
+                        {{--<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myProductModal">--}}
+                            {{--Nuevo Producto--}}
+                        {{--</button>--}}
+                    </div>
                 </div>
                 <div class="contacts">
 
@@ -185,17 +210,17 @@
                         <div class="col-md-4">
                             <div class="input-group-btn input-group-select">
                                 <div class="form-group">
-                                    {!! Form::select('product_id[]', $products, null, ['class' => 'form-control', 'placeholder' => '--- Indique producto ---']) !!}
+                                    {!! Form::select('product_id[]', $products, null, ['class' => 'form-control selectproduct', 'placeholder' => '--- Indique producto ---']) !!}
                                 </div>
 
                             </div>
                         </div>
                         <div class="col-md-2">
                             {!! Form::hidden('product_cost[]', null, ['class' => 'form-control', 'placeholder' => 'costo']) !!}
-                            {!! Form::text('product_price[]', null, ['class' => 'form-control', 'placeholder' => 'precio', 'required' => 'true']) !!}
+                            {!! Form::text('product_price[]', null, ['class' => 'form-control producto-price', 'placeholder' => 'precio']) !!}
                         </div>
                         <div class="col-md-2">
-                            {!! Form::text('product_quantity[]', null, ['class' => 'form-control', 'placeholder' => 'cantidad', 'required' => 'true']) !!}
+                            {!! Form::text('product_quantity[]', null, ['class' => 'form-control', 'placeholder' => 'cantidad']) !!}
                         </div>
                         <div class="col-md-2">
                         <span class="input-group-btn">
@@ -206,9 +231,50 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-6">
+            <div class="box box-info">
+                <div class="box-header">
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Estatus</label>
+
+                        <div class="col-sm-10">
+                            <label class="radio-inline">
+                                <input type="radio" name="status" value="budget" checked>Presupuesto
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="status" value="started" >Iniciado
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="status" value="ended" >Finalizado
+                            </label>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="box box-info">
+                <div class="box-header">
+                    <h3 class="box-title">Total</h3>
+                </div>
+                <p class="text-right">
+                    Precio: 7686
+                </p>
+                <p class="text-right">
+                    Iva: 23223
+                </p>
+                <p class="text-right">
+                    Total: 343466
+                </p>
+            </div>
+        </div>
 
     </div>
 </div>
+
+
+
 @section('js')
     <script type="text/javascript">
         (function ($) {
@@ -228,6 +294,16 @@
                     if ($multipleFormGroup.data('max') <= countFormGroup($multipleFormGroup)) {
                         $lastFormGroupLast.find('.btn-add').attr('disabled', true);
                     }
+
+                    /*var sum = 0;
+
+                    $('.producto-price').each(function(){
+                        sum += this.val();
+                    });*/
+
+                    // var sum2 = $('.service-hh').val();
+
+                    alert('aqui');
                 };
                 var removeFormGroup = function (event) {
                     event.preventDefault();
@@ -255,11 +331,11 @@
                 $(document).on('click', '.dropdown-menu a', selectFormGroup);
             });
         })(jQuery);
-        //datepicker
-        $('.datepicker').datepicker({
-            format: "dd-mm-yyyy",
-            language: "es",
-            autoclose: true
-        });
+
+
+        {{--$("select").change(function () {
+            alert("Handler for .change() called.");
+        });--}}
+
     </script>
 @endsection

@@ -7,6 +7,7 @@ use App\Product;
 use App\Service;
 use App\User;
 use App\Vehicle;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class OrdersController extends Controller
@@ -57,8 +58,8 @@ class OrdersController extends Controller
         $client = User::where('role', 'client')->find($user);
         $vehicle = Vehicle::find($vehicle);
 
-        $products = Product::orderBy('name', 'ASC')->pluck('name', 'id')->all();
-        $services = Service::orderBy('name', 'ASC')->pluck('name', 'id')->all();
+        $products = Product::orderBy('name', 'ASC')->pluck('name', 'id', 'price')->all();
+        $services = Service::orderBy('name', 'ASC')->pluck('name', 'id', 'hh')->all();
 
         return view('orders.create', compact('client', 'vehicle', 'products', 'services'));
     }
@@ -72,15 +73,23 @@ class OrdersController extends Controller
     public function store(Request $request)
     {
 
+        $this->validate($request, [
+            'title' => 'required',
+            'status' => 'required'
+        ]);
+
         $order = Order::create([
-            'title' => 'Mantenimiento 30mil km',
+            'title' => $request->get('title'),
             'user_id' => $request->get('user_id'),
             'vehicle_id' => $request->get('vehicle_id'),
+            'status' => $request->get('status'),
+            'start_date' => Carbon::now(),
             'total_cost' => '1500',
             'iva' => '100',
             'total' => '3500'
         ]);
-        
+
+
         for ($i = 0; $i < count($request->product_id); $i++) {
             $order->products()->attach($request->product_id[$i], ['quantity' => $request->product_quantity[$i], 'price' => $request->product_price[$i]]);
         }
@@ -93,7 +102,7 @@ class OrdersController extends Controller
 
         $order->save();
 
-        $orders = Order::all();
+        $orders = Order::with('vehicle')->get();
 
         return view('orders.index', compact('orders'))->with('success', 'Se ha registrado de manera exitosa!');;
 

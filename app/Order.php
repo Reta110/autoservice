@@ -2,11 +2,12 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-    protected $fillable = ['title','user_id', 'vehicle_id', 'total_cost', 'iva', 'total','status','start_date','ended_date'];
+    protected $fillable = ['title', 'user_id', 'vehicle_id', 'total_cost', 'iva', 'total', 'status', 'start_date', 'ended_date'];
 
 
     public function products()
@@ -14,7 +15,7 @@ class Order extends Model
         return $this->belongsToMany('App\Product');
     }
 
-    public function users()
+    public function user()
     {
         return $this->belongsTo('App\User');
     }
@@ -24,8 +25,13 @@ class Order extends Model
         return $this->belongsToMany('App\Service');
     }
 
-    public function vehicles()
+    public function vehicle()
     {
-        return $this->belongsToMany('App\Service');
+        return $this->belongsTo('App\Vehicle');
+    }
+
+    public function getStartDateAttribute($date)
+    {
+        return $date = \Carbon\Carbon::parse($date)->format('d-m-Y');
     }
 }

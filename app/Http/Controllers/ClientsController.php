@@ -8,6 +8,14 @@ use Illuminate\Http\Request;
 class ClientsController extends Controller
 {
 
+
+    public function index()
+    {
+        $clients = User::where('role', 'client')->get();
+
+        return view('clients.index', compact('clients'));
+    }
+
     public function store(Request $request)
     {
         $this->validate($request, [
