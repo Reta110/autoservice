@@ -80,7 +80,7 @@ class OrdersController extends Controller
             'iva' => '100',
             'total' => '3500'
         ]);
-
+        
         for ($i = 0; $i < count($request->product_id); $i++) {
             $order->products()->attach($request->product_id[$i], ['quantity' => $request->product_quantity[$i], 'price' => $request->product_price[$i]]);
         }

@@ -57,12 +57,10 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>TITULO</th>
-                                    <th>COSTO TOTAL</th>
-                                    <th>IVA</th>
                                     <th>TOTAL</th>
                                     <th>STATUS</th>
-                                    <th>FECHA INICIO</th>
-                                    <th>FECHA FINALIZADO</th>
+                                    <th>INICIO</th>
+                                    <th>FIN</th>
                                     <th>ACCIONES</th>
                                 </tr>
                                 </thead>
@@ -71,15 +69,10 @@
                                     <tr>
                                         <td>
                                             {{ $order->id }}
+                                            {{ $order->vehicle }}
                                         </td>
                                         <td>
                                             {{ $order->title }}
-                                        </td>
-                                        <td>
-                                            {{ $order->total_cost }}
-                                        </td>
-                                        <td>
-                                            {{ $order->iva }}
                                         </td>
                                         <td>
                                             {{ $order->total }}

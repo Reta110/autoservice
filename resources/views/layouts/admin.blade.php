@@ -28,7 +28,8 @@ folder instead of downloading all of them to reduce the load. -->
 
     <link href="{{ asset ('AdminLTE/plugins/datatables/dataTables.bootstrap.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset ('AdminLTE/plugins/datepicker/bootstrap-datepicker3.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset ('AdminLTE/plugins/datepicker/bootstrap-datepicker.standalone.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset ('AdminLTE/plugins/datepicker/bootstrap-datepicker.standalone.css') }}" rel="stylesheet"
+          type="text/css">
     <link rel="stylesheet" href="{{ asset ('chosen/chosen.css') }}">
     <!-- icheck
 <link href="AdminLTE/plugins/iCheck/square/red.css" rel="stylesheet">
@@ -296,7 +297,7 @@ folder instead of downloading all of them to reduce the load. -->
             <!-- search form -->
             <form action="#" class="sidebar-form" method="get">
                 <div class="input-group">
-                    <input class="form-control" name="q" placeholder="Search..." type="text">
+                    <input class="form-control" name="q" placeholder="Buscar..." type="text">
                     <span class="input-group-btn">
                                     <button class="btn btn-flat" id="search-btn" name="search" type="submit">
                                         <i class="fa fa-search">
@@ -310,9 +311,23 @@ folder instead of downloading all of them to reduce the load. -->
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu">
                 <li class="header">
-                    MAIN NAVIGATION
+                    MENU
                 </li>
                 <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-dashboard">
+                        </i>
+                        <span>
+                                    Estadísticas
+                                </span>
+                        <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right">
+                                    </i>
+                                </span>
+                    </a>
+                </li>
+                <li class="treeview">
+
                     <a href="#">
                         <i class="fa fa-dashboard">
                         </i>
@@ -332,6 +347,13 @@ folder instead of downloading all of them to reduce the load. -->
                                 Nuevo
                             </a>
                         </li>
+                        <li>
+                            <a href="{{route('orders.index')}}">
+                                <i class="fa fa-circle-o">
+                                </i>
+                                Listado
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 <li class="treeview">
@@ -339,7 +361,7 @@ folder instead of downloading all of them to reduce the load. -->
                         <i class="fa fa-dashboard">
                         </i>
                         <span>
-                                    Dashboard
+                                    Inventario
                                 </span>
                         <span class="pull-right-container">
                                     <i class="fa fa-angle-left pull-right">
@@ -363,6 +385,19 @@ folder instead of downloading all of them to reduce the load. -->
                         </li>
                     </ul>
                 </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-dashboard">
+                        </i>
+                        <span>
+                                    Configuración
+                                </span>
+                        <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right">
+                                    </i>
+                                </span>
+                    </a>
+                </li>
             </ul>
         </section>
         <!-- /.sidebar -->
@@ -372,9 +407,9 @@ folder instead of downloading all of them to reduce the load. -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
 
-            @yield('contenido')
+    @yield('contenido')
 
-        <!-- /.content -->
+    <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
     <footer class="main-footer">
@@ -641,7 +676,8 @@ folder instead of downloading all of them to reduce the load. -->
 <script src="{{asset('AdminLTE/plugins/datepicker/locales/bootstrap-datepicker.es.js')}}"></script>
 <script type="text/javascript" src="{{ asset('AdminLTE/plugins/datatables/datatables.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('AdminLTE/plugins/input-mask/jquery.inputmask.js') }}"></script>
-<script type="text/javascript" src="{{ asset('AdminLTE/plugins/input-mask/jquery.inputmask.phone.extensions.js') }}"></script>
+<script type="text/javascript"
+        src="{{ asset('AdminLTE/plugins/input-mask/jquery.inputmask.phone.extensions.js') }}"></script>
 <script type="text/javascript" src="{{ asset('AdminLTE/plugins/mask/jquery.mask.min.js') }}"></script>
 
 @yield('js')

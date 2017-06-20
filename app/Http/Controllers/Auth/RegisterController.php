@@ -42,7 +42,7 @@ class RegisterController extends Controller
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
@@ -50,22 +50,43 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
+            //'password' => 'required|string|min:6|confirmed',
         ]);
     }
 
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return User
      */
     protected function create(array $data)
     {
         return User::create([
             'name' => $data['name'],
+            'last_name' => $data['last_name'],
+            'rut' => $data['rut'],
+            'phone' => $data['phone'],
+            'address' => $data['address'],
             'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+            // 'password' => bcrypt($data['password']),
         ]);
+    }
+
+    public function store(Request $request)
+    {
+        $this->validate($request, [
+            'name' => 'required',
+            'last_name' => 'required',
+            'rut' => 'required',
+            'email' => 'required',
+            'phone' => 'required',
+            'stock' => 'required'
+        ]);
+
+        $user = Product::create($request->all());
+
+        return redirect()->route('select-vehicle',$user)->with('success', 'Se ha registrado de manera exitosa!');
+
     }
 }

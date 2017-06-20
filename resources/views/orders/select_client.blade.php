@@ -39,9 +39,10 @@
                 <div class="box-tools">
 
                     <div class="text-center">
-                        <a class="btn btn-danger btn-sm" href="{{ route('products.create') }}">
-                            NUEVO REGISTRO
-                        </a>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">
+                            NUEVO CLIENTE
+                        </button>
                         {{--  <a class="btn btn-success btn-sm" href="{{route('export')}}">
                             IMPRIMIR REPORTE
                         </a> --}}
@@ -115,6 +116,8 @@
             <!-- /.box -->
         </div>
     </section>
+
+    @include('orders.modals.client-modal');
 
 @endsection
 

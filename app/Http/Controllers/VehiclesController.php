@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
+use App\Vehicle;
 use Illuminate\Http\Request;
 
 class VehiclesController extends Controller
@@ -34,7 +36,20 @@ class VehiclesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'brand' => 'required',
+            'model' => 'required',
+            'vin' => 'required',
+            'year' => 'required',
+            'motor' => 'required',
+            'patente' => 'required',
+        ]);
+
+
+        $vehicle = Vehicle::create($request->all());
+
+        return redirect()->route('add-order', [ $request->get('user_id'), $vehicle])->with('success', 'Se ha registrado de manera exitosa!');
+
     }
 
     /**

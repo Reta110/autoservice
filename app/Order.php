@@ -23,4 +23,9 @@ class Order extends Model
     {
         return $this->belongsToMany('App\Service');
     }
+
+    public function vehicles()
+    {
+        return $this->belongsToMany('App\Service');
+    }
 }

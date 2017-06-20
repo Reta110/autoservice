@@ -27,3 +27,6 @@ Route::get('/orders/select-vehicle/user/{user}', 'OrdersController@selectVehicle
 Route::get('/orders/select-vehicle/user/{user}/vehicle/{vehicle}', 'OrdersController@create')->name('add-order');
 
 Route::resource('/orders', 'OrdersController');
+
+Route::post('/user/register', 'ClientsController@store')->name('user-store');
+Route::post('/vehicle/store', 'VehiclesController@store')->name('vehicle-store');

@@ -163,7 +163,7 @@
 
                         <div class="col-md-2">
 
-                            {!! Form::text('service_hh[]', null, ['class' => 'form-control', 'placeholder' => 'Horas']) !!}
+                            {!! Form::text('service_hh[]', null, ['class' => 'form-control', 'placeholder' => 'Horas', 'required' => 'true']) !!}
                         </div>
                         <div class="col-md-2">
                         <span class="input-group-btn">
@@ -192,10 +192,10 @@
                         </div>
                         <div class="col-md-2">
                             {!! Form::hidden('product_cost[]', null, ['class' => 'form-control', 'placeholder' => 'costo']) !!}
-                            {!! Form::text('product_price[]', null, ['class' => 'form-control', 'placeholder' => 'precio']) !!}
+                            {!! Form::text('product_price[]', null, ['class' => 'form-control', 'placeholder' => 'precio', 'required' => 'true']) !!}
                         </div>
                         <div class="col-md-2">
-                            {!! Form::text('product_quantity[]', null, ['class' => 'form-control', 'placeholder' => 'cantidad']) !!}
+                            {!! Form::text('product_quantity[]', null, ['class' => 'form-control', 'placeholder' => 'cantidad', 'required' => 'true']) !!}
                         </div>
                         <div class="col-md-2">
                         <span class="input-group-btn">

@@ -30,6 +30,7 @@
     </section>
     <!-- Main content -->
     <section class="content">
+        @include('common.success')
 
         <div class="row">
             <div class="col-xs-12">
@@ -38,6 +39,13 @@
                         <h3 class="box-title text-green">Seleccionar carro</h3>
 
                         <div class="box-tools">
+
+                            <div class="text-center">
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">
+                                    NUEVO VEHICULO
+                                </button>
+                            </div>
 
                         </div>
                     </div>
@@ -80,6 +88,7 @@
         </div>
     </section>
 
+    @include('orders.modals.vehicle-modal');
 @endsection
 
 @section('js')
