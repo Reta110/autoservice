@@ -59,9 +59,13 @@ class OrdersController extends Controller
         $vehicle = Vehicle::find($vehicle);
 
         $products = Product::orderBy('name', 'ASC')->pluck('name', 'id', 'price')->all();
-        $services = Service::orderBy('name', 'ASC')->pluck('name', 'id', 'hh')->all();
+        $services = Service::orderBy('name', 'ASC')->get();
+        //dd($services->toArray());
 
-        return view('orders.create', compact('client', 'vehicle', 'products', 'services'));
+        $serv = $services->toJson();
+
+
+        return view('orders.create', compact('client', 'vehicle', 'products', 'services', 'serv'));
     }
 
     /**

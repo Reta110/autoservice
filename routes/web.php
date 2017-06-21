@@ -27,6 +27,8 @@ Route::resource('/configurations', 'ConfigurationsController');
 Route::get('/orders/select-client', 'OrdersController@selectClient')->name('select-client');
 Route::get('/orders/select-vehicle/user/{user}', 'OrdersController@selectVehicle')->name('select-vehicle');
 Route::get('/orders/select-vehicle/user/{user}/vehicle/{vehicle}', 'OrdersController@create')->name('add-order');
+Route::post('/orders/select-ajax', 'OrdersController@selectAjax')->name('select-ajax');
+
 
 Route::resource('/orders', 'OrdersController');
 

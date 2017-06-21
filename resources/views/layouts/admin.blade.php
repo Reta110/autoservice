@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <link rel="icon" type="image/png" href="images/icon.png"/>
     <title>
         @yield('title')
     </title>
@@ -31,6 +32,7 @@ folder instead of downloading all of them to reduce the load. -->
     <link href="{{ asset ('AdminLTE/plugins/datepicker/bootstrap-datepicker.standalone.css') }}" rel="stylesheet"
           type="text/css">
     <link rel="stylesheet" href="{{ asset ('chosen/chosen.css') }}">
+    <script type="text/javascript" src="{{ asset('js/vue.min.js') }}"></script>
     <!-- icheck
 <link href="AdminLTE/plugins/iCheck/square/red.css" rel="stylesheet">
 <script src="AdminLTE/plugins/iCheck/icheck.js"></script>
@@ -41,6 +43,7 @@ folder instead of downloading all of them to reduce the load. -->
 <body class="hold-transition skin-blue sidebar-mini">
 <!-- Site wrapper -->
 <div class="wrapper">
+
     <header class="main-header">
         <!-- Logo -->
         <a class="logo" href="../../index2.html">
@@ -712,13 +715,9 @@ folder instead of downloading all of them to reduce the load. -->
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('chosen/chosen.jquery.js') }} "></script>
 <script src="{{asset('AdminLTE/dist/js/demo.js')}}"></script>
-<script src="{{asset('AdminLTE/plugins/datepicker/bootstrap-datepicker.min.js')}}"></script>
-<script src="{{asset('AdminLTE/plugins/datepicker/locales/bootstrap-datepicker.es.js')}}"></script>
+
 <script type="text/javascript" src="{{ asset('AdminLTE/plugins/datatables/datatables.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('AdminLTE/plugins/input-mask/jquery.inputmask.js') }}"></script>
-<script type="text/javascript"
-        src="{{ asset('AdminLTE/plugins/input-mask/jquery.inputmask.phone.extensions.js') }}"></script>
-<script type="text/javascript" src="{{ asset('AdminLTE/plugins/mask/jquery.mask.min.js') }}"></script>
+
 
 @yield('js')
 </body>
