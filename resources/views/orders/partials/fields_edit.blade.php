@@ -16,11 +16,6 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-12">
-            @include('orders.partials.clients-data')
-            @include('orders.partials.vehicle-data')
-        </div>
-
     </div>
 
     <div class="box-bodys">
@@ -28,11 +23,8 @@
             <div class="col-md-12">
                 <div class="box box-info">
                     <div class="box-header">
-                        <h3 class="box-title">Agregue los servicios</h3>
+                        <h3 class="box-title">Servicios</h3>
                         <div class="pull-right">
-                            {{--<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myServiceModal">--}}
-                            {{--Nuevo Servicio--}}
-                            {{--</button>--}}
                         </div>
                     </div>
                     <div class="contacts">

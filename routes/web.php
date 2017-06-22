@@ -33,4 +33,5 @@ Route::post('/orders/select-ajax', 'OrdersController@selectAjax')->name('select-
 Route::resource('/orders', 'OrdersController');
 
 Route::post('/user/register', 'ClientsController@store')->name('user-store');
+Route::post('/user/register', 'ClientsController@save')->name('user-save');
 Route::post('/vehicle/store', 'VehiclesController@store')->name('vehicle-store');

@@ -17,6 +17,7 @@ class CreateOrdersTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->string('total_cost');
+            $table->string('neto');
             $table->string('iva');
             $table->string('total');
             $table->enum('status', ['budget','started', 'template', 'ended']);

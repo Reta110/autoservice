@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Configuration;
 use Illuminate\Http\Request;
 
 class ConfigurationsController extends Controller
@@ -13,7 +14,9 @@ class ConfigurationsController extends Controller
      */
     public function index()
     {
-        //
+        $configuration = Configuration::first();
+
+        return view('configurations.edit', compact('configuration'));
     }
 
     /**
@@ -38,25 +41,16 @@ class ConfigurationsController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit()
     {
-        //
+        $configuration = Configuration::first();
+
+        return view('configurations.edit', compact('configuration'));
     }
 
     /**
@@ -71,14 +65,4 @@ class ConfigurationsController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

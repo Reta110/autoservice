@@ -13,7 +13,7 @@
                     {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => '', 'required']) !!}
                 </div>
                 <div class="form-group">
-                    {!! Form::label('hh', 'Precio HH') !!}
+                    {!! Form::label('hh', 'Precio en HH') !!}
                     {!! Form::text('hh', null, ['class' => 'form-control', 'placeholder' => '', 'required']) !!}
                 </div>
                 <div class="form-group">

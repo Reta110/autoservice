@@ -67,7 +67,7 @@ class OrdersController extends Controller
         $prod = $aux->toJson();
 
 
-        return view('orders.create', compact('client', 'vehicle', 'products', 'services', 'serv','prod'));
+        return view('orders.create', compact('client', 'vehicle', 'products', 'services', 'serv', 'prod'));
     }
 
     /**
@@ -91,8 +91,9 @@ class OrdersController extends Controller
             'status' => $request->get('status'),
             'start_date' => Carbon::now(),
             'total_cost' => '1500',
-            'iva' => '100',
-            'total' => '3500'
+            'neto' => $request->get('neto'),
+            'iva' => $request->get('iva'),
+            'total' => $request->get('total')
         ]);
 
 
@@ -122,7 +123,9 @@ class OrdersController extends Controller
      */
     public function show($id)
     {
-        //
+        $order = Order::find($id);
+
+        return view('orders.show', compact('order'));
     }
 
     /**
@@ -133,7 +136,9 @@ class OrdersController extends Controller
      */
     public function edit($id)
     {
-        //
+        $order = Order::find($id);
+
+        return view('orders.edit', compact('order'));
     }
 
     /**

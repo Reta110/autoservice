@@ -3,12 +3,12 @@
 <head>
     <meta charset="utf-8">
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
-    <link rel="icon" type="image/png" href="images/icon.png"/>
     <title>
         @yield('title')
     </title>
+    <link rel="icon" type="image/png" href="{{asset("images/icon.png")}}/>
     <!-- Tell the browser to be responsive to screen width -->
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta content=" width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.6 -->
     <link href="{{asset('AdminLTE/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
     <!-- Font Awesome -->
@@ -313,18 +313,18 @@ folder instead of downloading all of them to reduce the load. -->
                 <li class="header">
                     MENU
                 </li>
-                <li class="treeview">
-                    <a href="#">
-                        <i class="fa fa-dashboard">
-                        </i>
-                        <span>
-                                    Estadísticas
-                                </span>
-                        <span class="pull-right-container">
-                                    <i class="fa fa-angle-left pull-right"></i>
-                                </span>
-                    </a>
-                </li>
+                {{--<li class="treeview">--}}
+                    {{--<a href="#">--}}
+                        {{--<i class="fa fa-dashboard">--}}
+                        {{--</i>--}}
+                        {{--<span>--}}
+                                    {{--Estadísticas--}}
+                                {{--</span>--}}
+                        {{--<span class="pull-right-container">--}}
+                                    {{--<i class="fa fa-angle-left pull-right"></i>--}}
+                                {{--</span>--}}
+                    {{--</a>--}}
+                {{--</li>--}}
                 <li class="treeview">
 
                     <a href="#">
@@ -364,6 +364,12 @@ folder instead of downloading all of them to reduce the load. -->
                                 </span>
                     </a>
                     <ul class="treeview-menu">
+                        <li>
+                            <a href="{{route('clients.create')}}">
+                                <i class="fa fa-circle-o"></i>
+                                Nuevo
+                            </a>
+                        </li>
                         <li>
                             <a href="{{route('clients.index')}}">
                                 <i class="fa fa-circle-o"></i>
@@ -429,13 +435,14 @@ folder instead of downloading all of them to reduce the load. -->
                     </ul>
                 </li>
                 <li>
-                    <a href="#">
-                        <i class="fa fa-dashboard">
+                    <a href="{{route('configurations.index')}}">
+                    <i class="fa fa-dashboard">
                         </i>
                         <span>
                                     Configuración
                                 </span>
                         <span class="pull-right-container">
+
                                     <i class="fa fa-angle-left pull-right">
                                     </i>
                                 </span>

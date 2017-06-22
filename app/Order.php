@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-    protected $fillable = ['title', 'user_id', 'vehicle_id', 'total_cost', 'iva', 'total', 'status', 'start_date', 'ended_date'];
+    protected $fillable = ['title', 'user_id', 'vehicle_id', 'total_cost','neto', 'iva', 'total', 'status', 'start_date', 'ended_date'];
 
 
     public function products()
     {
-        return $this->belongsToMany('App\Product');
+        return $this->belongsToMany('App\Product')->withPivot('price', 'quantity');
     }
 
     public function user()

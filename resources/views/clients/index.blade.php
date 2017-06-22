@@ -92,9 +92,15 @@
                                             {{ $client->email }}
                                         </td>
                                         <td class="text-center">
-                                            <div class="form-group">
+                                            {!! Form::open(['route' => ['clients.destroy',$client ], 'method' => 'DELETE']) !!}
 
+                                            <div class="form-group">
+                                                <button type="submit" class="btn btn-link" title="Eliminar">
+                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                                </button>
                                             </div>
+                                            {!! Form::close() !!}
+
                                         </td>
                                     </tr>
                                 @endforeach
