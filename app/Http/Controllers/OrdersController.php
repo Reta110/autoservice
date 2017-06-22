@@ -63,9 +63,11 @@ class OrdersController extends Controller
         //dd($services->toArray());
 
         $serv = $services->toJson();
+        $aux = Product::orderBy('name', 'ASC')->get();
+        $prod = $aux->toJson();
 
 
-        return view('orders.create', compact('client', 'vehicle', 'products', 'services', 'serv'));
+        return view('orders.create', compact('client', 'vehicle', 'products', 'services', 'serv','prod'));
     }
 
     /**
