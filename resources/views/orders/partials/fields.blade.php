@@ -97,7 +97,7 @@
                             </div>
                             <div class="col-md-2">
                                 <label>Precio</label>
-                                {!! Form::hidden('product_cost[]', null, ['class' => 'form-control', 'placeholder' => 'costo']) !!}
+                                {!! Form::hidden('product_cost[]', null, ['class' => 'form-control producto-cost', 'placeholder' => 'costo']) !!}
                                 {!! Form::text('product_price[]', null, ['class' => 'form-control producto-price', 'placeholder' => 'precio']) !!}
                             </div>
                             <div class="col-md-2">
@@ -145,6 +145,9 @@
                     <div class="box-header">
                         <h3 class="box-title">Total</h3>
                     </div>
+                    <p class="text-right">
+                        {!! Form::hidden('total_cost', null, ['class' => 'form-control costo_total', 'placeholder' => 'Costo']) !!}
+                    </p>
                     <p class="text-right">
                         <label>Neto</label>
                         {!! Form::text('neto_show', null, ['class' => 'form-control neto', 'placeholder' => 'Neto', 'disabled' => 'true']) !!}
@@ -246,6 +249,7 @@
                         }
 
                         calculate();
+                        calcular_total_costos()
                     };
                     var removeFormGroup = function (event) {
                         event.preventDefault();
@@ -258,6 +262,7 @@
                         $formGroup.remove();
 
                         calculate();
+                        calcular_total_costos()
                     };
                     var selectFormGroup = function (event) {
                         event.preventDefault();
@@ -293,7 +298,7 @@
             });
             //Fin Colocar precio hora en servicio
 
-            //Colocar precio y stock de los productos
+            //Colocar precio, costo y stock de los productos
 
             $(document).on('change', '.select-product', function () {
                 var id = $(this).val();
@@ -307,19 +312,24 @@
                     return val.id == id ? val.stock : null;
                 });
 
+                var cost = $.map(myArray, function (val) {
+                    return val.id == id ? val.cost : null;
+                });
+
                 $(this).closest('.multiple-form-group').find('.producto-price').val(found[0]);
                 $(this).closest('.multiple-form-group').find('.producto-stock').val(stock[0]);
+                $(this).closest('.multiple-form-group').find('.producto-cost').val(cost[0]);
 
                 console.log(found[0]);
 
             });
 
-            //Fin Colocar precio y stock de los productos
+            //Fin Colocar precio, costo y stock de los productos
 
-            //Caluclar total de los productos
             //$(document).on('click', '.btn-add', calculate);
             //$(document).on('click', '.btn-remove', calculate);
 
+            //Caluclar total de los productos
             function calcular_total_producto() {
 
                 productos_total = 0
@@ -343,19 +353,18 @@
 
 
             //Caluclar total de los servicios
-            // $(document).on('click', '.btn-add2', calculate);
-            // $(document).on('click', '.btn-remove2', calculate);
-
             function calcular_total_servicios() {
 
                 servicios_total = 0
+
+                var hh = {!! $config->price_hh !!};
 
                 var size = $(".hh-service").size();
                 console.log('size service =' + size);
                 $(".hh-service").each(
                         function (index, value) {
                             if (eval($(this).val() != '')) {
-                                servicios_total = servicios_total + (eval($(this).val()) * 25000);
+                                servicios_total = servicios_total + (eval($(this).val()) * hh);
                             }
                             //eval($(this).closest('.multiple-form-group2').find('.hh-service').val()
                         });
@@ -366,20 +375,43 @@
 
                 return servicios_total;
             }
-
-
             //Fin  Caluclar total de los servicios
+
+            //Caluclar total de los costos
+            function calcular_total_costos() {
+                costos = 0
+
+                $(".producto-cost").each(
+                        function (index, value) {
+                            if (eval($(this).val() != '')) {
+                                costos = costos + (eval($(this).val()) * eval($(this).closest('.multiple-form-group').find('.producto-quantity').val()));
+                            }
+                        });
+
+                if (isNaN(costos)) {
+                    costos = 0
+                }
+                $(".costo_total").val(costos)
+            }
+            //Fin  Caluclar total de los costos
 
             function calculate() {
 
+                var conf_iva = {!! $config->iva !!};
+
                 var sum = eval(calcular_total_producto() + calcular_total_servicios());
-                var iva = eval(sum * 0.19)
+                var iva = eval(sum * (conf_iva / 100))
                 var neto = eval(sum - iva)
+//                var costos =  calcular_total_producto()
+
+//                $(".costo_total").val(costos)
 
                 $(".neto").val(neto)
                 $(".iva").val(iva)
 
                 $(".total").val(sum)
+
+
             }
 
 

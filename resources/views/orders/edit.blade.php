@@ -46,7 +46,7 @@
             </div>
         </div>
         <div class="for text-center">
-            {!! Form::submit('Registrar', ['class'=> 'btn btn-primary']) !!}
+            {!! Form::submit('Actualizar', ['class'=> 'btn btn-primary']) !!}
             <a class="btn btn-danger" href="{{ route('orders.index')}}">
                 Cancelar
             </a>

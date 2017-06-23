@@ -41,7 +41,7 @@
                                 <tr>
                                     <td>{{$service->name}}</td>
                                     <td>{{$service->hh}}</td>
-                                    <td>{{$service->hh * 25000}}</td>
+                                    <td>{{$service->hh * $config->price_hh }}</td>
                                 </tr>
                             @endforeach
                         </table>
@@ -72,6 +72,12 @@
 
                                 </tr>
                             @endforeach
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td class="text-right">Costos Totales</td>
+                                <td>{{$order->total_cost }}</td>
+                            </tr>
                         </table>
                     </div>
                 </div>

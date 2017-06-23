@@ -8,8 +8,7 @@
                         <label for="inputEmail3" class="col-sm-2 control-label">Título</label>
 
                         <div class="col-sm-10">
-                            <input type="text" class="form-control"
-                                   placeholder="Titulo" name="title" id="title" required>
+                            {!! Form::text('title', null, ['class' => 'form-control', 'id' => 'title', 'placeholder' => 'precio', 'required' => 'true']) !!}
                         </div>
 
                     </div>
@@ -29,24 +28,42 @@
                     </div>
                     <div class="contacts">
 
+                        @foreach($order->services as $oservice)
+
+                            <div class="form-group multiple-form-group2 input-group">
+                                <div class="col-md-6">
+                                    <label>Servicio</label>
+
+                                    <div class="input-group-btn input-group-select">
+                                        <div class="form-group">
+                                            {!! Form::select('service_id[]', $services, $oservice->id, ['class' => 'form-control select-service', 'placeholder' => '--- Indique servicio ---']) !!}
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-2">
+                                    <label>Horas</label>
+                                    {!! Form::text('service_hh[]', $oservice->hh, ['class' => 'form-control hh-service', 'placeholder' => 'Horas']) !!}
+                                </div>
+                                <div class="col-md-2">
+                                    <label> - </label>
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-danger btn-remove2">-</button>
+                                    </span>
+                                </div>
+                            </div>
+                        @endforeach
                         <div class="form-group multiple-form-group2 input-group">
                             <div class="col-md-6">
                                 <label>Servicio</label>
+
                                 <div class="input-group-btn input-group-select">
                                     <div class="form-group">
-                                        <select class="form-control select-service" name="service_id[]">
-                                            <option selected="selected" disabled="disabled" hidden="hidden" value="">---
-                                                Indique servicio ---
-                                            </option>
-                                            @foreach($services as $service)
-                                                <option value="{{$service->id}}">{{$service->name}}</option>
-                                            @endforeach
-                                        </select>
-
-
-                                        {{--{!! Form::select('service_id[]', $services, null, ['class' => 'form-control select-service', 'placeholder' => '--- Indique servicio ---']) !!}--}}
+                                        {!! Form::select('service_id[]', $services, null, ['class' => 'form-control select-service', 'placeholder' => '--- Indique servicio ---']) !!}
                                     </div>
                                 </div>
+
                             </div>
 
                             <div class="col-md-2">
@@ -56,8 +73,8 @@
                             <div class="col-md-2">
                                 <label> - </label>
                                 <span class="input-group-btn">
-                            <button type="button" class="btn btn-success btn-add2">+</button>
-                        </span>
+                                        <button type="button" class="btn btn-success btn-add2">+</button>
+                                    </span>
                             </div>
                         </div>
                     </div>
@@ -67,14 +84,44 @@
                 <div class="box box-info">
                     <div class="box-header">
                         <h3 class="box-title">Seleccione producto y cantidad</h3>
-                        <div class="pull-right">
-                            {{--<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myProductModal">--}}
-                            {{--Nuevo Producto--}}
-                            {{--</button>--}}
-                        </div>
                     </div>
                     <div class="contacts">
 
+                        @foreach($order->products as $oproduct)
+
+                            <div class="form-group multiple-form-group input-group">
+                                <div class="col-md-4">
+                                    <label>Producto</label>
+                                    <div class="input-group-btn input-group-select">
+
+                                        <div class="form-group">
+
+                                            {!! Form::select('product_id[]', $products, $oproduct->id, ['class' => 'form-control select-product', 'placeholder' => '--- Indique producto ---']) !!}
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <label>Precio</label>
+                                    {!! Form::hidden('product_cost[]', $oproduct->cost, ['class' => 'form-control', 'placeholder' => 'costo']) !!}
+                                    {!! Form::text('product_price[]', $oproduct->pivot->price, ['class' => 'form-control producto-price', 'placeholder' => 'precio']) !!}
+                                </div>
+                                <div class="col-md-2">
+                                    <label>Stock</label>
+                                    {!! Form::text('stock[]', $oproduct->stock, ['class' => 'form-control producto-stock', 'placeholder' => 'stock', 'disabled' => 'true']) !!}
+                                </div>
+                                <div class="col-md-2">
+                                    <label>Cantidad</label>
+                                    {!! Form::text('product_quantity[]', $oproduct->pivot->quantity, ['class' => 'form-control producto-quantity', 'placeholder' => 'cantidad']) !!}
+                                </div>
+                                <div class="col-md-2">
+                                    <label> - </label>
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-danger btn-remove">-</button>
+                                    </span>
+                                </div>
+                            </div>
+                        @endforeach
                         <div class="form-group multiple-form-group input-group">
                             <div class="col-md-4">
                                 <label>Producto</label>
@@ -103,8 +150,8 @@
                             <div class="col-md-2">
                                 <label> - </label>
                                 <span class="input-group-btn">
-                            <button type="button" class="btn btn-success btn-add">+</button>
-                        </span>
+                                        <button type="button" class="btn btn-success btn-add">+</button>
+                                    </span>
                             </div>
                         </div>
                     </div>
@@ -118,13 +165,16 @@
 
                             <div class="col-sm-10">
                                 <label class="radio-inline">
-                                    <input type="radio" name="status" value="budget" checked>Presupuesto
+                                    <input type="radio" name="status" value="budget"
+                                           @if($order->status == 'budget') checked @endif>Presupuesto
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" name="status" value="started">Iniciado
+                                    <input type="radio" name="status" value="started"
+                                           @if($order->status == 'started') checked @endif>Iniciado
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" name="status" value="ended">Finalizado
+                                    <input type="radio" name="status" value="ended"
+                                           @if($order->status == 'ended') checked @endif>Finalizado
                                 </label>
                             </div>
 
@@ -373,6 +423,10 @@
 
                 $(".total").val(sum)
             }
+
+            $(document).ready(function () {
+                calculate()
+            });
 
 
         </script>

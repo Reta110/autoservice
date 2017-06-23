@@ -20,8 +20,6 @@ class CreateConfigurationsTable extends Migration
             $table->string('iva');
             $table->string('price_hh');
 
-            $table->text('description')->nullable();
-
             $table->timestamps();
         });
     }

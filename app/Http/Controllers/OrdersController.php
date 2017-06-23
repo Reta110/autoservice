@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Configuration;
 use App\Order;
 use App\Product;
 use App\Service;
@@ -66,8 +67,9 @@ class OrdersController extends Controller
         $aux = Product::orderBy('name', 'ASC')->get();
         $prod = $aux->toJson();
 
+        $config = Configuration::first();
 
-        return view('orders.create', compact('client', 'vehicle', 'products', 'services', 'serv', 'prod'));
+        return view('orders.create', compact('client', 'vehicle', 'products', 'services', 'serv', 'prod','config'));
     }
 
     /**
@@ -90,7 +92,7 @@ class OrdersController extends Controller
             'vehicle_id' => $request->get('vehicle_id'),
             'status' => $request->get('status'),
             'start_date' => Carbon::now(),
-            'total_cost' => '1500',
+            'total_cost' => $request->get('total_cost'),
             'neto' => $request->get('neto'),
             'iva' => $request->get('iva'),
             'total' => $request->get('total')
@@ -124,21 +126,34 @@ class OrdersController extends Controller
     public function show($id)
     {
         $order = Order::find($id);
+        $config = Configuration::first();
 
-        return view('orders.show', compact('order'));
+        return view('orders.show', compact('order', 'show','config'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
+//    public function pdf($id)
+//    {
+//        $order = Order::find($id);
+//        $config = Configuration::first();
+//
+//        return view('orders.pdf.pdf', compact('order', 'show','config'));
+//    }
+
     public function edit($id)
     {
         $order = Order::find($id);
 
-        return view('orders.edit', compact('order'));
+        $products = Product::orderBy('name', 'ASC')->pluck('name', 'id', 'price')->all();
+        $services = Service::orderBy('name', 'ASC')->pluck('name', 'id', 'price')->all();
+        $servi = Service::orderBy('name', 'ASC')->get();
+
+        $serv = $servi->toJson();
+        $aux = Product::orderBy('name', 'ASC')->get();
+        $prod = $aux->toJson();
+
+        $config = Configuration::first();
+
+        return view('orders.edit', compact('order','client', 'vehicle', 'products', 'services', 'serv', 'prod','config'));
     }
 
     /**

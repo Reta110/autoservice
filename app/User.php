@@ -36,4 +36,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Vehicle');
     }
+
+    public function getFullNameAttribute($date)
+    {
+        return $this->name.' '.$this->last_name;
+    }
 }

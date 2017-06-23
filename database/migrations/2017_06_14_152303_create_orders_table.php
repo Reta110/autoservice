@@ -17,10 +17,14 @@ class CreateOrdersTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->string('total_cost');
+            $table->string('discount');
             $table->string('neto');
             $table->string('iva');
             $table->string('total');
+
             $table->enum('status', ['budget','started', 'template', 'ended']);
+
+
             $table->date('start_date')->nullable();
             $table->date('ended_date')->nullable();
 
