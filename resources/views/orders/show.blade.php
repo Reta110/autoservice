@@ -22,7 +22,7 @@
             <div class="col-xs-12">
                 <h1 class="page-header">
                     <img alt="User Image" src="{{ asset ('images/logo.png') }}">
-                    <small class="pull-right">Fecha: {{ $order->created_at }}</small>
+                    {{--<small class="pull-right">Fecha: {{ $order->created_at }}</small>--}}
                 </h1>
             </div>
             <!-- /.col -->
@@ -32,7 +32,7 @@
             <div class="col-sm-4 invoice-col">
                 <address>
                     <strong>Automec</strong><br>
-                    <b>Fecha: </b>{{ $order->created_at }}<br>
+                    <b>Fecha registro: </b>{{ $order->created_at }}<br>
                     <b>Dirección:</b> <br>
                     <b>Telf:</b> <br>
                     <b>Email:</b> admin@automec.cl
@@ -70,8 +70,8 @@
                     <table class="table table-striped">
                         <thead>
                         <tr>
-                            <th>SERVICIO</th>
-                            <th>PRECIO HH</th>
+                            <th>DESCRIPCION</th>
+                            <th>HH</th>
                             <th>TOTAL</th>
                         </tr>
                         </thead>
@@ -95,7 +95,7 @@
             <div class="row">
                 <div class="col-xs-12 table-responsive">
                     <h3>Productos</h3>
-                    <table class="table table-striped">
+                    <table class="table table-striped ">
                         <thead>
                         <tr>
                             <th>DESCRIPCION</th>
@@ -108,7 +108,7 @@
                         @foreach($order->products as $product)
                             <tr>
                                 <td>{{ $product->name   }}</td>
-                                <td>{{ $product->cost }}</td>
+                                <td>{{ $product->price }}</td>
                                 <td>{{ $product->pivot->quantity }}</td>
                                 <td>{{ $product->pivot->quantity*$product->cost }}</td>
                             </tr>
@@ -123,14 +123,15 @@
 
         <div class="row">
             <!-- accepted payments column -->
-            <div class="col-xs-6 no-print">
-                <p class="lead">Métodos de pago:</p>
-                <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
-                    Puede pagar en efectivo directamente en nuestra oficina o con un depósito o transferencia:
-                    C.Corriente 70541017, Banco Santander.
-                </p>
-            </div>
-            <!-- /.col -->
+            @if($order->observations != '')
+                <div class="col-xs-6">
+                    <p class="lead">Observaciones:</p>
+                    <p class="text-muted well well-sm " style="margin-top: 10px;">
+                        {{$order->observations}}
+                    </p>
+                </div>
+            @endif
+        <!-- /.col -->
             <div class="col-xs-4 pull-right">
 
                 <div class="form-group">

@@ -112,11 +112,11 @@
                                                     <i class="fa fa-eye" aria-hidden="true"></i>
                                                 </a>
                                             </div>
-                                            {{--<div class="form-group">--}}
-                                            {{--<a href="{{ route('orders.edit', $order) }}" title="Editar">--}}
-                                            {{--<i class="fa fa-pencil-square-o" aria-hidden="true"></i>--}}
-                                            {{--</a>--}}
-                                            {{--</div>--}}
+                                            <div class="form-group">
+                                                <a href="{{ route('orders.edit', $order) }}" title="Editar">
+                                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                                </a>
+                                            </div>
                                             <div class="form-group">
                                                 <button type="submit" class="btn btn-link" title="Eliminar">
                                                     <i class="fa fa-trash" aria-hidden="true"></i>

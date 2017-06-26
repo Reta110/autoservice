@@ -28,7 +28,7 @@
     </section>
     <!-- Main content -->
     <section class="content">
-        {!! Form::model($order, ['route' => ['orders.update', $order], 'method' => 'POST']) !!}
+        {!! Form::model($order, ['route' => ['orders.update', $order], 'method' => 'PUT']) !!}
         <div class="row">
             <div class="col-md-12">
                 <div class="box">
@@ -54,8 +54,8 @@
         {!! Form::close() !!}
     </section>
 
-    @include('orders.modals.product-modal')
-    @include('orders.modals.service-modal')
+    {{--@include('orders.modals.product-modal')--}}
+    {{--@include('orders.modals.service-modal')--}}
 
 @endsection
 

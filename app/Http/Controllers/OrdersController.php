@@ -69,7 +69,7 @@ class OrdersController extends Controller
 
         $config = Configuration::first();
 
-        return view('orders.create', compact('client', 'vehicle', 'products', 'services', 'serv', 'prod','config'));
+        return view('orders.create', compact('client', 'vehicle', 'products', 'services', 'serv', 'prod', 'config'));
     }
 
     /**
@@ -80,7 +80,6 @@ class OrdersController extends Controller
      */
     public function store(Request $request)
     {
-
         $this->validate($request, [
             'title' => 'required',
             'status' => 'required'
@@ -95,7 +94,9 @@ class OrdersController extends Controller
             'total_cost' => $request->get('total_cost'),
             'neto' => $request->get('neto'),
             'iva' => $request->get('iva'),
-            'total' => $request->get('total')
+            'total' => $request->get('total'),
+            'observations' => $request->get('observations'),
+            'hh' => $request->get('hh'),
         ]);
 
 
@@ -113,7 +114,7 @@ class OrdersController extends Controller
 
         $orders = Order::with('vehicle')->get();
 
-        return view('orders.index', compact('orders'))->with('success', 'Se ha registrado de manera exitosa!');;
+        return view('orders.index', compact('orders'))->with('success', 'Se ha registrado de manera exitosa!');
 
     }
 
@@ -128,7 +129,7 @@ class OrdersController extends Controller
         $order = Order::find($id);
         $config = Configuration::first();
 
-        return view('orders.show', compact('order', 'show','config'));
+        return view('orders.show', compact('order', 'show', 'config'));
     }
 
 //    public function pdf($id)
@@ -153,7 +154,7 @@ class OrdersController extends Controller
 
         $config = Configuration::first();
 
-        return view('orders.edit', compact('order','client', 'vehicle', 'products', 'services', 'serv', 'prod','config'));
+        return view('orders.edit', compact('order', 'client', 'vehicle', 'products', 'services', 'serv', 'prod', 'config'));
     }
 
     /**
@@ -165,7 +166,40 @@ class OrdersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'title' => 'required',
+            'status' => 'required'
+        ]);
+
+        //Limpiar servicios y productos relacionandos a la orden
+        $order = Order::find($id);
+        $order->products()->detach();
+        $order->services()->detach();
+        //FIN Limpiar servicios y productos relacionandos a la orden
+
+        for ($i = 0; $i < count($request->product_id); $i++) {
+            $order->products()->attach($request->product_id[$i], ['quantity' => $request->product_quantity[$i], 'price' => $request->product_price[$i]]);
+        }
+
+        for ($i = 0; $i < count($request->service_id); $i++) {
+            $order->services()->attach($request->service_id[$i], ['hh' => $request->service_hh[$i]]);
+        }
+
+        $order->hh = $request->get('hh');
+        $order->title = $request->get('title');
+        $order->status = $request->get('status');
+        $order->start_date = Carbon::now();
+        $order->total_cost = $request->get('total_cost');
+        $order->neto = $request->get('neto');
+        $order->iva = $request->get('iva');
+        $order->total = $request->get('total');
+        $order->observations = $request->get('observations');
+
+
+        $order->save();
+
+        return redirect()->route('orders.index')->with('success', 'Se ha actualizado de manera exitosa!');
+
     }
 
     /**
@@ -178,6 +212,6 @@ class OrdersController extends Controller
     {
         Order::destroy($id);
 
-        return redirect()->route('orders.index')->with('success', 'Se ha eleminado de manera exitosa!');;
+        return redirect()->route('orders.index')->with('success', 'Se ha eleminado de manera exitosa!');
     }
 }

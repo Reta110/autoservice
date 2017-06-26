@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-    protected $fillable = ['title', 'user_id', 'vehicle_id', 'total_cost','neto', 'iva', 'total', 'status', 'start_date', 'ended_date'];
+    protected $fillable = ['title', 'user_id', 'vehicle_id', 'total_cost','hh','neto', 'iva', 'total', 'status','observations', 'start_date', 'ended_date'];
 
 
     public function products()
@@ -22,7 +22,7 @@ class Order extends Model
 
     public function services()
     {
-        return $this->belongsToMany('App\Service');
+        return $this->belongsToMany('App\Service')->withPivot('hh');
     }
 
     public function vehicle()

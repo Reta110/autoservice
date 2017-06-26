@@ -32,6 +32,7 @@ folder instead of downloading all of them to reduce the load. -->
     <link href="{{ asset ('AdminLTE/plugins/datepicker/bootstrap-datepicker.standalone.css') }}" rel="stylesheet"
           type="text/css">
     <link rel="stylesheet" href="{{ asset ('chosen/chosen.css') }}">
+
     <script type="text/javascript" src="{{ asset('js/vue.min.js') }}"></script>
     <!-- icheck
 <link href="AdminLTE/plugins/iCheck/square/red.css" rel="stylesheet">
@@ -314,16 +315,16 @@ folder instead of downloading all of them to reduce the load. -->
                     MENU
                 </li>
                 {{--<li class="treeview">--}}
-                    {{--<a href="#">--}}
-                        {{--<i class="fa fa-dashboard">--}}
-                        {{--</i>--}}
-                        {{--<span>--}}
-                                    {{--Estadísticas--}}
-                                {{--</span>--}}
-                        {{--<span class="pull-right-container">--}}
-                                    {{--<i class="fa fa-angle-left pull-right"></i>--}}
-                                {{--</span>--}}
-                    {{--</a>--}}
+                {{--<a href="#">--}}
+                {{--<i class="fa fa-dashboard">--}}
+                {{--</i>--}}
+                {{--<span>--}}
+                {{--Estadísticas--}}
+                {{--</span>--}}
+                {{--<span class="pull-right-container">--}}
+                {{--<i class="fa fa-angle-left pull-right"></i>--}}
+                {{--</span>--}}
+                {{--</a>--}}
                 {{--</li>--}}
                 <li class="treeview">
 
@@ -436,7 +437,7 @@ folder instead of downloading all of them to reduce the load. -->
                 </li>
                 <li>
                     <a href="{{route('configurations.index')}}">
-                    <i class="fa fa-dashboard">
+                        <i class="fa fa-dashboard">
                         </i>
                         <span>
                                     Configuración
@@ -493,6 +494,7 @@ folder instead of downloading all of them to reduce the load. -->
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('chosen/chosen.jquery.js') }} "></script>
 <script src="{{asset('AdminLTE/dist/js/demo.js')}}"></script>
+<script src="{{asset('chosen/chosen.jquery.min.js')}}"></script>
 
 <script type="text/javascript" src="{{ asset('AdminLTE/plugins/datatables/datatables.min.js') }}"></script>
 

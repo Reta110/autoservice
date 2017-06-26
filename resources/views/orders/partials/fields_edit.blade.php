@@ -24,6 +24,8 @@
                     <div class="box-header">
                         <h3 class="box-title">Servicios</h3>
                         <div class="pull-right">
+                            <label>Precio HH</label>
+                            {!! Form::text('hh', $order->hh, ['class' => 'form-control', 'id' => 'hh', 'placeholder' => 'HH']) !!}
                         </div>
                     </div>
                     <div class="contacts">
@@ -44,7 +46,7 @@
 
                                 <div class="col-md-2">
                                     <label>Horas</label>
-                                    {!! Form::text('service_hh[]', $oservice->hh, ['class' => 'form-control hh-service', 'placeholder' => 'Horas']) !!}
+                                    {!! Form::text('service_hh[]', $oservice->pivot->hh, ['class' => 'form-control hh-service', 'placeholder' => 'Horas']) !!}
                                 </div>
                                 <div class="col-md-2">
                                     <label> - </label>
@@ -95,7 +97,6 @@
                                     <div class="input-group-btn input-group-select">
 
                                         <div class="form-group">
-
                                             {!! Form::select('product_id[]', $products, $oproduct->id, ['class' => 'form-control select-product', 'placeholder' => '--- Indique producto ---']) !!}
                                         </div>
 
@@ -103,7 +104,7 @@
                                 </div>
                                 <div class="col-md-2">
                                     <label>Precio</label>
-                                    {!! Form::hidden('product_cost[]', $oproduct->cost, ['class' => 'form-control', 'placeholder' => 'costo']) !!}
+                                    {!! Form::hidden('product_cost[]', $oproduct->cost, ['class' => 'form-control producto-cost', 'placeholder' => 'costo']) !!}
                                     {!! Form::text('product_price[]', $oproduct->pivot->price, ['class' => 'form-control producto-price', 'placeholder' => 'precio']) !!}
                                 </div>
                                 <div class="col-md-2">
@@ -181,12 +182,25 @@
                         </div>
                     </div>
                 </div>
+                <div class="box box-info">
+                    <div class="box-header">
+                        <label>Observaciones:</label>
+                        <div class="form-group">
+
+                            {!! Form::textarea('observations', null, ['class' => 'form-control', 'placeholder' => 'Observaciones', 'rows' => '5']) !!}
+
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="col-md-3 pull-right">
                 <div class="box box-info">
                     <div class="box-header">
                         <h3 class="box-title">Total</h3>
                     </div>
+                    <p class="text-right">
+                        {!! Form::hidden('total_cost', null, ['class' => 'form-control costo_total', 'placeholder' => 'Costo']) !!}
+                    </p>
                     <p class="text-right">
                         <label>Neto</label>
                         {!! Form::text('neto_show', null, ['class' => 'form-control neto', 'placeholder' => 'Neto', 'disabled' => 'true']) !!}
@@ -209,226 +223,261 @@
 
         </div>
     </div>
+</div>
 
 
-    @section('js')
+@section('js')
 
-        <script type="text/javascript">
+    <script type="text/javascript">
 
-            //SERVICES (Lista dinamica)
-            (function ($) {
-                $(function () {
-                    var addFormGroup2 = function (event) {
-                        event.preventDefault();
-                        var $formGroup = $(this).closest('.form-group');
-                        var $multipleFormGroup = $formGroup.closest('.multiple-form-group2');
-                        var $formGroupClone = $formGroup.clone();
-                        $(this)
-                                .toggleClass('btn-success btn-add2 btn-danger btn-remove2')
-                                .html('–');
-                        $formGroupClone.find('input').val('');
-                        $formGroupClone.find('.product_id').text('Seleccione');
-                        $formGroupClone.insertAfter($formGroup);
-                        var $lastFormGroupLast = $multipleFormGroup.find('.form-group:last');
-                        if ($multipleFormGroup.data('max') <= countFormGroup($multipleFormGroup)) {
-                            $lastFormGroupLast.find('.btn-add2').attr('disabled', true);
-                        }
-
-                        calculate();
-
-                    };
-                    var removeFormGroup2 = function (event) {
-                        event.preventDefault();
-                        var $formGroup = $(this).closest('.form-group');
-                        var $multipleFormGroup = $formGroup.closest('.multiple-form-group2');
-                        var $lastFormGroupLast = $multipleFormGroup.find('.form-group:last');
-                        if ($multipleFormGroup.data('max') >= countFormGroup($multipleFormGroup)) {
-                            $lastFormGroupLast.find('.btn-add2').attr('disabled', false);
-                        }
-                        $formGroup.remove();
-
-                        calculate();
-                    };
-                    var selectFormGroup2 = function (event) {
-                        event.preventDefault();
-                        var $selectGroup = $(this).closest('.input-group-select');
-                        var param = $(this).attr("href").replace("#", "");
-                        var concept = $(this).text();
-                        $selectGroup.find('.concept').text(concept);
-                        $selectGroup.find('.input-group-select-val').val(param);
+        //SERVICES (Lista dinamica)
+        (function ($) {
+            $(function () {
+                var addFormGroup2 = function (event) {
+                    event.preventDefault();
+                    var $formGroup = $(this).closest('.form-group');
+                    var $multipleFormGroup = $formGroup.closest('.multiple-form-group2');
+                    var $formGroupClone = $formGroup.clone();
+                    $(this)
+                            .toggleClass('btn-success btn-add2 btn-danger btn-remove2')
+                            .html('–');
+                    $formGroupClone.find('input').val('');
+                    $formGroupClone.find('.product_id').text('Seleccione');
+                    $formGroupClone.insertAfter($formGroup);
+                    var $lastFormGroupLast = $multipleFormGroup.find('.form-group:last');
+                    if ($multipleFormGroup.data('max') <= countFormGroup($multipleFormGroup)) {
+                        $lastFormGroupLast.find('.btn-add2').attr('disabled', true);
                     }
-                    var countFormGroup = function ($form) {
-                        return $form.find('.form-group').length;
-                    };
-                    $(document).on('click', '.btn-add2', addFormGroup2);
-                    $(document).on('click', '.btn-remove2', removeFormGroup2);
-                    $(document).on('click', '.dropdown-menu a', selectFormGroup2);
-                });
-            })(jQuery);
 
-            //Fin SERVICES
+                    calculate();
 
-            //PRODUCTS (lista dinamica)
-            (function ($) {
-                $(function () {
-                    var addFormGroup = function (event) {
-                        event.preventDefault();
-                        var $formGroup = $(this).closest('.form-group');
-                        var $multipleFormGroup = $formGroup.closest('.multiple-form-group');
-                        var $formGroupClone = $formGroup.clone();
-                        $(this)
-                                .toggleClass('btn-success btn-add btn-danger btn-remove')
-                                .html('–');
-                        $formGroupClone.find('input').val('');
-                        $formGroupClone.find('.product_id').text('Seleccione');
-                        $formGroupClone.insertAfter($formGroup);
-                        var $lastFormGroupLast = $multipleFormGroup.find('.form-group:last');
-                        if ($multipleFormGroup.data('max') <= countFormGroup($multipleFormGroup)) {
-                            $lastFormGroupLast.find('.btn-add').attr('disabled', true);
-                        }
-
-                        calculate();
-                    };
-                    var removeFormGroup = function (event) {
-                        event.preventDefault();
-                        var $formGroup = $(this).closest('.form-group');
-                        var $multipleFormGroup = $formGroup.closest('.multiple-form-group');
-                        var $lastFormGroupLast = $multipleFormGroup.find('.form-group:last');
-                        if ($multipleFormGroup.data('max') >= countFormGroup($multipleFormGroup)) {
-                            $lastFormGroupLast.find('.btn-add').attr('disabled', false);
-                        }
-                        $formGroup.remove();
-
-                        calculate();
-                    };
-                    var selectFormGroup = function (event) {
-                        event.preventDefault();
-                        var $selectGroup = $(this).closest('.input-group-select');
-                        var param = $(this).attr("href").replace("#", "");
-                        var concept = $(this).text();
-                        $selectGroup.find('.concept').text(concept);
-                        $selectGroup.find('.input-group-select-val').val(param);
+                };
+                var removeFormGroup2 = function (event) {
+                    event.preventDefault();
+                    var $formGroup = $(this).closest('.form-group');
+                    var $multipleFormGroup = $formGroup.closest('.multiple-form-group2');
+                    var $lastFormGroupLast = $multipleFormGroup.find('.form-group:last');
+                    if ($multipleFormGroup.data('max') >= countFormGroup($multipleFormGroup)) {
+                        $lastFormGroupLast.find('.btn-add2').attr('disabled', false);
                     }
-                    var countFormGroup = function ($form) {
-                        return $form.find('.form-group').length;
-                    };
-                    $(document).on('click', '.btn-add', addFormGroup);
-                    $(document).on('click', '.btn-remove', removeFormGroup);
-                    $(document).on('click', '.dropdown-menu a', selectFormGroup);
-                });
-            })(jQuery);
-            //Fin PRODUCTS
+                    $formGroup.remove();
 
-            //Colocar precio hora en servicio
-            $(document).on('change', '.select-service', function () {
-                var id = $(this).val();
-                var myArray = {!! $serv !!};
-
-                var found = $.map(myArray, function (val) {
-                    return val.id == id ? val.hh : null;
-                });
-
-                $(this).closest('.multiple-form-group2').find('.hh-service').val(found[0]);
-
-                console.log(found[0]);
-
+                    calculate();
+                };
+                var selectFormGroup2 = function (event) {
+                    event.preventDefault();
+                    var $selectGroup = $(this).closest('.input-group-select');
+                    var param = $(this).attr("href").replace("#", "");
+                    var concept = $(this).text();
+                    $selectGroup.find('.concept').text(concept);
+                    $selectGroup.find('.input-group-select-val').val(param);
+                }
+                var countFormGroup = function ($form) {
+                    return $form.find('.form-group').length;
+                };
+                $(document).on('click', '.btn-add2', addFormGroup2);
+                $(document).on('click', '.btn-remove2', removeFormGroup2);
+                $(document).on('click', '.dropdown-menu a', selectFormGroup2);
             });
-            //Fin Colocar precio hora en servicio
+        })(jQuery);
 
-            //Colocar precio y stock de los productos
+        //Fin SERVICES
 
-            $(document).on('change', '.select-product', function () {
-                var id = $(this).val();
-                var myArray = {!! $prod !!};
+        //PRODUCTS (lista dinamica)
+        (function ($) {
+            $(function () {
+                var addFormGroup = function (event) {
+                    event.preventDefault();
+                    var $formGroup = $(this).closest('.form-group');
+                    var $multipleFormGroup = $formGroup.closest('.multiple-form-group');
+                    var $formGroupClone = $formGroup.clone();
+                    $(this)
+                            .toggleClass('btn-success btn-add btn-danger btn-remove')
+                            .html('–');
+                    $formGroupClone.find('input').val('');
+                    $formGroupClone.find('.product_id').text('Seleccione');
+                    $formGroupClone.insertAfter($formGroup);
+                    var $lastFormGroupLast = $multipleFormGroup.find('.form-group:last');
+                    if ($multipleFormGroup.data('max') <= countFormGroup($multipleFormGroup)) {
+                        $lastFormGroupLast.find('.btn-add').attr('disabled', true);
+                    }
 
-                var found = $.map(myArray, function (val) {
-                    return val.id == id ? val.price : null;
-                });
+                    //Llamar calculate y costos cuando se elimina producto
+                    calculate();
+                    calcular_total_costos()
+                };
+                var removeFormGroup = function (event) {
+                    event.preventDefault();
+                    var $formGroup = $(this).closest('.form-group');
+                    var $multipleFormGroup = $formGroup.closest('.multiple-form-group');
+                    var $lastFormGroupLast = $multipleFormGroup.find('.form-group:last');
+                    if ($multipleFormGroup.data('max') >= countFormGroup($multipleFormGroup)) {
+                        $lastFormGroupLast.find('.btn-add').attr('disabled', false);
+                    }
+                    $formGroup.remove();
 
-                var stock = $.map(myArray, function (val) {
-                    return val.id == id ? val.stock : null;
-                });
+                    //Llamar calculate y costos cuando se elimina producto
+                    calculate();
+                    calcular_total_costos()
+                };
+                var selectFormGroup = function (event) {
+                    event.preventDefault();
+                    var $selectGroup = $(this).closest('.input-group-select');
+                    var param = $(this).attr("href").replace("#", "");
+                    var concept = $(this).text();
+                    $selectGroup.find('.concept').text(concept);
+                    $selectGroup.find('.input-group-select-val').val(param);
+                }
+                var countFormGroup = function ($form) {
+                    return $form.find('.form-group').length;
+                };
+                $(document).on('click', '.btn-add', addFormGroup);
+                $(document).on('click', '.btn-remove', removeFormGroup);
+                $(document).on('click', '.dropdown-menu a', selectFormGroup);
+            });
+        })(jQuery);
+        //Fin PRODUCTS
 
-                $(this).closest('.multiple-form-group').find('.producto-price').val(found[0]);
-                $(this).closest('.multiple-form-group').find('.producto-stock').val(stock[0]);
+        //Colocar precio hora en servicio
+        $(document).on('change', '.select-service', function () {
+            var id = $(this).val();
+            var myArray = {!! $serv !!};
 
-                console.log(found[0]);
-
+            var found = $.map(myArray, function (val) {
+                return val.id == id ? val.hh : null;
             });
 
-            //Fin Colocar precio y stock de los productos
+            $(this).closest('.multiple-form-group2').find('.hh-service').val(found[0]);
 
-            //Caluclar total de los productos
-            //$(document).on('click', '.btn-add', calculate);
-            //$(document).on('click', '.btn-remove', calculate);
+            console.log(found[0]);
 
-            function calcular_total_producto() {
+        });
+        //Fin Colocar precio hora en servicio
 
+        //Colocar precio y stock de los productos
+
+        $(document).on('change', '.select-product', function () {
+            var id = $(this).val();
+            var myArray = {!! $prod !!};
+
+            var found = $.map(myArray, function (val) {
+                return val.id == id ? val.price : null;
+            });
+
+            var stock = $.map(myArray, function (val) {
+                return val.id == id ? val.stock : null;
+            });
+
+            var cost = $.map(myArray, function (val) {
+                return val.id == id ? val.cost : null;
+            });
+
+            $(this).closest('.multiple-form-group').find('.producto-price').val(found[0]);
+            $(this).closest('.multiple-form-group').find('.producto-stock').val(stock[0]);
+            $(this).closest('.multiple-form-group').find('.producto-cost').val(cost[0]);
+
+            console.log(found[0]);
+
+        });
+
+        //Fin Colocar precio y stock de los productos
+
+        //Caluclar total de los productos
+        //$(document).on('click', '.btn-add', calculate);
+        //$(document).on('click', '.btn-remove', calculate);
+
+        function calcular_total_producto() {
+
+            productos_total = 0
+
+            $(".producto-price").each(
+                    function (index, value) {
+                        if (eval($(this).val() != '')) {
+                            productos_total = productos_total + (eval($(this).val()) * eval($(this).closest('.multiple-form-group').find('.producto-quantity').val()));
+                        }
+                    }
+            );
+
+            if (isNaN(productos_total)) {
                 productos_total = 0
+            }
 
-                $(".producto-price").each(
-                        function (index, value) {
-                            if (eval($(this).val() != '')) {
-                                productos_total = productos_total + (eval($(this).val()) * eval($(this).closest('.multiple-form-group').find('.producto-quantity').val()));
-                            }
+            return productos_total;
+        }
+
+        //Fin  Caluclar total de los productos
+
+
+        //Caluclar total de los servicios
+        // $(document).on('click', '.btn-add2', calculate);
+        // $(document).on('click', '.btn-remove2', calculate);
+
+        function calcular_total_servicios() {
+
+            servicios_total = 0
+
+            var precio_hh = {!! $order->hh !!};
+
+            var size = $(".hh-service").size();
+            console.log('size service =' + size);
+            $(".hh-service").each(
+                    function (index, value) {
+                        if (eval($(this).val() != '')) {
+                            servicios_total = servicios_total + (eval($(this).val()) * precio_hh);
                         }
-                );
+                        //eval($(this).closest('.multiple-form-group2').find('.hh-service').val()
+                    });
 
-                if (isNaN(productos_total)) {
-                    productos_total = 0
-                }
-
-                return productos_total;
-            }
-
-            //Fin  Caluclar total de los productos
-
-
-            //Caluclar total de los servicios
-            // $(document).on('click', '.btn-add2', calculate);
-            // $(document).on('click', '.btn-remove2', calculate);
-
-            function calcular_total_servicios() {
-
+            if (isNaN(servicios_total)) {
                 servicios_total = 0
-
-                var size = $(".hh-service").size();
-                console.log('size service =' + size);
-                $(".hh-service").each(
-                        function (index, value) {
-                            if (eval($(this).val() != '')) {
-                                servicios_total = servicios_total + (eval($(this).val()) * 25000);
-                            }
-                            //eval($(this).closest('.multiple-form-group2').find('.hh-service').val()
-                        });
-
-                if (isNaN(servicios_total)) {
-                    servicios_total = 0
-                }
-
-                return servicios_total;
             }
 
+            return servicios_total;
+        }
 
-            //Fin  Caluclar total de los servicios
+        //Caluclar total de los costos
+        function calcular_total_costos() {
+            costos = 0
 
-            function calculate() {
+            $(".producto-cost").each(
+                    function (index, value) {
+                        if (eval($(this).val() != '')) {
+                            costos = costos + (eval($(this).val()) * eval($(this).closest('.multiple-form-group').find('.producto-quantity').val()));
+                        }
+                    });
 
-                var sum = eval(calcular_total_producto() + calcular_total_servicios());
-                var iva = eval(sum * 0.19)
-                var neto = eval(sum - iva)
-
-                $(".neto").val(neto)
-                $(".iva").val(iva)
-
-                $(".total").val(sum)
+            if (isNaN(costos)) {
+                costos = 0
             }
 
-            $(document).ready(function () {
-                calculate()
-            });
+            //retornar valor, directo al field
+            $(".costo_total").val(costos)
+        }
+        //Fin  Caluclar total de los costos
 
 
-        </script>
+        //Fin  Caluclar total de los servicios
+
+        function calculate() {
+
+            var conf_iva = {!! $config->iva !!};
+
+            var sum = eval(calcular_total_producto() + calcular_total_servicios());
+            var iva = eval(sum * (conf_iva / 100))
+            var neto = eval(sum - iva)
+
+            $(".neto").val(neto)
+            $(".iva").val(iva)
+
+            $(".total").val(sum)
+        }
+
+        $(document).ready(function () {
+            calculate()
+            calcular_total_costos()
+        });
+
+
+    </script>
 
 @endsection

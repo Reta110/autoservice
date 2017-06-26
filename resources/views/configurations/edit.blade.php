@@ -47,7 +47,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    {!! Form::label('Precio HH', 'Precio HH') !!}
+                                    {!! Form::label('Precio HH', 'Precio HH referencia') !!}
                                     {!! Form::text('price_hh', null, ['class' => 'form-control', 'placeholder' => 'Precio de HH', 'required']) !!}
                                 </div>
                                 {{--<div class="form-group">--}}
