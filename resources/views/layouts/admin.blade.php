@@ -28,17 +28,14 @@ folder instead of downloading all of them to reduce the load. -->
     <![endif]-->
 
     <link href="{{ asset ('AdminLTE/plugins/datatables/dataTables.bootstrap.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset ('AdminLTE/plugins/datepicker/datepicker3.css') }}" rel="stylesheet" type="text/css">
     {{--<link href="{{ asset ('AdminLTE/plugins/datepicker/bootstrap-datepicker.standalone.css') }}" rel="stylesheet"--}}
-          {{--type="text/css">--}}
+    {{--type="text/css">--}}
     <link rel="stylesheet" href="{{ asset ('chosen/chosen.css') }}">
 
-    <script type="text/javascript" src="{{ asset('js/vue.min.js') }}"></script>
-    <!-- icheck
+       <!-- icheck
 <link href="AdminLTE/plugins/iCheck/square/red.css" rel="stylesheet">
-<script src="AdminLTE/plugins/iCheck/icheck.js"></script>
-
--->
+<script src="AdminLTE/plugins/iCheck/icheck.js"></script>-->
+    @yield('top')
 
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -314,22 +311,22 @@ folder instead of downloading all of them to reduce the load. -->
                 <li class="header">
                     MENU
                 </li>
-                {{--<li class="treeview">--}}
-                {{--<a href="#">--}}
-                {{--<i class="fa fa-dashboard">--}}
-                {{--</i>--}}
-                {{--<span>--}}
-                {{--Estadísticas--}}
-                {{--</span>--}}
-                {{--<span class="pull-right-container">--}}
-                {{--<i class="fa fa-angle-left pull-right"></i>--}}
-                {{--</span>--}}
-                {{--</a>--}}
-                {{--</li>--}}
+                <li class="treeview">
+                    <a href="{{route('stadistics.index')}}">
+                        <i class="fa fa-line-chart">
+                        </i>
+                        <span>
+                Estadísticas
+                </span>
+                        <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+                </span>
+                    </a>
+                </li>
                 <li class="treeview">
 
                     <a href="#">
-                        <i class="fa fa-dashboard">
+                        <i class="fa fa-car">
                         </i>
                         <span>
                                     Trabajos
@@ -355,7 +352,7 @@ folder instead of downloading all of them to reduce the load. -->
                 </li>
                 <li class="treeview">
                     <a href="#">
-                        <i class="fa fa-dashboard">
+                        <i class="fa fa-user">
                         </i>
                         <span>
                                     Clientes
@@ -381,7 +378,7 @@ folder instead of downloading all of them to reduce the load. -->
                 </li>
                 <li class="treeview">
                     <a href="#">
-                        <i class="fa fa-dashboard">
+                        <i class="fa fa-navicon">
                         </i>
                         <span>
                                     Productos
@@ -408,7 +405,7 @@ folder instead of downloading all of them to reduce the load. -->
                 </li>
                 <li class="treeview">
                     <a href="#">
-                        <i class="fa fa-dashboard">
+                        <i class="fa fa-server">
                         </i>
                         <span>
                                     Servicios
@@ -437,7 +434,7 @@ folder instead of downloading all of them to reduce the load. -->
                 </li>
                 <li>
                     <a href="{{route('configurations.index')}}">
-                        <i class="fa fa-dashboard">
+                        <i class="fa fa-gear">
                         </i>
                         <span>
                                     Configuración

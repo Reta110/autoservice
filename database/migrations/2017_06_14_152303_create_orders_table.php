@@ -16,12 +16,12 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
-            $table->string('total_cost')->default(0);
+            $table->string('total_cost')->default(0)->nullable();
             $table->string('discount')->default(0);
             $table->string('neto');
             $table->string('iva');
             $table->string('total');
-            $table->text('observations');
+            $table->text('observations')->nullable();
             $table->text('hh');
 
             $table->enum('status', ['budget','started', 'template', 'ended']);

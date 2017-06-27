@@ -130,7 +130,7 @@
                         {{$order->observations}}
                     </p>
                 </div>
-            @endif
+        @endif
         <!-- /.col -->
             <div class="col-xs-4 pull-right">
 
@@ -154,6 +154,13 @@
                 </div>
             </div>
             <!-- /.col -->
+            <div class="col-xs-3 no-print">
+                <h3>Ganancias:</h3>
+
+                <h4 class="text-info bg-info">Total: {{$order->total}} $</h4>
+                <h4 class="text-danger bg-danger">Costo total: {{$order->total_cost}} $</h4>
+                <h4 class="text-success bg-success">Ganancia: {{$order->total - $order->total_cost}} $</h4>
+            </div>
 
         </div>
         <!-- /.row -->

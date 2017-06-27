@@ -122,11 +122,11 @@
                                                     <i class="fa fa-trash" aria-hidden="true"></i>
                                                 </button>
                                             </div>
-                                            <div class="form-group">
-                                                <button type="submit" class="btn btn-link" title="Duplicar">
-                                                    <i class="glyphicon glyphicon-duplicate" aria-hidden="true"></i>
-                                                </button>
-                                            </div>
+                                            {{--<div class="form-group">--}}
+                                            {{--<button type="submit" class="btn btn-link" title="Duplicar">--}}
+                                            {{--<i class="glyphicon glyphicon-duplicate" aria-hidden="true"></i>--}}
+                                            {{--</button>--}}
+                                            {{--</div>--}}
                                             {!! Form::close() !!}
                                         </td>
                                     </tr>

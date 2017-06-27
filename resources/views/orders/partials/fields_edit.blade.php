@@ -137,7 +137,7 @@
                             </div>
                             <div class="col-md-2">
                                 <label>Precio</label>
-                                {!! Form::hidden('product_cost[]', null, ['class' => 'form-control', 'placeholder' => 'costo']) !!}
+                                {!! Form::hidden('product_cost[]', null, ['class' => 'form-control producto-cost', 'placeholder' => 'costo']) !!}
                                 {!! Form::text('product_price[]', null, ['class' => 'form-control producto-price', 'placeholder' => 'precio']) !!}
                             </div>
                             <div class="col-md-2">
@@ -199,7 +199,7 @@
                         <h3 class="box-title">Total</h3>
                     </div>
                     <p class="text-right">
-                        {!! Form::hidden('total_cost', null, ['class' => 'form-control costo_total', 'placeholder' => 'Costo']) !!}
+                        {!! Form::text('total_cost', null, ['class' => 'form-control costo_total', 'placeholder' => 'Costo']) !!}
                     </p>
                     <p class="text-right">
                         <label>Neto</label>
