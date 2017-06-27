@@ -17,7 +17,7 @@ class CreateOrdersTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->string('total_cost')->default(0);
-            $table->string('discount');
+            $table->string('discount')->default(0);
             $table->string('neto');
             $table->string('iva');
             $table->string('total');

@@ -28,9 +28,9 @@ folder instead of downloading all of them to reduce the load. -->
     <![endif]-->
 
     <link href="{{ asset ('AdminLTE/plugins/datatables/dataTables.bootstrap.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset ('AdminLTE/plugins/datepicker/bootstrap-datepicker3.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset ('AdminLTE/plugins/datepicker/bootstrap-datepicker.standalone.css') }}" rel="stylesheet"
-          type="text/css">
+    <link href="{{ asset ('AdminLTE/plugins/datepicker/datepicker3.css') }}" rel="stylesheet" type="text/css">
+    {{--<link href="{{ asset ('AdminLTE/plugins/datepicker/bootstrap-datepicker.standalone.css') }}" rel="stylesheet"--}}
+          {{--type="text/css">--}}
     <link rel="stylesheet" href="{{ asset ('chosen/chosen.css') }}">
 
     <script type="text/javascript" src="{{ asset('js/vue.min.js') }}"></script>

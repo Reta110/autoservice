@@ -60,3 +60,6 @@ $factory->define(App\Vehicle::class, function (Faker\Generator $faker) {
         'patente' => $faker->randomNumber(8),
     ];
 });
+
+
+

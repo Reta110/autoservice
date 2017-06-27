@@ -29,7 +29,7 @@
                 <div class="box box-info">
                     <div class="box-header">
                         <h3 class="box-title">Agregue los servicios</h3>
-                        <div class="pull-right">
+                        <div class="pull-right no-print">
                             {{--<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myServiceModal">--}}
                             {{--Nuevo Servicio--}}
                             {{--</button>--}}
@@ -189,7 +189,7 @@
 
     <script type="text/javascript">
 
-        //SERVICES (Lista dinamica)
+        //SERVICES (Lista dinamica)  formgroup2
         (function ($) {
             $(function () {
                 var addFormGroup2 = function (event) {
@@ -243,6 +243,11 @@
 
         //Fin SERVICES
 
+        //Si cambian el precio hora de la orden, se calculan los numeros nuevamente
+        $(document).on('change', '.order_hh', function () {
+            calculate()
+        });
+
         //PRODUCTS (lista dinamica)
         (function ($) {
             $(function () {
@@ -263,8 +268,15 @@
                     }
 
                     //Llamar calculate y costos cuando se agrega producto
+
                     calculate();
-                    calcular_total_costos()
+                    calcular_total_costos();
+
+                    var idproduct = $(this).closest('.multiple-form-group').find('.select-product').val();
+                    var quantity = $(this).closest('.multiple-form-group').find('.producto-quantity').val();
+                    remove_product_ajax(idproduct, quantity);
+
+                    //fin
                 };
                 var removeFormGroup = function (event) {
                     event.preventDefault();
@@ -278,7 +290,13 @@
 
                     //Llamar calculate y costos cuando se elimina producto
                     calculate();
-                    calcular_total_costos()
+                    calcular_total_costos();
+
+                    var idproduct = $(this).closest('.multiple-form-group').find('.select-product').val();
+                    var quantity = $(this).closest('.multiple-form-group').find('.producto-quantity').val();
+                    add_product_ajax(idproduct, quantity);
+
+                    //Fin
                 };
                 var selectFormGroup = function (event) {
                     event.preventDefault();
@@ -298,6 +316,35 @@
         })(jQuery);
         //Fin PRODUCTS
 
+        //Agregar producto ajax
+        function add_product_ajax(idproduct, quantity) {
+            var token = $("input[name='_token']").val();
+            $.ajax({
+                url: "{{route('add-ajax')}}",
+                method: 'POST',
+                data: {idproduct: idproduct, quantity: quantity, _token: token},
+                success: function (data) {
+                    console.log("suucees bro")
+                }
+            });
+        }
+        //Fin Agregar producto ajax
+
+        //Remove producto ajax
+        function remove_product_ajax(idproduct, quantity) {
+
+            var token = $("input[name='_token']").val();
+            $.ajax({
+                url: "{{route('remove-ajax')}}",
+                method: 'POST',
+                data: {idproduct: idproduct, quantity: quantity, _token: token},
+                success: function (data) {
+                    console.log("suucees bro")
+                }
+            });
+        }
+        //Fin Remove producto ajax
+
         //Colocar precio hora en servicios
         $(document).on('change', '.select-service', function () {
             var id = $(this).val();
@@ -309,7 +356,7 @@
 
             $(this).closest('.multiple-form-group2').find('.hh-service').val(found[0]);
 
-            console.log(found[0]);
+            //console.log(found[0]);
 
         });
         //Fin Colocar precio hora en servicios
@@ -370,7 +417,7 @@
 
             servicios_total = 0
 
-            var hh = $(".order_hh").val();
+            var hh = eval($(".order_hh").val());;
 
             var size = $(".hh-service").size();
             console.log('size service =' + size);
@@ -428,5 +475,7 @@
         //Fin calculate
 
     </script>
+
+    {{--<script type="text/javascript" src="{{ asset('js/questionPage.js') }}"></script>--}}
 
 @endsection

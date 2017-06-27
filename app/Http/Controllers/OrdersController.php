@@ -202,12 +202,42 @@ class OrdersController extends Controller
 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
+    public function addAjax(Request $request)
+    {
+        $id = request()->get('idproduct');
+        $quantity = request()->get('quantity');
+
+        if ($request->ajax()) {
+
+            $product = Product::find($id);
+
+            $product->stock = $product->stock + $quantity;
+
+            $product->save();
+
+            return response()->json(['options' => '']);
+        }
+
+    }
+
+    public function removeAjax(Request $request)
+    {
+        $id = request()->get('idproduct');
+        $quantity = request()->get('quantity');
+
+        if ($request->ajax()) {
+
+            $product = Product::find($id);
+
+            $product->stock = $product->stock - $quantity;
+
+            $product->save();
+
+            return response()->json(['options' => '']);
+        }
+
+    }
+
     public function destroy($id)
     {
         Order::destroy($id);

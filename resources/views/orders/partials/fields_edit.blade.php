@@ -25,7 +25,7 @@
                         <h3 class="box-title">Servicios</h3>
                         <div class="pull-right">
                             <label>Precio HH</label>
-                            {!! Form::text('hh', $order->hh, ['class' => 'form-control', 'id' => 'hh', 'placeholder' => 'HH']) !!}
+                            {!! Form::text('hh', $order->hh, ['class' => 'form-control order_hh', 'id' => 'hh', 'placeholder' => 'HH']) !!}
                         </div>
                     </div>
                     <div class="contacts">
@@ -283,6 +283,11 @@
 
         //Fin SERVICES
 
+        //Si cambian el precio hora de la orden, se calculan los numeros nuevamente
+        $(document).on('change', '.order_hh', function () {
+            calculate()
+        });
+
         //PRODUCTS (lista dinamica)
         (function ($) {
             $(function () {
@@ -305,6 +310,13 @@
                     //Llamar calculate y costos cuando se elimina producto
                     calculate();
                     calcular_total_costos()
+
+                    var idproduct = $(this).closest('.multiple-form-group').find('.select-product').val();
+                    var quantity = $(this).closest('.multiple-form-group').find('.producto-quantity').val();
+                    remove_product_ajax(idproduct, quantity);
+
+                    //fin
+
                 };
                 var removeFormGroup = function (event) {
                     event.preventDefault();
@@ -319,6 +331,12 @@
                     //Llamar calculate y costos cuando se elimina producto
                     calculate();
                     calcular_total_costos()
+
+                    var idproduct = $(this).closest('.multiple-form-group').find('.select-product').val();
+                    var quantity = $(this).closest('.multiple-form-group').find('.producto-quantity').val();
+                    add_product_ajax(idproduct, quantity);
+
+                    //fin
                 };
                 var selectFormGroup = function (event) {
                     event.preventDefault();
@@ -337,6 +355,35 @@
             });
         })(jQuery);
         //Fin PRODUCTS
+
+        //Agregar producto ajax
+        function add_product_ajax(idproduct, quantity) {
+            var token = $("input[name='_token']").val();
+            $.ajax({
+                url: "{{route('add-ajax')}}",
+                method: 'POST',
+                data: {idproduct: idproduct, quantity: quantity, _token: token},
+                success: function (data) {
+                    console.log("suucees bro")
+                }
+            });
+        }
+        //Fin Agregar producto ajax
+
+        //Remove producto ajax
+        function remove_product_ajax(idproduct, quantity) {
+
+            var token = $("input[name='_token']").val();
+            $.ajax({
+                url: "{{route('remove-ajax')}}",
+                method: 'POST',
+                data: {idproduct: idproduct, quantity: quantity, _token: token},
+                success: function (data) {
+                    console.log("suucees bro")
+                }
+            });
+        }
+        //Fin Remove producto ajax
 
         //Colocar precio hora en servicio
         $(document).on('change', '.select-service', function () {
@@ -416,7 +463,7 @@
 
             servicios_total = 0
 
-            var precio_hh = {!! $order->hh !!};
+            var precio_hh = eval($(".order_hh").val());
 
             var size = $(".hh-service").size();
             console.log('size service =' + size);
@@ -479,5 +526,6 @@
 
 
     </script>
+
 
 @endsection
