@@ -32,7 +32,7 @@ folder instead of downloading all of them to reduce the load. -->
     {{--type="text/css">--}}
     <link rel="stylesheet" href="{{ asset ('chosen/chosen.css') }}">
 
-       <!-- icheck
+    <!-- icheck
 <link href="AdminLTE/plugins/iCheck/square/red.css" rel="stylesheet">
 <script src="AdminLTE/plugins/iCheck/icheck.js"></script>-->
     @yield('top')
@@ -325,7 +325,7 @@ folder instead of downloading all of them to reduce the load. -->
                 </li>
                 <li class="treeview">
 
-                    <a href="#">
+                    <a href="{{route('orders.index')}}">
                         <i class="fa fa-car">
                         </i>
                         <span>
@@ -335,23 +335,23 @@ folder instead of downloading all of them to reduce the load. -->
                                     <i class="fa fa-angle-left pull-right"></i>
                                 </span>
                     </a>
-                    <ul class="treeview-menu">
-                        <li>
-                            <a href="{{route('select-client')}}">
-                                <i class="fa fa-circle-o"> </i>
-                                Nuevo
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{route('orders.index')}}">
-                                <i class="fa fa-circle-o"></i>
-                                Listado
-                            </a>
-                        </li>
-                    </ul>
+                    {{--<ul class="treeview-menu">--}}
+                    {{--<li>--}}
+                    {{--<a href="{{route('select-client')}}">--}}
+                    {{--<i class="fa fa-circle-o"> </i>--}}
+                    {{--Nuevo--}}
+                    {{--</a>--}}
+                    {{--</li>--}}
+                    {{--<li>--}}
+                    {{--<a href="">--}}
+                    {{--<i class="fa fa-circle-o"></i>--}}
+                    {{--Listado--}}
+                    {{--</a>--}}
+                    {{--</li>--}}
+                    {{--</ul>--}}
                 </li>
                 <li class="treeview">
-                    <a href="#">
+                    <a href="{{route('clients.index')}}">
                         <i class="fa fa-user">
                         </i>
                         <span>
@@ -361,23 +361,23 @@ folder instead of downloading all of them to reduce the load. -->
                                     <i class="fa fa-angle-left pull-right"></i>
                                 </span>
                     </a>
-                    <ul class="treeview-menu">
-                        <li>
-                            <a href="{{route('clients.create')}}">
-                                <i class="fa fa-circle-o"></i>
-                                Nuevo
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{route('clients.index')}}">
-                                <i class="fa fa-circle-o"></i>
-                                Listado
-                            </a>
-                        </li>
-                    </ul>
+                    {{--<ul class="treeview-menu">--}}
+                    {{--<li>--}}
+                    {{--<a href="{{route('clients.create')}}">--}}
+                    {{--<i class="fa fa-circle-o"></i>--}}
+                    {{--Nuevo--}}
+                    {{--</a>--}}
+                    {{--</li>--}}
+                    {{--<li>--}}
+                    {{--<a href="{{route('clients.index')}}">--}}
+                    {{--<i class="fa fa-circle-o"></i>--}}
+                    {{--Listado--}}
+                    {{--</a>--}}
+                    {{--</li>--}}
+                    {{--</ul>--}}
                 </li>
                 <li class="treeview">
-                    <a href="#">
+                    <a href="{{route('products.index')}}">
                         <i class="fa fa-navicon">
                         </i>
                         <span>
@@ -387,24 +387,24 @@ folder instead of downloading all of them to reduce the load. -->
                                     <i class="fa fa-angle-left pull-right"></i>
                                 </span>
                     </a>
-                    <ul class="treeview-menu">
-                        <li>
-                            <a href="{{ route('products.create') }}">
-                                <i class="fa fa-circle-o"></i>
-                                Nuevo
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{route('products.index')}}">
-                                <i class="fa fa-circle-o"></i>
-                                Listado
-                            </a>
-                        </li>
+                    {{--<ul class="treeview-menu">--}}
+                    {{--<li>--}}
+                    {{--<a href="{{ route('products.create') }}">--}}
+                    {{--<i class="fa fa-circle-o"></i>--}}
+                    {{--Nuevo--}}
+                    {{--</a>--}}
+                    {{--</li>--}}
+                    {{--<li>--}}
+                    {{--<a href="{{route('products.index')}}">--}}
+                    {{--<i class="fa fa-circle-o"></i>--}}
+                    {{--Listado--}}
+                    {{--</a>--}}
+                    {{--</li>--}}
 
-                    </ul>
+                    {{--</ul>--}}
                 </li>
                 <li class="treeview">
-                    <a href="#">
+                    <a href="{{route('services.index')}}">
                         <i class="fa fa-server">
                         </i>
                         <span>
@@ -415,22 +415,22 @@ folder instead of downloading all of them to reduce the load. -->
                                     </i>
                                 </span>
                     </a>
-                    <ul class="treeview-menu">
-                        <li>
-                            <a href="{{route('services.create')}}">
-                                <i class="fa fa-circle-o">
-                                </i>
-                                Nuevo
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{route('services.index')}}">
-                                <i class="fa fa-circle-o">
-                                </i>
-                                Listado
-                            </a>
-                        </li>
-                    </ul>
+                    {{--<ul class="treeview-menu">--}}
+                    {{--<li>--}}
+                    {{--<a href="{{route('services.create')}}">--}}
+                    {{--<i class="fa fa-circle-o">--}}
+                    {{--</i>--}}
+                    {{--Nuevo--}}
+                    {{--</a>--}}
+                    {{--</li>--}}
+                    {{--<li>--}}
+                    {{--<a href="{{route('services.index')}}">--}}
+                    {{--<i class="fa fa-circle-o">--}}
+                    {{--</i>--}}
+                    {{--Listado--}}
+                    {{--</a>--}}
+                    {{--</li>--}}
+                    {{--</ul>--}}
                 </li>
                 <li>
                     <a href="{{route('configurations.index')}}">

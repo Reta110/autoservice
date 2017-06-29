@@ -10,6 +10,7 @@ use App\User;
 use App\Vehicle;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use PhpParser\Node\Stmt\DeclareDeclare;
 
 class OrdersController extends Controller
 {
@@ -129,7 +130,7 @@ class OrdersController extends Controller
         $order = Order::find($id);
         $config = Configuration::first();
 
-        return view('orders.show', compact('order', 'show', 'config'));
+        return view('orders.show', compact('order',  'config'));
     }
 
 //    public function pdf($id)
@@ -173,7 +174,15 @@ class OrdersController extends Controller
 
         //Limpiar servicios y productos relacionandos a la orden
         $order = Order::find($id);
-        $order->products()->detach();
+
+        if ($order->products()->count() > 0) {
+            $order->products()->detach();
+        }
+
+        if ($order->services()->count() > 0) {
+            $order->services()->detach();
+        }
+
         $order->services()->detach();
         //FIN Limpiar servicios y productos relacionandos a la orden
 
@@ -235,6 +244,16 @@ class OrdersController extends Controller
 
             return response()->json(['options' => '']);
         }
+
+    }
+
+    public function printWorkPaper(Request $request)
+    {
+        $id = $request->get('id');
+        $order = Order::find($id);
+        $config = Configuration::first();
+
+        return view('orders.work_paper', compact('order', 'config'));
 
     }
 

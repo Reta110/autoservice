@@ -199,7 +199,7 @@
                         <h3 class="box-title">Total</h3>
                     </div>
                     <p class="text-right">
-                        {!! Form::text('total_cost', null, ['class' => 'form-control costo_total', 'placeholder' => 'Costo']) !!}
+                        {!! Form::hidden('total_cost', null, ['class' => 'form-control costo_total', 'placeholder' => 'Costo']) !!}
                     </p>
                     <p class="text-right">
                         <label>Neto</label>

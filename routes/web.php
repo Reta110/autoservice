@@ -17,7 +17,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'StadisticsController@index')->name('home');
 
 Route::resource('/clients', 'ClientsController');
 Route::resource('/products', 'ProductsController');
@@ -29,6 +29,7 @@ Route::get('/orders/select-client', 'OrdersController@selectClient')->name('sele
 Route::get('/orders/select-vehicle/user/{user}', 'OrdersController@selectVehicle')->name('select-vehicle');
 Route::get('/orders/select-vehicle/user/{user}/vehicle/{vehicle}', 'OrdersController@create')->name('add-order');
 Route::get('/orders/pdf/{id}', 'OrdersController@pdf')->name('order-pdf');
+Route::post('/orders/work/', 'OrdersController@printWorkPaper')->name('print-work-paper');
 Route::post('add-ajax', ['as'=>'add-ajax','uses'=>'OrdersController@addAjax']);
 Route::post('remove-ajax', ['as'=>'remove-ajax','uses'=>'OrdersController@removeAjax']);
 

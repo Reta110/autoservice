@@ -41,9 +41,6 @@
                         <a class="btn btn-danger btn-sm" href="{{ route('products.create') }}">
                             NUEVO REGISTRO
                         </a>
-                        {{--  <a class="btn btn-success btn-sm" href="{{route('export')}}">
-                            IMPRIMIR REPORTE
-                        </a> --}}
                     </div>
 
                 </div>

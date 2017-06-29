@@ -165,10 +165,16 @@
         </div>
         <!-- /.row -->
         <div class="row text-center no-print">
-            <button type="button" class="btn btn-primary printer" id="print">Imprimir
+            {!! Form::open(['route' => 'print-work-paper', 'method' => 'POST', 'class' => 'pull-left']) !!}
+            {!! Form::hidden('id', $order->id, ['class' => 'form-control']) !!}
+            <button type="submit" class="btn btn-primary" id="print">Ver Hoja de trabajo
                 <i class="glyphicon glyphicon-print"></i>
             </button>
-            <a class="btn btn-danger" href="{{ route('orders.index')}}">
+            {!! Form::close() !!}
+            <button type="button" class="btn btn-success printer" id="print">Imprimir Boleta
+                <i class="glyphicon glyphicon-print"></i>
+            </button>
+            <a class="btn btn-danger" href="{{ route('print-work-paper')}}">
                 Volver
             </a>
         </div>
