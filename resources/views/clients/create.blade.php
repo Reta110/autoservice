@@ -13,16 +13,16 @@
                 <a href="#">
                     <i class="fa fa-dashboard">
                     </i>
-                    Home
+                    Admin
                 </a>
             </li>
             <li>
                 <a href="#">
-                    Examples
+                    Cientes
                 </a>
             </li>
             <li class="active">
-                Blank page
+                Crear
             </li>
         </ol>
     </section>

@@ -90,6 +90,8 @@
                         <thead>
                         <tr>
                             <th>DESCRIPCION</th>
+                            <th>MARCA</th>
+                            <th>MODELO</th>
                             <th>CANTIDAD</th>
                             <th></th>
                         </tr>
@@ -98,6 +100,8 @@
                         @foreach($order->products as $product)
                             <tr>
                                 <td>{{ $product->name   }}</td>
+                                <td>{{ $product->brand   }}</td>
+                                <td>{{ $product->model   }}</td>
                                 <td>{{ $product->pivot->quantity }}</td>
                                 <td class="text-center"><input type="checkbox"></td>
                             </tr>

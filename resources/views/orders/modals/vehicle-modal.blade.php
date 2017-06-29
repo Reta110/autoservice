@@ -17,7 +17,7 @@
 
                         <div class="col-md-6">
                             <input id="brand" type="text" class="form-control" name="brand" value="{{ old('brand') }}"
-                                   required autofocus>
+                                    autofocus>
 
                             @if ($errors->has('brand'))
                                 <span class="help-block">
@@ -32,7 +32,7 @@
 
                         <div class="col-md-6">
                             <input id="model" type="text" class="form-control" name="model" value="{{ old('model') }}"
-                                   required autofocus>
+                                    autofocus>
 
                             @if ($errors->has('model'))
                                 <span class="help-block">
@@ -46,7 +46,7 @@
 
                         <div class="col-md-6">
                             <input id="vin" type="text" class="form-control" name="vin" value="{{ old('vin') }}"
-                                   required autofocus>
+                                    autofocus>
 
                             @if ($errors->has('vin'))
                                 <span class="help-block">
@@ -60,7 +60,7 @@
 
                         <div class="col-md-6">
                             <input id="year" type="text" class="form-control" name="year" value="{{ old('year') }}"
-                                   required autofocus>
+                                    autofocus>
 
                             @if ($errors->has('year'))
                                 <span class="help-block">
@@ -74,7 +74,7 @@
 
                         <div class="col-md-6">
                             <input id="motor" type="text" class="form-control" name="motor" value="{{ old('motor') }}"
-                                   required autofocus>
+                                    autofocus>
 
                             @if ($errors->has('motor'))
                                 <span class="help-block">
@@ -88,7 +88,7 @@
 
                         <div class="col-md-6">
                             <input id="patente" type="text" class="form-control" name="patente" value="{{ old('patente') }}"
-                                   required autofocus>
+                                    autofocus>
 
                             @if ($errors->has('patente'))
                                 <span class="help-block">
@@ -100,7 +100,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                     <button type="submit" class="btn btn-primary">Registrar</button>
                 </div>
             </div>

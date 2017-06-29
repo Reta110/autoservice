@@ -98,6 +98,10 @@ class OrdersController extends Controller
             'total' => $request->get('total'),
             'observations' => $request->get('observations'),
             'hh' => $request->get('hh'),
+            'discount' => $request->get('discount'),
+            'paid' => $request->get('paid'),
+            'type_pay' => $request->get('type_pay'),
+            'pay_observations' => $request->get('pay_observations')
         ]);
 
 
@@ -130,7 +134,7 @@ class OrdersController extends Controller
         $order = Order::find($id);
         $config = Configuration::first();
 
-        return view('orders.show', compact('order',  'config'));
+        return view('orders.show', compact('order', 'config'));
     }
 
 //    public function pdf($id)
@@ -203,7 +207,10 @@ class OrdersController extends Controller
         $order->iva = $request->get('iva');
         $order->total = $request->get('total');
         $order->observations = $request->get('observations');
-
+        $order->discount = $request->get('discount');
+        $order->paid = $request->get('paid');
+        $order->type_pay = $request->get('type_pay');
+        $order->pay_observations = $request->get('pay_observations');
 
         $order->save();
 

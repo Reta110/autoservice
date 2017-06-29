@@ -7,7 +7,7 @@
         <h1>
             Nuevo trabajo
             <small>
-                <span class="text-blue">Cliente:</span> {{$client->name.' '.$client->lastname}}
+                <span class="text-blue">Cliente:</span> {{$client->name.' '.$client->last_name}}
             </small>
         </h1>
         <ol class="breadcrumb">

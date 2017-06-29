@@ -71,7 +71,7 @@
                                 </thead>
                                 <tbody>
                                 @foreach($orders as $order)
-                                    <tr>
+                                    <tr @if($order->paid == 'no' && $order->status != 'budget')class="bg-danger" @endif>
                                         <td>
                                             {{ $order->id }}
                                         </td>
@@ -147,18 +147,6 @@
         </div>
     </section>
 
-@endsection
-
-@section('js')
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#table').DataTable({
-                "language": {
-                    "url": "{{ asset('AdminLTE/plugins/datatables/esp.lang') }}"
-                }
-            });
-        });
-    </script>
 @endsection
 
 @section('js')

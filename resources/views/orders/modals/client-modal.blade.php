@@ -17,7 +17,7 @@
 
                         <div class="col-md-6">
                             <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}"
-                                   required autofocus>
+                                    autofocus>
 
                             @if ($errors->has('name'))
                                 <span class="help-block">
@@ -32,7 +32,7 @@
 
                         <div class="col-md-6">
                             <input id="last_name" type="text" class="form-control" name="last_name"
-                                   value="{{ old('last_name') }}" required autofocus>
+                                   value="{{ old('last_name') }}"  autofocus>
 
                             @if ($errors->has('last_name'))
                                 <span class="help-block">
@@ -47,7 +47,7 @@
 
                         <div class="col-md-6">
                             <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}"
-                                   required>
+                                   >
 
                             @if ($errors->has('email'))
                                 <span class="help-block">
@@ -62,7 +62,7 @@
 
                         <div class="col-md-6">
                             <input id="rut" type="text" class="form-control" name="rut" value="{{ old('rut') }}"
-                                   required autofocus>
+                                    autofocus>
 
                             @if ($errors->has('rut'))
                                 <span class="help-block">
@@ -77,7 +77,7 @@
 
                         <div class="col-md-6">
                             <input id="phone" type="text" class="form-control" name="phone" value="{{ old('phone') }}"
-                                   required autofocus>
+                                    autofocus>
 
                             @if ($errors->has('phone'))
                                 <span class="help-block">
@@ -92,7 +92,7 @@
 
                         <div class="col-md-6">
                             <input id="address" type="text" class="form-control" name="address"
-                                   value="{{ old('address') }}" required autofocus>
+                                   value="{{ old('address') }}"  autofocus>
 
                             @if ($errors->has('address'))
                                 <span class="help-block">
@@ -104,7 +104,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                     <button type="submit" class="btn btn-primary">Registrar</button>
                 </div>
             </div>

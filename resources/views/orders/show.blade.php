@@ -24,8 +24,28 @@
                     <img alt="User Image" src="{{ asset ('images/logo.png') }}">
                     {{--<small class="pull-right">Fecha: {{ $order->created_at }}</small>--}}
                 </h1>
+
             </div>
-            <!-- /.col -->
+        </div>
+        <div class="row no-print">
+            <div class="col-xs-12">
+                <table class="table table-bordered">
+                    <tr>
+                        <td><b>Estatus:</b></td>
+                        <td>{{$order->status }}</td>
+                        <td><b>Pagado:</b></td>
+                        <td>{{$order->paid }}</td>
+                        @if($order->paid == 'si')
+                            <td><b>Forma de pago Pago:</b></td>
+                            <td>{{$order->type_pay }}</td>
+                        @endif
+                        <td><b>Observación de pago:</b></td>
+                        <td>{{$order->pay_observations}}</td>
+                        <td><b>HH:</b></td>
+                        <td>{{$order->hh}}</td>
+                    </tr>
+                </table>
+            </div>
         </div>
         <!-- info row -->
         <div class="row invoice-info">
@@ -80,7 +100,7 @@
                             <tr>
                                 <td>{{$service->name}}</td>
                                 <td>{{$service->hh}}</td>
-                                <td>{{$service->hh * $config->price_hh }}</td>
+                                <td>$ {{$service->hh * $config->price_hh }}</td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -108,9 +128,9 @@
                         @foreach($order->products as $product)
                             <tr>
                                 <td>{{ $product->name   }}</td>
-                                <td>{{ $product->price }}</td>
+                                <td>$ {{ $product->price }}</td>
                                 <td>{{ $product->pivot->quantity }}</td>
-                                <td>{{ $product->pivot->quantity*$product->cost }}</td>
+                                <td>$ {{ $product->pivot->quantity*$product->cost }}</td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -138,17 +158,23 @@
 
                     <table class="table">
                         <br>
+                        @if($order->discount > 0)
+                            <tr>
+                                <td>Descuento:</td>
+                                <td><b>{{$order->discount}} %</b></td>
+                            </tr>
+                        @endif
                         <tr>
                             <td>Neto:</td>
-                            <td><b>{{ $order->neto }} $</b></td>
+                            <td><b>$ {{ $order->neto }} </b></td>
                         </tr>
                         <tr>
                             <td>Iva:</td>
-                            <td><b>{{ $order->iva }} $</b></td>
+                            <td><b>$ {{ $order->iva }}</b></td>
                         </tr>
                         <tr>
                             <th><h4>Total:</h4></th>
-                            <td><h4><b>{{ $order->total }} $</b></h4></td>
+                            <td><h4><b>$ {{ $order->total }}</b></h4></td>
                         </tr>
                     </table>
                 </div>
@@ -156,10 +182,9 @@
             <!-- /.col -->
             <div class="col-xs-3 no-print">
                 <h3>Ganancias:</h3>
-
-                <h4 class="text-info bg-info">Total: {{$order->total}} $</h4>
-                <h4 class="text-danger bg-danger">Costo total: {{$order->total_cost}} $</h4>
-                <h4 class="text-success bg-success">Ganancia: {{$order->total - $order->total_cost}} $</h4>
+                <h4 class="text-info bg-info">Total: $ {{$order->total}}</h4>
+                <h4 class="text-danger bg-danger">Costo total: $ {{$order->total_cost}}</h4>
+                <h4 class="text-success bg-success">Ganancia: $ {{$order->total - $order->total_cost}}</h4>
             </div>
 
         </div>
@@ -167,14 +192,14 @@
         <div class="row text-center no-print">
             {!! Form::open(['route' => 'print-work-paper', 'method' => 'POST', 'class' => 'pull-left']) !!}
             {!! Form::hidden('id', $order->id, ['class' => 'form-control']) !!}
-            <button type="submit" class="btn btn-primary" id="print">Ver Hoja de trabajo
-                <i class="glyphicon glyphicon-print"></i>
+            <button type="submit" class="btn btn-primary" id="print">Hoja de trabajo
+                <i class="glyphicon glyphicon-file"></i>
             </button>
             {!! Form::close() !!}
             <button type="button" class="btn btn-success printer" id="print">Imprimir Boleta
                 <i class="glyphicon glyphicon-print"></i>
             </button>
-            <a class="btn btn-danger" href="{{ route('print-work-paper')}}">
+            <a class="btn btn-danger" href="{{ route('orders.index')}}">
                 Volver
             </a>
         </div>

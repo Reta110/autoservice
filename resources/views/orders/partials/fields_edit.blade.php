@@ -161,6 +161,16 @@
             <div class="col-md-6">
                 <div class="box box-info">
                     <div class="box-header">
+                        <label>Observaciones de boleta:</label>
+                        <div class="form-group">
+
+                            {!! Form::textarea('observations', null, ['class' => 'form-control', 'placeholder' => 'Observaciones', 'rows' => '5']) !!}
+
+                        </div>
+                    </div>
+                </div>
+                <div class="box box-info">
+                    <div class="box-header">
                         <div class="form-group">
                             <label for="inputEmail3" class="col-sm-2 control-label">Estatus</label>
 
@@ -181,13 +191,53 @@
 
                         </div>
                     </div>
-                </div>
-                <div class="box box-info">
                     <div class="box-header">
-                        <label>Observaciones:</label>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Pagado</label>
+
+                            <div class="col-sm-10">
+                                <label class="radio-inline">
+                                    <input type="radio" name="paid" value="no" @if($order->paid == 'no') checked @endif>No
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="paid" value="si" @if($order->paid == 'si') checked @endif>Si
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-header">
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-4 control-label">Forma de pago:</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" name="type_pay"
+                                        @if($order->type_pay == '') selected="selected" @endif>
+                                    <option value="">---
+                                        Tipo de pago ---
+                                    </option>
+                                    <option value="TransBank"
+                                            @if($order->type_pay == 'TransBank') selected="selected" @endif>
+                                        TransBank
+                                    </option>
+                                    <option value="Transferencia"
+                                            @if($order->type_pay == 'Transferencia') selected="selected" @endif>
+                                        Transferencia
+                                    </option>
+                                    <option value="Efectivo"
+                                            @if($order->type_pay == 'Efectivo') selected="selected" @endif>
+                                        Efectivo
+                                    </option>
+                                    <option value="Cheque" @if($order->type_pay == 'Cheque') selected="selected" @endif>
+                                        Cheque
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-header">
+                        <label>Observación de pago:</label>
                         <div class="form-group">
 
-                            {!! Form::textarea('observations', null, ['class' => 'form-control', 'placeholder' => 'Observaciones', 'rows' => '5']) !!}
+                            {!! Form::textarea('pay_observations', null, ['class' => 'form-control', 'placeholder' => 'Observaciones', 'rows' => '2']) !!}
 
                         </div>
                     </div>
@@ -200,6 +250,10 @@
                     </div>
                     <p class="text-right">
                         {!! Form::hidden('total_cost', null, ['class' => 'form-control costo_total', 'placeholder' => 'Costo']) !!}
+                    </p>
+                    <p class="text-right">
+                        <label>Descuento</label>
+                        {!! Form::text('discount', $order->discount, ['class' => 'form-control discount', 'placeholder' => 'Descuento']) !!}
                     </p>
                     <p class="text-right">
                         <label>Neto</label>
@@ -285,6 +339,22 @@
 
         //Si cambian el precio hora de la orden, se calculan los numeros nuevamente
         $(document).on('change', '.order_hh', function () {
+            calculate()
+        });
+        //Si cambian el discount de la orden, se calculan los numeros nuevamente
+        $(document).on('change', '.discount', function () {
+            calculate()
+        });
+        //Si cambian el alguna hora de algun servicio de la orden, se calculan los numeros nuevamente
+        $(document).on('change', '.hh-service', function () {
+            calculate()
+        });
+        //Si cambian el precio de algun producto de la orden, se calculan los numeros nuevamente
+        $(document).on('change', '.producto-price', function () {
+            calculate()
+        });
+        //Si cambian la cantidad de algun producto de la orden, se calculan los numeros nuevamente
+        $(document).on('change', '.producto-quantity', function () {
             calculate()
         });
 
@@ -507,9 +577,18 @@
 
         function calculate() {
 
+            calcular_total_costos();
+
             var conf_iva = {!! $config->iva !!};
 
-            var sum = eval(calcular_total_producto() + calcular_total_servicios());
+            if ($(".discount").val() > 0) {
+                var porc = eval($(".discount").val() / 100);
+                var discount = eval((calcular_total_producto() + calcular_total_servicios()) * porc);
+                var sum = eval((calcular_total_producto() + calcular_total_servicios()) - discount);
+            } else {
+                var sum = eval(calcular_total_producto() + calcular_total_servicios());
+            }
+
             var iva = eval(sum * (conf_iva / 100))
             var neto = eval(sum - iva)
 

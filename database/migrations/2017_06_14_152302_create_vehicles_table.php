@@ -16,12 +16,12 @@ class CreateVehiclesTable extends Migration
         Schema::create('vehicles', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->string('brand');
-            $table->string('model');
-            $table->string('vin');
-            $table->string('year');
-            $table->string('motor');
-            $table->string('patente');
+            $table->string('brand')->nullable();
+            $table->string('model')->nullable();
+            $table->string('vin')->nullable();
+            $table->string('year')->nullable();
+            $table->string('motor')->nullable();
+            $table->string('patente')->nullable();
 
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

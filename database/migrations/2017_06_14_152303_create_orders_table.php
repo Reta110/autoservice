@@ -17,12 +17,15 @@ class CreateOrdersTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->string('total_cost')->default(0)->nullable();
-            $table->string('discount')->default(0);
-            $table->string('neto');
-            $table->string('iva');
-            $table->string('total');
+            $table->string('discount')->default(0)->nullable();
+            $table->string('neto')->nullable();
+            $table->string('iva')->nullable();
+            $table->string('total')->nullable();
             $table->text('observations')->nullable();
             $table->text('hh');
+            $table->enum('paid',['si','no']);
+            $table->text('type_pay')->nullable();
+            $table->text('pay_observations')->nullable();
 
             $table->enum('status', ['budget','started', 'template', 'ended']);
 
