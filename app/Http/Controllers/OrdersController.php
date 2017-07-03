@@ -61,6 +61,7 @@ class OrdersController extends Controller
         $vehicle = Vehicle::find($vehicle);
 
         $products = Product::orderBy('name', 'ASC')->pluck('name', 'id', 'price')->all();
+        //$products = Product::orderBy('name', 'ASC')->get();
         $services = Service::orderBy('name', 'ASC')->get();
         //dd($services->toArray());
 

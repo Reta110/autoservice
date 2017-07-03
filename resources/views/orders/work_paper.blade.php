@@ -47,6 +47,8 @@
                         <td>{{ $order->vehicle->vin }}</td>
                         <td><strong>Año</strong></td>
                         <td>{{ $order->vehicle->year }}</td>
+                        <td><strong>Km</strong></td>
+                        <td>{{ $order->vehicle->km }}</td>
                     </tr>
                 </table>
 

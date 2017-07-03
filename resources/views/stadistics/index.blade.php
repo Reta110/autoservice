@@ -33,25 +33,25 @@
                     Estadísticas de los últimos 7 días
                 </h3>
                 <div class="box-tools">
-                        {{Form::open(['route' => 'stadistics.store', 'class'=>'form-inline','method' => 'POST'])}}
-                        <div class="form-group">
-                            <label>Rango de fechas:</label>
+                    {{Form::open(['route' => 'stadistics.store', 'class'=>'form-inline','method' => 'POST'])}}
+                    <div class="form-group">
+                        <label>Rango de fechas:</label>
 
-                            <div class="input-group">
-                                <div class="input-group-addon">
-                                    <i class="fa fa-calendar"></i>
-                                </div>
-                                <input name="date" type="text" class="form-control pull-right" id="reservation">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <input name="date" type="text" class="form-control pull-right" id="reservation">
 
-                            </div>
-                            <div class="input-group">
-                                {!! Form::submit('Aplicar', ['class'=> 'btn btn-primary']) !!}
-                            </div>
-                            <!-- /.input group -->
                         </div>
-                        <!-- /.form group -->
+                        <div class="input-group">
+                            {!! Form::submit('Aplicar', ['class'=> 'btn btn-primary']) !!}
+                        </div>
+                        <!-- /.input group -->
+                    </div>
+                    <!-- /.form group -->
 
-                        {{Form::close()}}
+                    {{Form::close()}}
 
                 </div>
             </div>
@@ -149,13 +149,20 @@
 
                         <div class="progress-group">
                             <span class="progress-text">Presupuestos concretados</span>
-                            <span class="progress-number"><b>{{$concretas}}</b>/{{$total_ordenes}}</span>
+                            <span class="progress-number"><b>{{$concretas}}</b> de {{$total_ordenes}}</span>
 
                             <div class="progress sm">
-                                <div class="progress-bar progress-bar-red"
-                                     style="width: {{($concretas * 100) / $total_ordenes}}%">
+                                @if($total_ordenes>0)
+                                    <div class="progress-bar progress-bar-red"
+                                         style="width: {{($concretas * 100) / $total_ordenes}}%">
 
-                                </div>
+                                    </div>
+                                @else
+                                    <div class="progress-bar progress-bar-red"
+                                         style="width: 0%">
+
+                                    </div>
+                                @endif
                             </div>
                         </div>
                         <!-- /.progress-group -->
@@ -329,7 +336,7 @@
                 color: '#00a65a',
                 highlight: '#00a65a',
                 label: 'Ingresos'
-            },
+            }
         ];
         var pieOptions = {
             // Boolean - Whether we should show a stroke on each segment

@@ -15,7 +15,8 @@ class VehiclesController extends Controller
      */
     public function index()
     {
-        //
+        $vehicles = Vehicle::all();
+        return view('vehicles.index', compact('vehicles'));
     }
 
     /**
@@ -25,75 +26,78 @@ class VehiclesController extends Controller
      */
     public function create()
     {
-        //
+        return view('vehicles.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'brand' => 'required',
-            'model' => 'required',
-            'vin' => 'required',
-            'year' => 'required',
-            'motor' => 'required',
-            'patente' => 'required',
-        ]);
+        Vehicle::create($request->all());
 
+        return redirect()->route('vehicles.index')->with('success', 'Se ha registrado de manera exitosa!');
+    }
 
+    public function vehicleStore(Request $request)
+    {
         $vehicle = Vehicle::create($request->all());
 
         return redirect()->route('add-order', [ $request->get('user_id'), $vehicle])->with('success', 'Se ha registrado de manera exitosa!');
-
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        //
+        $vehicle = Vehicle::find($id);
+        return view('vehicles.show', compact('vehicle'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        //
+        $vehicle = Vehicle::find($id);
+        return view('vehicles.edit', compact('vehicle'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        //
+        $vehicle = Vehicle::find($id);
+        $vehicle->update($request->all());
+
+        return redirect()->route('vehicles.index')->with('success', 'Se ha actualizado de manera exitosa!');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        //
+        Vehicle::destroy($id);
+
+        return redirect()->route('vehicles.index')->with('success', 'Se ha eleminado de manera exitosa!');
     }
 }

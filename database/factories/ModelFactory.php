@@ -59,5 +59,7 @@ $factory->define(App\Vehicle::class, function (Faker\Generator $faker) {
         'vin' => $faker->randomNumber(8),
         'motor' => $faker->randomFloat(1, 1, 8),
         'patente' => $faker->randomNumber(8),
+        'km' => $faker->randomElement(['232.000','389.000','74.000','458.000','155.000','856.000','824.000','735.000','632.000','789.000','474.000','358.000','355.000','756.000','724.000','635.000']),
+
     ];
 });

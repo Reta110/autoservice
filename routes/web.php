@@ -27,6 +27,9 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::resource('/configurations', 'ConfigurationsController');
     Route::resource('/stadistics', 'StadisticsController');
 
+    Route::resource('/vehicles', 'VehiclesController');
+    Route::post('/vehicle/vehicle-select', 'VehiclesController@vehicleStore')->name('vehicle-select');
+
     Route::get('/orders/select-client', 'OrdersController@selectClient')->name('select-client');
     Route::get('/orders/select-vehicle/user/{user}', 'OrdersController@selectVehicle')->name('select-vehicle');
     Route::get('/orders/select-vehicle/user/{user}/vehicle/{vehicle}', 'OrdersController@create')->name('add-order');
@@ -40,6 +43,6 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::post('/user/register', 'ClientsController@store')->name('user-store');
     Route::post('/user/save', 'ClientsController@save')->name('user-save');
 
-    Route::post('/vehicle/store', 'VehiclesController@store')->name('vehicle-store');
+
 
 });

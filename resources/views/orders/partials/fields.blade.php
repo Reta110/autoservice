@@ -91,6 +91,14 @@
                                 <div class="input-group-btn input-group-select">
 
                                     <div class="form-group">
+                                        {{--<select class="form-control select-product" name="product_id[]">--}}
+                                            {{--<option selected="selected" disabled="disabled" hidden="hidden" value="">-----}}
+                                                {{--Indique producto -----}}
+                                            {{--</option>--}}
+                                            {{--@foreach($products as $product)--}}
+                                                {{--<option value="{{$product->id}}">{{$product->name.' - '.$product->brand.' - '.$product->model}}</option>--}}
+                                            {{--@endforeach--}}
+                                        {{--</select>--}}
 
                                         {!! Form::select('product_id[]', $products, null, ['class' => 'form-control select-product', 'placeholder' => '--- Indique producto ---']) !!}
                                     </div>
@@ -168,7 +176,7 @@
                         <div class="form-group type_pay" style="visibility: false">
                             <label for="inputEmail3" class="col-sm-4 control-label">Forma de pago:</label>
                             <div class="col-sm-8">
-                                <select class="form-control" name="type_pay">
+                                <select class="form-control select2" name="type_pay">
                                     <option selected="selected" value="">---
                                         Tipo de pago ---
                                     </option>
@@ -549,6 +557,9 @@
 
         }
         //Fin calculate
+
+        //Initialize Select2 Elements
+        $('.select2').select2()
 
     </script>
 

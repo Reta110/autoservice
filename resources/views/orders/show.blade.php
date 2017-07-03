@@ -76,6 +76,7 @@
                     <b>Modelo:</b> {{ $order->vehicle->model }}<br>
                     <b>Motor:</b> {{ $order->vehicle->motor }}<br>
                     <b>Vin:</b> {{ $order->vehicle->vin }}<br>
+                    <b>Km:</b> {{ $order->vehicle->km }}<br>
                 </address>
             </div>
             <!-- /.col -->

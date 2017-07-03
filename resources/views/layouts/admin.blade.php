@@ -28,6 +28,7 @@ folder instead of downloading all of them to reduce the load. -->
     <![endif]-->
 
     <link href="{{ asset ('AdminLTE/plugins/datatables/dataTables.bootstrap.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset ('AdminLTE/plugins/select2/select2.min.css') }}" rel="stylesheet" type="text/css">
     {{--<link href="{{ asset ('AdminLTE/plugins/datepicker/bootstrap-datepicker.standalone.css') }}" rel="stylesheet"--}}
     {{--type="text/css">--}}
     <link rel="stylesheet" href="{{ asset ('chosen/chosen.css') }}">
@@ -75,131 +76,6 @@ folder instead of downloading all of them to reduce the load. -->
             </a>
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
-                    <!-- Messages: style can be found in dropdown.less-->
-                    {{--<li class="dropdown messages-menu">--}}
-                        {{--<a class="dropdown-toggle" data-toggle="dropdown" href="#">--}}
-                            {{--<i class="fa fa-envelope-o">--}}
-                            {{--</i>--}}
-                            {{--<span class="label label-success">--}}
-                                        {{--4--}}
-                                    {{--</span>--}}
-                        {{--</a>--}}
-                        {{--<ul class="dropdown-menu">--}}
-                            {{--<li class="header">--}}
-                                {{--You have 4 messages--}}
-                            {{--</li>--}}
-                            {{--<li>--}}
-                                {{--<!-- inner menu: contains the actual data -->--}}
-                                {{--<ul class="menu">--}}
-                                    {{--<li>--}}
-                                        {{--<!-- start message -->--}}
-                                        {{--<a href="#">--}}
-                                            {{--<div class="pull-left">--}}
-                                                {{--<img alt="User Image" class="img-circle"--}}
-                                                     {{--src="../../dist/img/user2-160x160.jpg">--}}
-                                                {{--</img>--}}
-                                            {{--</div>--}}
-                                            {{--<h4>--}}
-                                                {{--Support Team--}}
-                                                {{--<small>--}}
-                                                    {{--<i class="fa fa-clock-o">--}}
-                                                    {{--</i>--}}
-                                                    {{--5 mins--}}
-                                                {{--</small>--}}
-                                            {{--</h4>--}}
-                                            {{--<p>--}}
-                                                {{--Why not buy a new awesome theme?--}}
-                                            {{--</p>--}}
-                                        {{--</a>--}}
-                                    {{--</li>--}}
-                                    {{--<!-- end message -->--}}
-                                {{--</ul>--}}
-                            {{--</li>--}}
-                            {{--<li class="footer">--}}
-                                {{--<a href="#">--}}
-                                    {{--See All Messages--}}
-                                {{--</a>--}}
-                            {{--</li>--}}
-                        {{--</ul>--}}
-                    {{--</li>--}}
-                    <!-- Notifications: style can be found in dropdown.less -->
-                    {{--<li class="dropdown notifications-menu">--}}
-                        {{--<a class="dropdown-toggle" data-toggle="dropdown" href="#">--}}
-                            {{--<i class="fa fa-bell-o">--}}
-                            {{--</i>--}}
-                            {{--<span class="label label-warning">--}}
-                                        {{--10--}}
-                                    {{--</span>--}}
-                        {{--</a>--}}
-                        {{--<ul class="dropdown-menu">--}}
-                            {{--<li class="header">--}}
-                                {{--You have 10 notifications--}}
-                            {{--</li>--}}
-                            {{--<li>--}}
-                                {{--<!-- inner menu: contains the actual data -->--}}
-                                {{--<ul class="menu">--}}
-                                    {{--<li>--}}
-                                        {{--<a href="#">--}}
-                                            {{--<i class="fa fa-users text-aqua">--}}
-                                            {{--</i>--}}
-                                            {{--5 new members joined today--}}
-                                        {{--</a>--}}
-                                    {{--</li>--}}
-                                {{--</ul>--}}
-                            {{--</li>--}}
-                            {{--<li class="footer">--}}
-                                {{--<a href="#">--}}
-                                    {{--View all--}}
-                                {{--</a>--}}
-                            {{--</li>--}}
-                        {{--</ul>--}}
-                    {{--</li>--}}
-                    <!-- Tasks: style can be found in dropdown.less -->
-                    {{--<li class="dropdown tasks-menu">--}}
-                        {{--<a class="dropdown-toggle" data-toggle="dropdown" href="#">--}}
-                            {{--<i class="fa fa-flag-o">--}}
-                            {{--</i>--}}
-                            {{--<span class="label label-danger">--}}
-                                        {{--9--}}
-                                    {{--</span>--}}
-                        {{--</a>--}}
-                        {{--<ul class="dropdown-menu">--}}
-                            {{--<li class="header">--}}
-                                {{--You have 9 tasks--}}
-                            {{--</li>--}}
-                            {{--<li>--}}
-                                {{--<!-- inner menu: contains the actual data -->--}}
-                                {{--<ul class="menu">--}}
-                                    {{--<li>--}}
-                                        {{--<!-- Task item -->--}}
-                                        {{--<a href="#">--}}
-                                            {{--<h3>--}}
-                                                {{--Design some buttons--}}
-                                                {{--<small class="pull-right">--}}
-                                                    {{--20%--}}
-                                                {{--</small>--}}
-                                            {{--</h3>--}}
-                                            {{--<div class="progress xs">--}}
-                                                {{--<div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20"--}}
-                                                     {{--class="progress-bar progress-bar-aqua" role="progressbar"--}}
-                                                     {{--style="width: 20%">--}}
-                                                            {{--<span class="sr-only">--}}
-                                                                {{--20% Complete--}}
-                                                            {{--</span>--}}
-                                                {{--</div>--}}
-                                            {{--</div>--}}
-                                        {{--</a>--}}
-                                    {{--</li>--}}
-                                    {{--<!-- end task item -->--}}
-                                {{--</ul>--}}
-                            {{--</li>--}}
-                            {{--<li class="footer">--}}
-                                {{--<a href="#">--}}
-                                    {{--View all tasks--}}
-                                {{--</a>--}}
-                            {{--</li>--}}
-                        {{--</ul>--}}
-                    {{--</li>--}}
                     <!-- User Account: style can be found in dropdown.less -->
                     <li class="dropdown user user-menu">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -235,13 +111,6 @@ folder instead of downloading all of them to reduce the load. -->
                             </li>
                         </ul>
                     </li>
-                    <!-- Control Sidebar Toggle Button -->
-                    {{--<li>--}}
-                        {{--<a data-toggle="control-sidebar" href="#">--}}
-                            {{--<i class="fa fa-gears">--}}
-                            {{--</i>--}}
-                        {{--</a>--}}
-                    {{--</li>--}}
                 </ul>
             </div>
         </nav>
@@ -311,20 +180,6 @@ folder instead of downloading all of them to reduce the load. -->
                                     <i class="fa fa-angle-left pull-right"></i>
                                 </span>
                     </a>
-                    {{--<ul class="treeview-menu">--}}
-                    {{--<li>--}}
-                    {{--<a href="{{route('select-client')}}">--}}
-                    {{--<i class="fa fa-circle-o"> </i>--}}
-                    {{--Nuevo--}}
-                    {{--</a>--}}
-                    {{--</li>--}}
-                    {{--<li>--}}
-                    {{--<a href="">--}}
-                    {{--<i class="fa fa-circle-o"></i>--}}
-                    {{--Listado--}}
-                    {{--</a>--}}
-                    {{--</li>--}}
-                    {{--</ul>--}}
                 </li>
                 <li class="treeview">
                     <a href="{{route('clients.index')}}">
@@ -337,20 +192,6 @@ folder instead of downloading all of them to reduce the load. -->
                                     <i class="fa fa-angle-left pull-right"></i>
                                 </span>
                     </a>
-                    {{--<ul class="treeview-menu">--}}
-                    {{--<li>--}}
-                    {{--<a href="{{route('clients.create')}}">--}}
-                    {{--<i class="fa fa-circle-o"></i>--}}
-                    {{--Nuevo--}}
-                    {{--</a>--}}
-                    {{--</li>--}}
-                    {{--<li>--}}
-                    {{--<a href="{{route('clients.index')}}">--}}
-                    {{--<i class="fa fa-circle-o"></i>--}}
-                    {{--Listado--}}
-                    {{--</a>--}}
-                    {{--</li>--}}
-                    {{--</ul>--}}
                 </li>
                 <li class="treeview">
                     <a href="{{route('products.index')}}">
@@ -363,21 +204,6 @@ folder instead of downloading all of them to reduce the load. -->
                                     <i class="fa fa-angle-left pull-right"></i>
                                 </span>
                     </a>
-                    {{--<ul class="treeview-menu">--}}
-                    {{--<li>--}}
-                    {{--<a href="{{ route('products.create') }}">--}}
-                    {{--<i class="fa fa-circle-o"></i>--}}
-                    {{--Nuevo--}}
-                    {{--</a>--}}
-                    {{--</li>--}}
-                    {{--<li>--}}
-                    {{--<a href="{{route('products.index')}}">--}}
-                    {{--<i class="fa fa-circle-o"></i>--}}
-                    {{--Listado--}}
-                    {{--</a>--}}
-                    {{--</li>--}}
-
-                    {{--</ul>--}}
                 </li>
                 <li class="treeview">
                     <a href="{{route('services.index')}}">
@@ -391,22 +217,19 @@ folder instead of downloading all of them to reduce the load. -->
                                     </i>
                                 </span>
                     </a>
-                    {{--<ul class="treeview-menu">--}}
-                    {{--<li>--}}
-                    {{--<a href="{{route('services.create')}}">--}}
-                    {{--<i class="fa fa-circle-o">--}}
-                    {{--</i>--}}
-                    {{--Nuevo--}}
-                    {{--</a>--}}
-                    {{--</li>--}}
-                    {{--<li>--}}
-                    {{--<a href="{{route('services.index')}}">--}}
-                    {{--<i class="fa fa-circle-o">--}}
-                    {{--</i>--}}
-                    {{--Listado--}}
-                    {{--</a>--}}
-                    {{--</li>--}}
-                    {{--</ul>--}}
+                </li>
+                <li class="treeview">
+                    <a href="{{route('vehicles.index')}}">
+                        <i class="fa fa-car">
+                        </i>
+                        <span>
+                                    Vehículos
+                                </span>
+                        <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right">
+                                    </i>
+                                </span>
+                    </a>
                 </li>
                 <li>
                     <a href="{{route('configurations.index')}}">
@@ -467,7 +290,7 @@ folder instead of downloading all of them to reduce the load. -->
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('chosen/chosen.jquery.js') }} "></script>
 <script src="{{asset('AdminLTE/dist/js/demo.js')}}"></script>
-<script src="{{asset('chosen/chosen.jquery.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('AdminLTE/plugins/select2/select2.js') }}"></script>
 
 <script type="text/javascript" src="{{ asset('AdminLTE/plugins/datatables/datatables.min.js') }}"></script>
 

@@ -53,52 +53,56 @@
                                 <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>CODIGO</th>
-                                    <th>NOMBRE</th>
-                                    <th>COSTO</th>
-                                    <th>PRECIO</th>
                                     <th>MARCA</th>
                                     <th>MODELO</th>
-                                    <th>DISPONIBLE</th>
+                                    <th>VIN</th>
+                                    <th>AÑO</th>
+                                    <th>MOTOR</th>
+                                    <th>PATENTE</th>
+                                    <th>KM</th>
+                                    <th>CLIENTE</th>
                                     <th>ACCIONES</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($products as $product)
+                                @foreach($vehicles as $vehicle)
                                     <tr>
                                         <td>
-                                            {{ $product->id }}
+                                            {{ $vehicle->id }}
                                         </td>
                                         <td>
-                                            {{ $product->code }}
+                                            {{ $vehicle->brand }}
                                         </td>
                                         <td>
-                                            {{ $product->name }}
+                                            {{ $vehicle->model }}
                                         </td>
                                         <td>
-                                            {{ $product->cost }}
+                                            {{ $vehicle->vin }}
                                         </td>
                                         <td>
-                                            {{ $product->price }}
+                                            {{ $vehicle->year }}
                                         </td>
                                         <td>
-                                            {{ $product->brand }}
+                                            {{ $vehicle->motor }}
                                         </td>
                                         <td>
-                                            {{ $product->model }}
+                                            {{ $vehicle->patente }}
                                         </td>
                                         <td>
-                                            {{ $product->stock }}
+                                            {{ $vehicle->km }}
+                                        </td>
+                                        <td class="text-info">
+                                            {{ $vehicle->owner() }}
                                         </td>
                                         <td>
-                                            {!! Form::open(['route' => ['products.destroy',$product ], 'method' => 'DELETE']) !!}
+                                            {!! Form::open(['route' => ['vehicles.destroy',$vehicle ], 'method' => 'DELETE']) !!}
                                             <div class="form-group">
-                                                <a href="{{ route('products.show', $product) }}">
+                                                <a href="{{ route('vehicles.show', $vehicle) }}">
                                                     <i class="fa fa-eye" aria-hidden="true"></i>
                                                 </a>
                                             </div>
                                             <div class="form-group">
-                                                <a href="{{ route('products.edit', $product) }}">
+                                                <a href="{{ route('vehicles.edit', $vehicle) }}">
                                                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                                 </a>
                                             </div>

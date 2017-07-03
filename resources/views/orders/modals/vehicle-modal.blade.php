@@ -1,7 +1,7 @@
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
-        <form class="form-horizontal" role="form" method="POST" action="{{ route('vehicle-store') }}">
+        <form class="form-horizontal" role="form" method="POST" action="{{ route('vehicle-select') }}">
             {{ csrf_field() }}
             <div class="modal-content">
                 <div class="modal-header">
@@ -93,6 +93,20 @@
                             @if ($errors->has('patente'))
                                 <span class="help-block">
                                         <strong>{{ $errors->first('patente') }}</strong>
+                                    </span>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="form-group{{ $errors->has('km') ? ' has-error' : '' }}">
+                        <label for="km" class="col-md-4 control-label">Km</label>
+
+                        <div class="col-md-6">
+                            <input id="km" type="text" class="form-control" name="km" value="{{ old('km') }}"
+                                   autofocus>
+
+                            @if ($errors->has('km'))
+                                <span class="help-block">
+                                        <strong>{{ $errors->first('km') }}</strong>
                                     </span>
                             @endif
                         </div>

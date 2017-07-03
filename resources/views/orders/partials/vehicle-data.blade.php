@@ -35,7 +35,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="inputPassword3" class="col-sm-2 control-label">Patente</label>
+                <label for="patente" class="col-sm-2 control-label">Patente</label>
 
                 <div class="col-sm-10">
                     <input type="password" class="form-control"
@@ -43,7 +43,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="inputPassword3" class="col-sm-2 control-label">Motor</label>
+                <label for="motor" class="col-sm-2 control-label">Motor</label>
 
                 <div class="col-sm-10">
                     <input type="password" class="form-control"
@@ -51,11 +51,19 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="inputPassword3" class="col-sm-2 control-label">Año</label>
+                <label for="year" class="col-sm-2 control-label">Año</label>
 
                 <div class="col-sm-10">
                     <input type="password" class="form-control"
                            placeholder="{{$vehicle->year}}" disabled>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="km" class="col-sm-2 control-label">km</label>
+
+                <div class="col-sm-10">
+                    <input type="password" class="form-control"
+                           placeholder="{{$vehicle->km}}" disabled>
                 </div>
             </div>
         </div>

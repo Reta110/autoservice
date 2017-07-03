@@ -42,6 +42,11 @@
                     <strong>Año:</strong>
                     {{$order->vehicle->year}}
                 </div>
+                <div class="form-group">
+
+                    <strong>Año:</strong>
+                    {{$order->vehicle->km}}
+                </div>
             </div>
         </div>
         <!-- /.box-body -->
