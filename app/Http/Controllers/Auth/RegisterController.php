@@ -48,8 +48,8 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'name' => 'string|max:255',
+            'email' => 'string|email|max:255',
             //'password' => 'required|string|min:6|confirmed',
         ]);
     }
@@ -75,14 +75,6 @@ class RegisterController extends Controller
 
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'last_name' => 'required',
-            'rut' => 'required',
-            'email' => 'required',
-            'phone' => 'required',
-            'stock' => 'required'
-        ]);
 
         $user = Product::create($request->all());
 

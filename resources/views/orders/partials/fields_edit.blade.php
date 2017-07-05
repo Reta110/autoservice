@@ -95,11 +95,36 @@
                                 <div class="col-md-4">
                                     <label>Producto</label>
                                     <div class="input-group-btn input-group-select">
-
                                         <div class="form-group">
-                                            {!! Form::select('product_id[]', $products, $oproduct->id, ['class' => 'form-control select-product', 'placeholder' => '--- Indique producto ---']) !!}
+                                            {!! Form::hidden('product_id[]', $oproduct->id, ['class' => 'form-control producto-id']) !!}
+                                            {!! Form::select('product_category[]', $categories, $oproduct->category_id, ['class' => 'form-control select-category', 'placeholder' => '--- Categoria ---']) !!}
                                         </div>
-
+                                        <div class="form-group">
+                                            <select class="form-control select-brand" name="product_brand[]">
+                                                <option selected="selected" disabled="disabled" hidden="hidden"
+                                                        value="">---
+                                                    --- Marca---
+                                                </option>
+                                                @foreach($marcas as $marca)
+                                                    <option value="{{$marca}}"
+                                                            @if($marca == $oproduct->brand) selected="selected" @endif>{{$marca}}</option>
+                                                @endforeach
+                                            </select>
+                                            {{--{!! Form::select('product_brand[]',$marcas , $oproduct->brand, ['class' => 'form-control select-brand', 'placeholder' => '--- Marca---']) !!}--}}
+                                        </div>
+                                        <div class="form-group">
+                                            <select class="form-control select-model" name="product_model[]">
+                                                <option selected="selected" disabled="disabled" hidden="hidden"
+                                                        value="">---
+                                                    --- Modelo ---
+                                                </option>
+                                                @foreach($modelos as $modelo)
+                                                    <option value="{{$modelo}}"
+                                                            @if($modelo == $oproduct->model) selected="selected" @endif>{{$modelo}}</option>
+                                                @endforeach
+                                            </select>
+                                            {{--{!! Form::select('product_model[]',$modelos , $oproduct->model, ['class' => 'form-control select-model ', 'placeholder' => '--- Modelo---']) !!}--}}
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-2">
@@ -129,8 +154,10 @@
                                 <div class="input-group-btn input-group-select">
 
                                     <div class="form-group">
-
-                                        {!! Form::select('product_id[]', $products, null, ['class' => 'form-control select-product', 'placeholder' => '--- Indique producto ---']) !!}
+                                        {!! Form::hidden('product_id[]', null, ['class' => 'form-control producto-id']) !!}
+                                        {!! Form::select('product_category[]', $categories, null, ['class' => 'form-control select-category', 'placeholder' => '--- Categoria ---']) !!}
+                                        {!! Form::select('product_brand[]', $marcas, null, ['class' => 'form-control select-brand', 'placeholder' => '--- Marca ---']) !!}
+                                        {!! Form::select('product_model[]', $modelos, null, ['class' => 'form-control select-model', 'placeholder' => '--- Modelo ---']) !!}
                                     </div>
 
                                 </div>
@@ -471,31 +498,87 @@
         });
         //Fin Colocar precio hora en servicio
 
-        //Colocar precio y stock de los productos
-
-        $(document).on('change', '.select-product', function () {
+        //Buscar las marcas y modelos cuando se cambia la categoria
+        $(document).on('change', '.select-category', function () {
             var id = $(this).val();
+            console.log('id=' + id);
+            var token = $("input[name='_token']").val();
+            console.log('token=' + token);
+            var thisi = $(this);
+            $.ajax({
+                url: "{{route('select-brands-ajax')}}",
+                method: 'POST',
+                data: {id: id, _token: token},
+                success: function (data) {
+                    console.log("suucees category")
+                    thisi.closest('.multiple-form-group').find('.select-brand').html('');
+                    thisi.closest('.multiple-form-group').find('.select-brand').html(data.options);
+                }
+            });
+        });
+        //Fin bscar las marcas y modelos cuando se cambia la categoria
+
+        {{--// Buscar los modelos cuando cambie la marca--}}
+        $(document).on('change', '.select-brand', function () {
+            var thisa = $(this);
+            var brand = $(this).closest('.multiple-form-group').find('.select-brand option:selected').html();
+            console.log('brand=' + brand);
+            var id = $(this).closest('.multiple-form-group').find('.select-category').val();
+            console.log('id=' + id);
+            var token = $("input[name='_token']").val();
+            console.log('token=' + token);
+
+            $.ajax({
+                url: "{{route('select-models-ajax')}}",
+                method: 'POST',
+                data: {id: id, brand: brand, _token: token},
+                success: function (data) {
+                    console.log("suucees bro3")
+                    thisa.closest('.multiple-form-group').find('.select-model').html('');
+                    thisa.closest('.multiple-form-group').find('.select-model').html(data.options);
+                }
+            });
+        });
+        //Fin buscar los modelos cuando cambie el producto
+
+        //Colocar precio, costo y stock de los productos en los fields
+        $(document).on('change', '.select-model', function () {
+
+            var cat = $(this).closest('.multiple-form-group').find('.select-category option:selected').val();
+            var brand = $(this).closest('.multiple-form-group').find('.select-brand option:selected').html();
+            var model = $(this).closest('.multiple-form-group').find('.select-model option:selected').html();
+
+            console.log('cat product=' + cat);
+            console.log('brand product=' + brand);
+            console.log('model product=' + model);
             var myArray = {!! $prod !!};
 
             var found = $.map(myArray, function (val) {
-                return val.id == id ? val.price : null;
+                return (val.category_id == cat && val.brand == brand && val.model == model) ? val.price : null;
             });
 
             var stock = $.map(myArray, function (val) {
-                return val.id == id ? val.stock : null;
+                return (val.category_id == cat && val.brand == brand && val.model == model) ? val.stock : null;
             });
 
             var cost = $.map(myArray, function (val) {
-                return val.id == id ? val.cost : null;
+                return (val.category_id == cat && val.brand == brand && val.model == model) ? val.cost : null;
+            });
+
+            var id = $.map(myArray, function (val) {
+                return (val.category_id == cat && val.brand == brand && val.model == model) ? val.id : null;
             });
 
             $(this).closest('.multiple-form-group').find('.producto-price').val(found[0]);
             $(this).closest('.multiple-form-group').find('.producto-stock').val(stock[0]);
             $(this).closest('.multiple-form-group').find('.producto-cost').val(cost[0]);
+            $(this).closest('.multiple-form-group').find('.producto-id').val(id[0]);
 
             console.log(found[0]);
 
         });
+
+        //Fin Colocar precio, costo y stock de los productos en los fields
 
         //Fin Colocar precio y stock de los productos
 

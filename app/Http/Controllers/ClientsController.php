@@ -32,13 +32,6 @@ class ClientsController extends Controller
 
     public function save(Request $request)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'last_name' => 'required',
-            'rut' => 'required',
-            'email' => 'required',
-            'phone' => 'required',
-        ]);
 
         User::create($request->all());
 

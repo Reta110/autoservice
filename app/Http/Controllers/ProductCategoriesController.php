@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Product;
 use App\ProductCategory;
 use Illuminate\Http\Request;
 
-class ProductsController extends Controller
+class ProductCategoriesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +14,8 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
-        return view('products.index', compact('products'));
+        $categories = ProductCategory::all();
+        return view('product_categories.index', compact('categories'));
     }
 
     /**
@@ -26,9 +25,7 @@ class ProductsController extends Controller
      */
     public function create()
     {
-        $categories = ProductCategory::orderBy('name','ASC')->pluck('name', 'id')->all();
-
-        return view('products.create', compact('categories'));
+        return view('product_categories.create');
     }
 
     /**
@@ -41,14 +38,11 @@ class ProductsController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            'brand' => 'required',
-            'model' => 'required',
-            'stock' => 'required',
         ]);
 
-        Product::create($request->all());
+        ProductCategory::create($request->all());
 
-        return redirect()->route('products.index')->with('success', 'Se ha registrado de manera exitosa!');
+        return redirect()->route('categories.index')->with('success', 'Se ha registrado de manera exitosa!');
     }
 
     /**
@@ -59,8 +53,9 @@ class ProductsController extends Controller
      */
     public function show($id)
     {
-        $product = Product::find($id);
-        return view('products.show', compact('product'));
+        $category = ProductCategory::find($id);
+
+        return view('product_categories.show', compact('category'));
     }
 
     /**
@@ -71,10 +66,9 @@ class ProductsController extends Controller
      */
     public function edit($id)
     {
-        $product = Product::find($id);
-        $categories = ProductCategory::orderBy('name','ASC')->pluck('name', 'id')->all();
+        $category = ProductCategory::find($id);
 
-        return view('products.edit', compact('product','categories'));
+        return view('product_categories.edit', compact('category'));
     }
 
     /**
@@ -86,10 +80,10 @@ class ProductsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $product = Product::find($id);
-        $product->update($request->all());
+        $category = ProductCategory::find($id);
+        $category->update($request->all());
 
-        return redirect()->route('products.index')->with('success', 'Se ha actualizado de manera exitosa!');
+        return redirect()->route('categories.index')->with('success', 'Se ha actualizado de manera exitosa!');
     }
 
     /**
@@ -100,8 +94,8 @@ class ProductsController extends Controller
      */
     public function destroy($id)
     {
-        Product::destroy($id);
+        ProductCategory::destroy($id);
 
-        return redirect()->route('products.index')->with('success', 'Se ha eleminado de manera exitosa!');
+        return redirect()->route('product_categories.index')->with('success', 'Se ha eleminado de manera exitosa!');
     }
 }

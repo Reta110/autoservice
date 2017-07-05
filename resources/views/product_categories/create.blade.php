@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Editar Producto')
+@section('title', 'Nuevo Categoria')
 
 @section('contenido')
     <section class="content-header">
@@ -29,26 +29,26 @@
     <!-- Main content -->
     <section class="content">
 
-        {!! Form::model($product, ['route' => ['products.update', $product], 'method' => 'PUT']) !!}
+        {!! Form::open(['route' => 'categories.store', 'method' => 'POST']) !!}
         <div class="row">
             <div class="col-md-12">
                 <div class="box">
                     <div class="box-header with-border">
                         @include('common.errors')
-                        <h3 class="box-title">Editar Producto</h3>
+                        <h3 class="box-title">Nuevo Productos</h3>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
                         <div class="row">
-                            @include('products.partials.fields')
+                            @include('product_categories.partials.fields')
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="for text-center">
-            {!! Form::submit('Actualizar', ['class'=> 'btn btn-primary']) !!}
-            <a class="btn btn-danger" href="{{ route('products.index')}}">
+            {!! Form::submit('Registrar', ['class'=> 'btn btn-primary']) !!}
+            <a class="btn btn-danger" href="{{ route('categories.index')}}">
                 Cancelar
             </a>
         </div>

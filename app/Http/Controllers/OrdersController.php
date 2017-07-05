@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Configuration;
 use App\Order;
 use App\Product;
+use App\ProductCategory;
 use App\Service;
 use App\User;
 use App\Vehicle;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use PhpParser\Node\Stmt\DeclareDeclare;
 
@@ -60,8 +62,8 @@ class OrdersController extends Controller
         $client = User::where('role', 'client')->find($user);
         $vehicle = Vehicle::find($vehicle);
 
-        $products = Product::orderBy('name', 'ASC')->pluck('name', 'id', 'price')->all();
-        //$products = Product::orderBy('name', 'ASC')->get();
+        $products = Product::orderBy('name', 'ASC')->get();
+        //$products = array_unique($products);
         $services = Service::orderBy('name', 'ASC')->get();
         //dd($services->toArray());
 
@@ -70,8 +72,11 @@ class OrdersController extends Controller
         $prod = $aux->toJson();
 
         $config = Configuration::first();
+        $marcas = Product::orderBy('name', 'ASC')->pluck('brand')->all();
+        $modelos = Product::orderBy('name', 'ASC')->pluck('model')->all();
+        $categories = ProductCategory::orderBy('name', 'ASC')->pluck('name', 'id')->all();
 
-        return view('orders.create', compact('client', 'vehicle', 'products', 'services', 'serv', 'prod', 'config'));
+        return view('orders.create', compact('client', 'vehicle', 'products', 'services', 'serv', 'prod', 'config', 'marcas', 'modelos', 'categories'));
     }
 
     /**
@@ -102,7 +107,7 @@ class OrdersController extends Controller
             'discount' => $request->get('discount'),
             'paid' => $request->get('paid'),
             'type_pay' => $request->get('type_pay'),
-            'pay_observations' => $request->get('pay_observations')
+            'pay_observations' => $request->get('pay_observations'),
         ]);
 
 
@@ -138,14 +143,6 @@ class OrdersController extends Controller
         return view('orders.show', compact('order', 'config'));
     }
 
-//    public function pdf($id)
-//    {
-//        $order = Order::find($id);
-//        $config = Configuration::first();
-//
-//        return view('orders.pdf.pdf', compact('order', 'show','config'));
-//    }
-
     public function edit($id)
     {
         $order = Order::find($id);
@@ -160,7 +157,11 @@ class OrdersController extends Controller
 
         $config = Configuration::first();
 
-        return view('orders.edit', compact('order', 'client', 'vehicle', 'products', 'services', 'serv', 'prod', 'config'));
+        $categories = ProductCategory::orderBy('name', 'ASC')->pluck('name', 'id')->all();
+        $marcas = Product::orderBy('name', 'ASC')->pluck('brand')->all();
+        $modelos = Product::orderBy('name', 'ASC')->pluck('model')->all();
+
+        return view('orders.edit', compact('order', 'client', 'vehicle', 'products', 'services', 'serv', 'prod', 'config', 'marcas','modelos','categories'));
     }
 
     /**
@@ -263,6 +264,32 @@ class OrdersController extends Controller
 
         return view('orders.work_paper', compact('order', 'config'));
 
+    }
+
+    public function selectBrandsAjax(Request $request)
+    {
+        //id categroy
+        $id = request()->get('id');
+
+        if ($request->ajax()) {
+            $optionss = Product::orderBy('brand', 'ASC')->where('category_id', $id)->pluck('brand', 'id')->all();
+            $optionss = array_unique($optionss);
+            $data = view('orders.partials.select-ajax', compact('optionss'))->render();
+            return response()->json(['options' => $data]);
+        }
+    }
+
+    public function selectModelsAjax(Request $request)
+    {
+        //id category
+        $id = request()->get('id');
+        $brand = request()->get('brand');
+
+        if ($request->ajax()) {
+            $optionss = Product::orderBy('model', 'ASC')->where('category_id', $id)->where('brand', 'like', $brand)->pluck('model', 'model')->all();
+            $data = view('orders.partials.select-ajax', compact('optionss'))->render();
+            return response()->json(['options' => $data]);
+        }
     }
 
     public function destroy($id)

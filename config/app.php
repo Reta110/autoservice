@@ -180,6 +180,9 @@ return [
         Barryvdh\DomPDF\ServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
 
+        Barryvdh\Debugbar\ServiceProvider::class,
+
+
     ],
 
     /*

@@ -99,14 +99,16 @@ folder instead of downloading all of them to reduce the load. -->
                             <!-- Menu Footer-->
                             <li class="user-footer">
                                 {{--<div class="pull-left">--}}
-                                    {{--<a class="btn btn-default btn-flat" href="#">--}}
-                                        {{--Profile--}}
-                                    {{--</a>--}}
+                                {{--<a class="btn btn-default btn-flat" href="#">--}}
+                                {{--Profile--}}
+                                {{--</a>--}}
                                 {{--</div>--}}
                                 <div class="text-center">
-                                    <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                                    <a href="{{ route('logout') }}"
+                                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">{{ csrf_field() }}</form>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                          style="display: none;">{{ csrf_field() }}</form>
                                 </div>
                             </li>
                         </ul>
@@ -193,18 +195,24 @@ folder instead of downloading all of them to reduce the load. -->
                                 </span>
                     </a>
                 </li>
-                <li class="treeview">
-                    <a href="{{route('products.index')}}">
-                        <i class="fa fa-navicon">
-                        </i>
-                        <span>
-                                    Productos
-                                </span>
+                <li class="active treeview menu-open">
+                    <a href="#">
+                        <i class="fa fa-dashboard"></i>
+                        <span>Productos</span>
                         <span class="pull-right-container">
-                                    <i class="fa fa-angle-left pull-right"></i>
-                                </span>
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
                     </a>
+                    <ul class="treeview-menu">
+                        <li>
+                            <a href="{{route('products.index')}}"><i class="fa fa-circle-o"></i>Listado</a>
+                        </li>
+                        <li>
+                            <a href="{{route('categories.index')}}"><i class="fa fa-circle-o"></i>Categorias</a>
+                        </li>
+                    </ul>
                 </li>
+
                 <li class="treeview">
                     <a href="{{route('services.index')}}">
                         <i class="fa fa-server">

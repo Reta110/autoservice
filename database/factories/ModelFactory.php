@@ -38,6 +38,7 @@ $factory->define(App\Product::class, function (Faker\Generator $faker) {
         'brand' => $faker->unique()->company,
         'model' => $faker->unique()->word,
         'stock' => $faker->randomNumber(2),
+        'category_id' => rand(1,5),
 
     ];
 });

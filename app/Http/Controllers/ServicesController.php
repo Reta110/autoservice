@@ -37,7 +37,6 @@ class ServicesController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'code' => 'required',
             'name' => 'required',
             'hh' => 'required',
         ]);

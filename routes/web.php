@@ -26,10 +26,14 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::resource('/services', 'ServicesController');
     Route::resource('/configurations', 'ConfigurationsController');
     Route::resource('/stadistics', 'StadisticsController');
+    Route::resource('/product/categories', 'ProductCategoriesController');
 
     Route::resource('/vehicles', 'VehiclesController');
     Route::post('/vehicle/vehicle-select', 'VehiclesController@vehicleStore')->name('vehicle-select');
 
+    Route::post('select-brands-ajax', 'OrdersController@selectBrandsAjax')->name('select-brands-ajax');
+//    Route::post('select-category-ajax', 'OrdersController@selectCategoriesAjax')->name('select-brands-ajax');
+    Route::post('select-models-ajax', 'OrdersController@selectModelsAjax')->name('select-models-ajax');
     Route::get('/orders/select-client', 'OrdersController@selectClient')->name('select-client');
     Route::get('/orders/select-vehicle/user/{user}', 'OrdersController@selectVehicle')->name('select-vehicle');
     Route::get('/orders/select-vehicle/user/{user}/vehicle/{vehicle}', 'OrdersController@create')->name('add-order');
