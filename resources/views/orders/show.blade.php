@@ -131,7 +131,7 @@
                                 <td>{{ $product->name   }}</td>
                                 <td>$ {{ $product->price }}</td>
                                 <td>{{ $product->pivot->quantity }}</td>
-                                <td>$ {{ $product->pivot->quantity*$product->cost }}</td>
+                                <td>$ {{ $product->pivot->quantity * $product->pivot->price }}</td>
                             </tr>
                         @endforeach
                         </tbody>

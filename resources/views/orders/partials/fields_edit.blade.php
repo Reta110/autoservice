@@ -97,13 +97,17 @@
                                     <div class="input-group-btn input-group-select">
                                         <div class="form-group">
                                             {!! Form::hidden('product_id[]', $oproduct->id, ['class' => 'form-control producto-id']) !!}
+                                            <span class="has-success has-feedback">
+                                            {!! Form::text('product_code',null, ['class' => 'form-control input-code inputSuccess', 'placeholder' => 'Código / serial:']) !!}
+                                            </span>
+                                            <span class="help-block">Help block with success</span>
+                                            <hr>
                                             {!! Form::select('product_category[]', $categories, $oproduct->category_id, ['class' => 'form-control select-category', 'placeholder' => '--- Categoria ---']) !!}
                                         </div>
                                         <div class="form-group">
                                             <select class="form-control select-brand" name="product_brand[]">
                                                 <option selected="selected" disabled="disabled" hidden="hidden"
-                                                        value="">---
-                                                    --- Marca---
+                                                        value=""> ---------
                                                 </option>
                                                 @foreach($marcas as $marca)
                                                     <option value="{{$marca}}"
@@ -115,8 +119,7 @@
                                         <div class="form-group">
                                             <select class="form-control select-model" name="product_model[]">
                                                 <option selected="selected" disabled="disabled" hidden="hidden"
-                                                        value="">---
-                                                    --- Modelo ---
+                                                        value="">    ---------
                                                 </option>
                                                 @foreach($modelos as $modelo)
                                                     <option value="{{$modelo}}"
@@ -149,18 +152,27 @@
                             </div>
                         @endforeach
                         <div class="form-group multiple-form-group input-group">
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label>Producto</label>
                                 <div class="input-group-btn input-group-select">
 
                                     <div class="form-group">
                                         {!! Form::hidden('product_id[]', null, ['class' => 'form-control producto-id']) !!}
-                                        {!! Form::select('product_category[]', $categories, null, ['class' => 'form-control select-category', 'placeholder' => '--- Categoria ---']) !!}
-                                        {!! Form::select('product_brand[]', $marcas, null, ['class' => 'form-control select-brand', 'placeholder' => '--- Marca ---']) !!}
-                                        {!! Form::select('product_model[]', $modelos, null, ['class' => 'form-control select-model', 'placeholder' => '--- Modelo ---']) !!}
+                                        <span class="has-success has-feedback">
+                                        {!! Form::text('product_code',null, ['class' => 'form-control input-code inputSuccess', 'placeholder' => 'Código / serial:']) !!}
+                                        </span>
+                                        <span class="help-block">Help block with success</span>
+                                        <hr>
+                                        {!! Form::select('product_category[]', $categories, null, ['class' => 'form-control select-category', 'placeholder' => '--------']) !!}
+                                        {!! Form::select('product_brand[]', $marcas, null, ['class' => 'form-control select-brand', 'placeholder' => '---------']) !!}
+                                        {!! Form::select('product_model[]', $modelos, null, ['class' => 'form-control select-model', 'placeholder' => '---------']) !!}
                                     </div>
 
                                 </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label>Costo</label>
+                                {!! Form::text('product_cost[]', null, ['class' => 'form-control producto-cost', 'placeholder' => 'costo', 'disabled' => 'true']) !!}
                             </div>
                             <div class="col-md-2">
                                 <label>Precio</label>
@@ -175,7 +187,7 @@
                                 <label>Cantidad</label>
                                 {!! Form::text('product_quantity[]', null, ['class' => 'form-control producto-quantity', 'placeholder' => 'cantidad']) !!}
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-1">
                                 <label> - </label>
                                 <span class="input-group-btn">
                                         <button type="button" class="btn btn-success btn-add">+</button>
@@ -383,6 +395,15 @@
         //Si cambian la cantidad de algun producto de la orden, se calculan los numeros nuevamente
         $(document).on('change', '.producto-quantity', function () {
             calculate()
+
+            var quantity = $(this).closest('.multiple-form-group').find('.producto-quantity').val();
+            var stock = $(this).closest('.multiple-form-group').find('.producto-stock').val();
+
+
+            if (stock > 0 && (quantity > stock)) {
+                alert('Advertencia: la cantidad solicitada es mayor al stock!');
+            }
+
         });
 
         //PRODUCTS (lista dinamica)
@@ -541,46 +562,73 @@
         });
         //Fin buscar los modelos cuando cambie el producto
 
-        //Colocar precio, costo y stock de los productos en los fields
-        $(document).on('change', '.select-model', function () {
+        //Colocar precio y stock de los productos
 
-            var cat = $(this).closest('.multiple-form-group').find('.select-category option:selected').val();
-            var brand = $(this).closest('.multiple-form-group').find('.select-brand option:selected').html();
-            var model = $(this).closest('.multiple-form-group').find('.select-model option:selected').html();
-
-            console.log('cat product=' + cat);
-            console.log('brand product=' + brand);
-            console.log('model product=' + model);
+        $(document).on('change', '.select-product', function () {
+            var id = $(this).val();
             var myArray = {!! $prod !!};
 
             var found = $.map(myArray, function (val) {
-                return (val.category_id == cat && val.brand == brand && val.model == model) ? val.price : null;
+                return val.id == id ? val.price : null;
             });
 
             var stock = $.map(myArray, function (val) {
-                return (val.category_id == cat && val.brand == brand && val.model == model) ? val.stock : null;
+                return val.id == id ? val.stock : null;
             });
 
             var cost = $.map(myArray, function (val) {
-                return (val.category_id == cat && val.brand == brand && val.model == model) ? val.cost : null;
+                return val.id == id ? val.cost : null;
+            });
+
+            $(this).closest('.multiple-form-group').find('.producto-price').val(found[0]);
+            $(this).closest('.multiple-form-group').find('.producto-stock').val(stock[0]);
+            $(this).closest('.multiple-form-group').find('.producto-cost').val(cost[0]);
+
+            console.log(found[0]);
+
+        });
+
+        //Fin Colocar precio y stock de los productos
+
+        //Colocar los campos mediante el codigo
+        $(document).on('change', '.input-code', function () {
+
+            var code = $(this).closest('.multiple-form-group').find('.input-code').val();
+            console.log('code product=' + code);
+            var myArray = {!! $prod !!};
+
+            var found = $.map(myArray, function (val) {
+                return (val.code == code) ? val.price : null;
+            });
+
+            var stock = $.map(myArray, function (val) {
+                return (val.code == code) ? val.stock : null;
+            });
+
+            var cost = $.map(myArray, function (val) {
+                return (val.code == code) ? val.cost : null;
             });
 
             var id = $.map(myArray, function (val) {
-                return (val.category_id == cat && val.brand == brand && val.model == model) ? val.id : null;
+                return (val.code == code) ? val.id : null;
+            });
+
+            var category_id = $.map(myArray, function (val) {
+                return (val.code == code) ? val.category_id : null;
             });
 
             $(this).closest('.multiple-form-group').find('.producto-price').val(found[0]);
             $(this).closest('.multiple-form-group').find('.producto-stock').val(stock[0]);
             $(this).closest('.multiple-form-group').find('.producto-cost').val(cost[0]);
             $(this).closest('.multiple-form-group').find('.producto-id').val(id[0]);
+            $(this).closest('.multiple-form-group').find('.select-category option[value=' + category_id + ']').attr("selected", true);
 
             console.log(found[0]);
 
         });
 
-        //Fin Colocar precio, costo y stock de los productos en los fields
+        //Fin colocar los campos mediante el codigo
 
-        //Fin Colocar precio y stock de los productos
 
         //Caluclar total de los productos
         //$(document).on('click', '.btn-add', calculate);

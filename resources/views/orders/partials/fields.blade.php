@@ -86,26 +86,32 @@
                     <div class="contacts">
 
                         <div class="form-group multiple-form-group input-group">
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label>Producto</label>
                                 <div class="input-group-btn input-group-select">
                                     <div class="form-group">
                                         {!! Form::hidden('product_id[]', null, ['class' => 'form-control producto-id']) !!}
-                                        {!! Form::select('product_category', $categories, null, ['class' => 'form-control select-category', 'placeholder' => '--- Categoria ---']) !!}
+                                        <span class="has-success has-feedback">
+                                        {!! Form::text('product_code',null, ['class' => 'form-control input-code inputSuccess', 'placeholder' => 'Código / serial:']) !!}
+                                        </span>
+                                        <span class="help-block">Help block with success</span>
+                                        <hr>
+                                        {!! Form::select('product_category', $categories, null, ['class' => 'form-control select-category', 'placeholder' => '---------']) !!}
                                     </div>
                                     <div class="form-group">
-                                        {!! Form::select('product_brand[]',$marcas , null, ['class' => 'form-control select-brand', 'placeholder' => '--- Marca---']) !!}
+                                        {!! Form::select('product_brand[]',$marcas , null, ['class' => 'form-control select-brand', 'placeholder' => '---------']) !!}
                                     </div>
                                     <div class="form-group">
-                                        {!! Form::select('product_model[]',$modelos , null, ['class' => 'form-control select-model ', 'placeholder' => '--- Modelo---']) !!}
+                                        {!! Form::select('product_model[]',$modelos , null, ['class' => 'form-control select-model ', 'placeholder' => '----------']) !!}
                                     </div>
 
                                 </div>
                             </div>
                             <div class="col-md-2">
-                                {{--<label>Costo</label>--}}
-                                {{--{!! Form::text('product_cost[]', null, ['class' => 'form-control producto-cost', 'placeholder' => 'costo', 'disabled' => 'true']) !!}--}}
-                                {{--<br>--}}
+                                <label>Costo</label>
+                                {!! Form::text('product_cost[]', null, ['class' => 'form-control producto-cost', 'placeholder' => 'costo', 'disabled' => 'true']) !!}
+                            </div>
+                            <div class="col-md-2">
                                 <label>Precio</label>
                                 {!! Form::text('product_price[]', null, ['class' => 'form-control producto-price', 'placeholder' => 'precio']) !!}
                             </div>
@@ -117,7 +123,7 @@
                                 <label>Cantidad</label>
                                 {!! Form::text('product_quantity[]', null, ['class' => 'form-control producto-quantity', 'placeholder' => 'cantidad']) !!}
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-1">
                                 <label> - </label>
                                 <span class="input-group-btn">
                             <button type="button" class="btn btn-success btn-add">+</button>
@@ -326,7 +332,7 @@
             var stock = $(this).closest('.multiple-form-group').find('.producto-stock').val();
 
 
-            if(stock > 0 && (quantity > stock)){
+            if (stock > 0 && (quantity > stock)) {
                 alert('Advertencia: la cantidad solicitada es mayor al stock!');
             }
 
@@ -526,6 +532,46 @@
         });
 
         //Fin Colocar precio, costo y stock de los productos en los fields
+
+        //Colocar los campos mediante el codigo
+        $(document).on('change', '.input-code', function () {
+
+            var code = $(this).closest('.multiple-form-group').find('.input-code').val();
+            console.log('code product=' + code);
+            var myArray = {!! $prod !!};
+
+            var found = $.map(myArray, function (val) {
+                return (val.code == code) ? val.price : null;
+            });
+
+            var stock = $.map(myArray, function (val) {
+                return (val.code == code) ? val.stock : null;
+            });
+
+            var cost = $.map(myArray, function (val) {
+                return (val.code == code) ? val.cost : null;
+            });
+
+            var id = $.map(myArray, function (val) {
+                return (val.code == code) ? val.id : null;
+            });
+
+            var category_id = $.map(myArray, function (val) {
+                return (val.code == code) ? val.category_id : null;
+            });
+
+            $(this).closest('.multiple-form-group').find('.producto-price').val(found[0]);
+            $(this).closest('.multiple-form-group').find('.producto-stock').val(stock[0]);
+            $(this).closest('.multiple-form-group').find('.producto-cost').val(cost[0]);
+            $(this).closest('.multiple-form-group').find('.producto-id').val(id[0]);
+            $(this).closest('.multiple-form-group').find('.select-category option[value=' + category_id + ']').attr("selected", true);
+
+            console.log(found[0]);
+
+        });
+
+        //Fin colocar los campos mediante el codigo
+
 
         //Caluclar total de los productos
         function calcular_total_producto() {
