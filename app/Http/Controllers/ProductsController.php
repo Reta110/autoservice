@@ -44,6 +44,7 @@ class ProductsController extends Controller
             'brand' => 'required',
             'model' => 'required',
             'stock' => 'required',
+            'category_id' => 'required',
         ]);
 
         Product::create($request->all());

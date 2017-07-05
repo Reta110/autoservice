@@ -103,8 +103,10 @@
                                 </div>
                             </div>
                             <div class="col-md-2">
+                                {{--<label>Costo</label>--}}
+                                {{--{!! Form::text('product_cost[]', null, ['class' => 'form-control producto-cost', 'placeholder' => 'costo', 'disabled' => 'true']) !!}--}}
+                                {{--<br>--}}
                                 <label>Precio</label>
-                                {!! Form::hidden('product_cost[]', null, ['class' => 'form-control producto-cost', 'placeholder' => 'costo']) !!}
                                 {!! Form::text('product_price[]', null, ['class' => 'form-control producto-price', 'placeholder' => 'precio']) !!}
                             </div>
                             <div class="col-md-2">
@@ -319,6 +321,15 @@
         //Si cambian la cantidad de algun producto de la orden, se calculan los numeros nuevamente
         $(document).on('change', '.producto-quantity', function () {
             calculate()
+
+            var quantity = $(this).closest('.multiple-form-group').find('.producto-quantity').val();
+            var stock = $(this).closest('.multiple-form-group').find('.producto-stock').val();
+
+
+            if(stock > 0 && (quantity > stock)){
+                alert('Advertencia: la cantidad solicitada es mayor al stock!');
+            }
+
         });
 
         //PRODUCTS (lista dinamica)

@@ -178,6 +178,18 @@
                             </div>
                         </div>
 
+                        <div class="progress-group">
+                            <span class="progress-text">Productos almacenados</span>
+                            <span class="progress-number"><b>{{$total_productos}}</b></span>
+
+                            <div class="progress sm">
+                                <div class="progress-bar progress-bar-light-blue"
+                                     style="width: {{$total_productos}}%">
+
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
                 <hr>
