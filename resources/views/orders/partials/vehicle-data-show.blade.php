@@ -44,7 +44,7 @@
                 </div>
                 <div class="form-group">
 
-                    <strong>Año:</strong>
+                    <strong>Km:</strong>
                     {{$order->vehicle->km}}
                 </div>
             </div>

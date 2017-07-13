@@ -302,6 +302,12 @@ folder instead of downloading all of them to reduce the load. -->
 
 <script type="text/javascript" src="{{ asset('AdminLTE/plugins/datatables/datatables.min.js') }}"></script>
 
+<script src="{{ asset('js/autoNumeric.min.js') }}"></script>
+<script type="text/javascript">
+    jQuery(function($) {
+        $('.money').autoNumeric('init',{aSep: '.', aDec: ',', aSign: '$ ', mDec: '0'});
+    });
+</script>
 
 @yield('js')
 </body>

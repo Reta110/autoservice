@@ -90,7 +90,7 @@
                                             {{ $order->title }}
                                         </td>
                                         <td>
-                                            {{ $order->user->name }}
+                                            {{ $order->user->name . ' '. $order->user->last_name }}
                                         </td>
                                         <td>
                                             {{ $order->user->rut }}
@@ -104,16 +104,9 @@
                                         <td>
                                             {{ $order->vehicle->year }}                                        </td>
                                         </td>
-                                        <td>
-                                            {{ $order->neto }}
-                                        </td>
-                                        <td>
-                                            {{ $order->iva }}
-                                        </td>
-                                        <td>
-                                            {{ $order->total }}
-                                        </td>
-                                        <td>
+                                        <td class="money">{{ $order->neto }}</td>
+                                        <td class="money">{{ $order->iva }}</td>
+                                        <td class="money">{{ $order->total }}<td>
                                             {{ $order->status }}
                                         </td>
                                     </tr>
@@ -128,9 +121,10 @@
                         <p class="text-center">
                             <strong>Totales</strong>
                         </p>
-                        <h4 class="text-info bg-info">Ingresos: {{$total}} $</h4>
-                        <h4 class="text-danger bg-danger">Costos: {{$total_cost}} $</h4>
-                        <h4 class="text-success bg-success">Ganancia: {{$total - $total_cost}} $</h4>
+                        <h4 class="text-info bg-info">Ingresos: <span class="money">{{$total}}</span></h4>
+                        <h4 class="text-danger bg-danger">Costos: <span class="money">{{$total_cost}}</span></h4>
+                        <h4 class="text-success bg-success">Ganancia: <span
+                                    class="money">{{$total - $total_cost}}</span></h4>
                     </div>
                     <div class="col-xs-5">
                         <p class="text-center">
@@ -192,7 +186,7 @@
 
                         <div class="progress-group">
                             <span class="progress-text">Costo total del almacen</span>
-                            <span class="progress-number"><b>$ {{$total_costos}}</b></span>
+                            <span class="progress-number"><b class="money">{{$total_costos}}</b></span>
 
                             <div class="progress sm">
                                 <div class="progress-bar progress-bar-yellow"

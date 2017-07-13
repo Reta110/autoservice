@@ -26,6 +26,7 @@ class CreateOrdersTable extends Migration
             $table->enum('paid',['si','no']);
             $table->text('type_pay')->nullable();
             $table->text('pay_observations')->nullable();
+            $table->text('km')->nullable();
 
             $table->enum('status', ['budget','started', 'template', 'ended']);
 

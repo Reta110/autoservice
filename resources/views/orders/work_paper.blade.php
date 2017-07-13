@@ -15,7 +15,7 @@
     <section class="invoice">
         <!-- title row -->
         <div class="row">
-            <div class="col-xs-12 table-responsive">
+            <div class="col-xs-12 table-responsive table-condensed">
                 <h1>
                     <img alt="User Image" src="{{ asset ('images/logo.png') }}" class="pull-left">
                 </h1>
@@ -30,12 +30,9 @@
 
         <!-- info row -->
         <div class="row">
-            <div class="col-xs-12 table-responsive">
+            <div class="col-xs-12">
 
-                <table class="table table-bordered table-bordered">
-                    <tr>
-                        <td colspan="10"><strong>DATOS DEL VEHICULO</strong></td>
-                    </tr>
+                <table class="table table-bordered table-condensed">
                     <tr>
                         <td><strong>Marca:</strong></td>
                         <td>{{ $order->vehicle->brand }}</td>
@@ -60,9 +57,9 @@
     @if(count($order->services)>0)
         <!-- Table row -->
             <div class="row">
-                <div class="col-xs-12 table-responsive">
+                <div class="col-xs-12">
                     <h3>Servicios</h3>
-                    <table class="table table-bordered table-bordered">
+                    <table class="table table-bordered table-condensed">
                         <thead>
                         <tr>
                             <th>DESCRIPCION</th>
@@ -86,9 +83,9 @@
     @if(count($order->products)>0)
         <!-- Table row -->
             <div class="row">
-                <div class="col-xs-12 table-responsive">
+                <div class="col-xs-12">
                     <h3>Productos</h3>
-                    <table class="table table-striped table-bordered">
+                    <table class="table table-striped table-bordered table-condensed">
                         <thead>
                         <tr>
                             <th>DESCRIPCION</th>

@@ -15,6 +15,10 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-12">
+            @include('orders.partials.clients-data')
+            @include('orders.partials.vehicle-data')
+        </div>
     </div>
 
     <div class="box-bodys">
@@ -828,12 +832,12 @@
             }
 
             var iva = eval(sum * (conf_iva / 100))
-            var neto = eval(sum - iva)
+            var neto = eval(sum)
 
             $(".neto").val(neto)
             $(".iva").val(iva)
 
-            $(".total").val(sum)
+            $(".total").val(neto + iva)
         }
 
         $(document).ready(function () {

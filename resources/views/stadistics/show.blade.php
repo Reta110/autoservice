@@ -103,15 +103,9 @@
                                         <td>
                                             {{ $order->vehicle->year }}                                        </td>
                                         </td>
-                                        <td>
-                                            {{ $order->neto }}
-                                        </td>
-                                        <td>
-                                            {{ $order->iva }}
-                                        </td>
-                                        <td>
-                                            {{ $order->total }}
-                                        </td>
+                                        <td class="money">{{ $order->neto }}</td>
+                                        <td class="money">{{ $order->iva }}</td>
+                                        <td class="money">{{ $order->total }}<td>
                                         <td>
                                             {{ $order->status }}
                                         </td>
@@ -126,9 +120,10 @@
                         <p class="text-center">
                             <strong>Totales</strong>
                         </p>
-                        <h4 class="text-info bg-info">Ingresos: {{$total}} $</h4>
-                        <h4 class="text-danger bg-danger">Costos: {{$total_cost}} $</h4>
-                        <h4 class="text-success bg-success">Ganancia: {{$total - $total_cost}} $</h4>
+                        <h4 class="text-info bg-info">Ingresos: <span class="money">{{$total}}</span></h4>
+                        <h4 class="text-danger bg-danger">Costos: <span class="money">{{$total_cost}}</span></h4>
+                        <h4 class="text-success bg-success">Ganancia: <span
+                                    class="money">{{$total - $total_cost}}</span></h4>
                     </div>
                     <div class="col-xs-5">
                         <p class="text-center">

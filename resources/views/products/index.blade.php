@@ -76,12 +76,8 @@
                                         <td>
                                             {{ $product->name }}
                                         </td>
-                                        <td>
-                                            {{ $product->cost }}
-                                        </td>
-                                        <td>
-                                            {{ $product->price }}
-                                        </td>
+                                        <td class="money">{{ $product->cost }}</td>
+                                        <td class="money">{{ $product->price }}</td>
                                         <td>
                                             {{ $product->brand }}
                                         </td>

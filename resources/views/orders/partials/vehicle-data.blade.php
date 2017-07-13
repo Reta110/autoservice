@@ -14,7 +14,7 @@
                 <label for="inputPassword3" class="col-sm-2 control-label">Marca</label>
 
                 <div class="col-sm-10">
-                    <input type="password" class="form-control"
+                    <input type="text" class="form-control"
                            placeholder="{{$vehicle->brand}}" disabled>
                 </div>
             </div>
@@ -22,7 +22,7 @@
                 <label for="inputPassword3" class="col-sm-2 control-label">Modelo</label>
 
                 <div class="col-sm-10">
-                    <input type="password" class="form-control"
+                    <input type="text" class="form-control"
                            placeholder="{{$vehicle->model}}" disabled>
                 </div>
             </div>
@@ -30,7 +30,7 @@
                 <label for="inputPassword3" class="col-sm-2 control-label">Vin</label>
 
                 <div class="col-sm-10">
-                    <input type="password" class="form-control"
+                    <input type="text" class="form-control"
                            placeholder="{{$vehicle->vin}}" disabled>
                 </div>
             </div>
@@ -38,7 +38,7 @@
                 <label for="patente" class="col-sm-2 control-label">Patente</label>
 
                 <div class="col-sm-10">
-                    <input type="password" class="form-control"
+                    <input type="text" class="form-control"
                            placeholder="{{$vehicle->patente}}" disabled>
                 </div>
             </div>
@@ -46,7 +46,7 @@
                 <label for="motor" class="col-sm-2 control-label">Motor</label>
 
                 <div class="col-sm-10">
-                    <input type="password" class="form-control"
+                    <input type="text" class="form-control"
                            placeholder="{{$vehicle->motor}}" disabled>
                 </div>
             </div>
@@ -54,7 +54,7 @@
                 <label for="year" class="col-sm-2 control-label">Año</label>
 
                 <div class="col-sm-10">
-                    <input type="password" class="form-control"
+                    <input type="text" class="form-control"
                            placeholder="{{$vehicle->year}}" disabled>
                 </div>
             </div>
@@ -62,8 +62,7 @@
                 <label for="km" class="col-sm-2 control-label">km</label>
 
                 <div class="col-sm-10">
-                    <input type="password" class="form-control"
-                           placeholder="{{$vehicle->km}}" disabled>
+                    <input type="type" name="km" class="form-control" value="{{$order->km}}">
                 </div>
             </div>
         </div>

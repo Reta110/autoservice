@@ -35,8 +35,8 @@
                                 {!! Form::text('hh', $config->price_hh, ['class' => 'form-control order_hh', 'placeholder' => 'HH']) !!}
                             </fieldset>
                             {{--<button type="button" class="btn btn-success btn-sm" data-toggle="modal"--}}
-                                    {{--data-target="#myServiceModal">--}}
-                                {{--Nuevo Servicio--}}
+                            {{--data-target="#myServiceModal">--}}
+                            {{--Nuevo Servicio--}}
                             {{--</button>--}}
                         </div>
                     </div>
@@ -165,13 +165,13 @@
 
                             <div class="col-sm-10">
                                 {{--<label class="radio-inline">--}}
-                                    <input type="hidden" name="status" value="budget">
+                                <input type="hidden" name="status" value="budget">
                                 {{--</label>--}}
                                 {{--<label class="radio-inline">--}}
-                                    {{--<input type="radio" name="status" value="started">Iniciado--}}
+                                {{--<input type="radio" name="status" value="started">Iniciado--}}
                                 {{--</label>--}}
                                 {{--<label class="radio-inline">--}}
-                                    {{--<input type="radio" name="status" value="ended">Finalizado--}}
+                                {{--<input type="radio" name="status" value="ended">Finalizado--}}
                                 {{--</label>--}}
                             </div>
 
@@ -476,30 +476,30 @@
 
         {{--//Agregar producto ajax--}}
         {{--function add_product_ajax(idproduct, quantity) {--}}
-            {{--var token = $("input[name='_token']").val();--}}
-            {{--$.ajax({--}}
-                {{--url: "{{route('add-ajax')}}",--}}
-                {{--method: 'POST',--}}
-                {{--data: {idproduct: idproduct, quantity: quantity, _token: token},--}}
-                {{--success: function (data) {--}}
-                    {{--console.log("suucees bro")--}}
-                {{--}--}}
-            {{--});--}}
+        {{--var token = $("input[name='_token']").val();--}}
+        {{--$.ajax({--}}
+        {{--url: "{{route('add-ajax')}}",--}}
+        {{--method: 'POST',--}}
+        {{--data: {idproduct: idproduct, quantity: quantity, _token: token},--}}
+        {{--success: function (data) {--}}
+        {{--console.log("suucees bro")--}}
+        {{--}--}}
+        {{--});--}}
         {{--}--}}
         {{--//Fin Agregar producto ajax--}}
 
         {{--//Remove producto ajax--}}
         {{--function remove_product_ajax(idproduct, quantity) {--}}
 
-            {{--var token = $("input[name='_token']").val();--}}
-            {{--$.ajax({--}}
-                {{--url: "{{route('remove-ajax')}}",--}}
-                {{--method: 'POST',--}}
-                {{--data: {idproduct: idproduct, quantity: quantity, _token: token},--}}
-                {{--success: function (data) {--}}
-                    {{--console.log("suucees bro")--}}
-                {{--}--}}
-            {{--});--}}
+        {{--var token = $("input[name='_token']").val();--}}
+        {{--$.ajax({--}}
+        {{--url: "{{route('remove-ajax')}}",--}}
+        {{--method: 'POST',--}}
+        {{--data: {idproduct: idproduct, quantity: quantity, _token: token},--}}
+        {{--success: function (data) {--}}
+        {{--console.log("suucees bro")--}}
+        {{--}--}}
+        {{--});--}}
         {{--}--}}
         {{--//Fin Remove producto ajax--}}
 
@@ -725,13 +725,20 @@
                 var sum = eval(calcular_total_producto() + calcular_total_servicios());
             }
 
+//            var iva = eval(sum * (conf_iva / 100))
+//            var neto = eval(sum - iva)
+//
+//            $(".neto").val(neto)
+//            $(".iva").val(iva)
+//
+//            $(".total").val(sum)
             var iva = eval(sum * (conf_iva / 100))
-            var neto = eval(sum - iva)
+            var neto = eval(sum)
 
             $(".neto").val(neto)
             $(".iva").val(iva)
 
-            $(".total").val(sum)
+            $(".total").val(neto + iva)
 
         }
         //Fin calculate

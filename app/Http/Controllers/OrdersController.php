@@ -165,6 +165,7 @@ class OrdersController extends Controller
             'paid' => $request->get('paid'),
             'type_pay' => $request->get('type_pay'),
             'pay_observations' => $request->get('pay_observations'),
+            'km' => $request->get('km'),
         ]);
 
         if (count($request->product_id) > 0) {
@@ -207,6 +208,9 @@ class OrdersController extends Controller
     public function edit($id)
     {
         $order = Order::find($id);
+
+        $client = $order->user;
+        $vehicle = $order->vehicle;
 
         $products = Product::orderBy('name', 'ASC')->pluck('name', 'id', 'price')->all();
         $services = Service::orderBy('name', 'ASC')->pluck('name', 'id', 'price')->all();
@@ -296,8 +300,7 @@ class OrdersController extends Controller
 
         $order->save();
 
-        return redirect()->route('orders.index')->with('success', 'Se ha actualizado de manera exitosa!');
-
+        return redirect()->route('orders.show', $order->id)->with('success', 'Se ha actualizado de manera exitosa!');
     }
 
     public function addAjax(Request $request)

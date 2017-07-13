@@ -23,6 +23,7 @@
                                     <th>MARCA</th>
                                     <th>MODELO</th>
                                     <th>DISPONIBLE</th>
+                                    <th>TAGS</th>
                                     <th>CATEGORIA</th>
                                 </tr>
                                 </thead>
@@ -52,6 +53,9 @@
                                         </td>
                                         <td>
                                             {{ $product->stock }}
+                                        </td>
+                                        <td>
+                                            {{ $product->tags }}
                                         </td>
                                         <td>
                                             {{ $product->category->name }}

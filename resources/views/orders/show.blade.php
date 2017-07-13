@@ -53,16 +53,16 @@
                 <address>
                     <strong>Automec</strong><br>
                     <b>Fecha registro: </b>{{ $order->created_at }}<br>
-                    <b>Dirección:</b> <br>
-                    <b>Telf:</b> <br>
-                    <b>Email:</b> admin@automec.cl
+                    <b>Orden Nro:</b> {{ $order->id }}<br>
+                    <b>Telf:</b> 232666335<br>
+                    <b>Email:</b>contacto@automec.cl
                 </address>
             </div>
             <!-- /.col -->
             <div class="col-sm-4 invoice-col">
                 <address>
                     <strong>Datos del cliente</strong><br>
-                    <b>Cliente:</b> {{ $order->user->fullname }}<br>
+                    <b>Nombre:</b> {{ $order->user->fullname }}<br>
                     <b>Rut:</b> {{ $order->user->rut }}<br>
                     <b>Telf:</b> {{ $order->user->phone }}<br>
                     <b>Email:</b> {{ $order->user->email }}<br>
@@ -76,7 +76,7 @@
                     <b>Modelo:</b> {{ $order->vehicle->model }}<br>
                     <b>Motor:</b> {{ $order->vehicle->motor }}<br>
                     <b>Vin:</b> {{ $order->vehicle->vin }}<br>
-                    <b>Km:</b> {{ $order->vehicle->km }}<br>
+                    <b>Km:</b> {{ $order->km }}<br>
                 </address>
             </div>
             <!-- /.col -->
@@ -88,7 +88,7 @@
             <div class="row">
                 <div class="col-xs-12 table-responsive">
                     <h3>Servicios</h3>
-                    <table class="table table-striped">
+                    <table class="table table-striped table-condensed">
                         <thead>
                         <tr>
                             <th>DESCRIPCION</th>
@@ -100,8 +100,8 @@
                         @foreach($order->services as $service)
                             <tr>
                                 <td>{{$service->name}}</td>
-                                <td>{{$service->hh}}</td>
-                                <td>$ {{$service->hh * $config->price_hh }}</td>
+                                <td>{{$service->pivot->hh}}</td>
+                                <td class="money">{{$service->pivot->hh * $order->hh }}</td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -114,9 +114,9 @@
     @if(count($order->products)>0)
         <!-- Table row -->
             <div class="row">
-                <div class="col-xs-12 table-responsive">
+                <div class="col-xs-12">
                     <h3>Productos</h3>
-                    <table class="table table-striped ">
+                    <table class="table table-striped table-condensed">
                         <thead>
                         <tr>
                             <th>DESCRIPCION</th>
@@ -129,9 +129,9 @@
                         @foreach($order->products as $product)
                             <tr>
                                 <td>{{ $product->name   }}</td>
-                                <td>$ {{ $product->price }}</td>
+                                <td class="money">{{ $product->price }}</td>
                                 <td>{{ $product->pivot->quantity }}</td>
-                                <td>$ {{ $product->pivot->quantity * $product->pivot->price }}</td>
+                                <td class="money">{{ $product->pivot->quantity * $product->pivot->price }}</td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -167,15 +167,17 @@
                         @endif
                         <tr>
                             <td>Neto:</td>
-                            <td><b>$ {{ $order->neto }} </b></td>
+                            <td><b class="money">{{ $order->neto }} </b></td>
                         </tr>
                         <tr>
                             <td>Iva:</td>
-                            <td><b>$ {{ $order->iva }}</b></td>
+                            <td><b class="money">{{ $order->iva }}</b></td>
                         </tr>
                         <tr>
                             <th><h4>Total:</h4></th>
-                            <td><h4><b>$ {{ $order->total }}</b></h4></td>
+                            <td>
+                                <h4><b class="money">{{ $order->total }}</b></h4>
+                            </td>
                         </tr>
                     </table>
                 </div>
@@ -183,9 +185,9 @@
             <!-- /.col -->
             <div class="col-xs-3 no-print">
                 <h3>Ganancias:</h3>
-                <h4 class="text-info bg-info">Total: $ {{$order->total}}</h4>
-                <h4 class="text-danger bg-danger">Costo total: $ {{$order->total_cost}}</h4>
-                <h4 class="text-success bg-success">Ganancia: $ {{$order->total - $order->total_cost}}</h4>
+                <h4 class="text-info bg-info">Total: <span class="money">{{$order->total}}</span></h4>
+                <h4 class="text-danger bg-danger">Costo total: <span class="money">{{$order->total_cost}}</span></h4>
+                <h4 class="text-success bg-success">Ganancia: <span class="money">{{$order->total - $order->total_cost}}</span></h4>
             </div>
 
         </div>
@@ -208,7 +210,8 @@
                 <i class="glyphicon glyphicon-backward"></i>
             </a>
             <div class="pull-right">
-                <a class="btn btn-warning" title="Duplicar Orden" href="{{ route('duplicate-select-client',$order->id)}}">Duplicar Orden
+                <a class="btn btn-warning" title="Duplicar Orden"
+                   href="{{ route('duplicate-select-client',$order->id)}}">Duplicar Orden
                     <i class="glyphicon glyphicon-duplicate" aria-hidden="true"></i>
                 </a>
             </div>
@@ -216,11 +219,15 @@
 
         <br>
         <div class="row">
-            <p class="FontSmall text-right pull-right">
-                Servicio Automotriz Automec Limitada. Rut: 76.525.647-K
-                <br>
-                C.Corriente 70541017, Banco Santander.
-            </p>
+            <div class="col-xs-11">
+
+                <p class="FontSmall text-right pull-right">
+                    Servicio Automotriz Automec Limitada. Rut: 76.525.647-K
+                    <br>
+                    C.Corriente 70541017, Banco Santander.
+                </p>
+
+            </div>
         </div>
 
     </section>
