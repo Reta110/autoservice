@@ -13,16 +13,13 @@
                 <a href="#">
                     <i class="fa fa-dashboard">
                     </i>
-                    Home
+                    Ordenes
                 </a>
             </li>
             <li>
                 <a href="#">
-                    Examples
+                    Listado
                 </a>
-            </li>
-            <li class="active">
-                Blank page
             </li>
         </ol>
     </section>
@@ -122,11 +119,6 @@
                                                     <i class="fa fa-trash" aria-hidden="true"></i>
                                                 </button>
                                             </div>
-                                            {{--<div class="form-group">--}}
-                                            {{--<button type="submit" class="btn btn-link" title="Duplicar">--}}
-                                            {{--<i class="glyphicon glyphicon-duplicate" aria-hidden="true"></i>--}}
-                                            {{--</button>--}}
-                                            {{--</div>--}}
                                             {!! Form::close() !!}
                                         </td>
                                     </tr>

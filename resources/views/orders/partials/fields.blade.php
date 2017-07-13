@@ -30,11 +30,14 @@
                     <div class="box-header">
                         <h3 class="box-title">Agregue los servicios</h3>
                         <div class="pull-right no-print">
-                            {{--<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myServiceModal">--}}
-                            {{--Nuevo Servicio--}}
+                            <fieldset>
+                                <label>Precio HH</label>
+                                {!! Form::text('hh', $config->price_hh, ['class' => 'form-control order_hh', 'placeholder' => 'HH']) !!}
+                            </fieldset>
+                            {{--<button type="button" class="btn btn-success btn-sm" data-toggle="modal"--}}
+                                    {{--data-target="#myServiceModal">--}}
+                                {{--Nuevo Servicio--}}
                             {{--</button>--}}
-                            <label>Precio HH</label>
-                            {!! Form::text('hh', $config->price_hh, ['class' => 'form-control order_hh', 'placeholder' => 'HH']) !!}
                         </div>
                     </div>
                     <div class="contacts">
@@ -78,9 +81,20 @@
                     <div class="box-header">
                         <h3 class="box-title">Seleccione producto y cantidad</h3>
                         <div class="pull-right">
-                            {{--<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myProductModal">--}}
-                            {{--Nuevo Producto--}}
-                            {{--</button>--}}
+                            @if(count($recommended) > 0)
+                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                        data-target="#myProductRecommendeModal">
+                                    Recomendados
+                                </button>
+                            @endif
+
+                            <button type="button" class="btn btn-success btn-sm" data-toggle="modal"
+                                    data-target="#myProductModal">
+                                Nuevo
+                            </button>
+                            <div class="product-saved">
+                                <p class="info no-print text-success">Guardado!!</p>
+                            </div>
                         </div>
                     </div>
                     <div class="contacts">
@@ -96,7 +110,7 @@
                                         </span>
                                         <span class="help-block">Help block with success</span>
                                         <hr>
-                                        {!! Form::select('product_category', $categories, null, ['class' => 'form-control select-category', 'placeholder' => '---------']) !!}
+                                        {!! Form::select('product_category', $categories, null, ['class' => 'form-control select-category', 'placeholder' => '--- Categoria ---']) !!}
                                     </div>
                                     <div class="form-group">
                                         {!! Form::select('product_brand[]',$marcas , null, ['class' => 'form-control select-brand', 'placeholder' => '---------']) !!}
@@ -147,18 +161,18 @@
                 <div class="box box-info">
                     <div class="box-header">
                         <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-2 control-label">Estatus</label>
+                            {{--<label for="inputEmail3" class="col-sm-2 control-label">Estatus</label>--}}
 
                             <div class="col-sm-10">
-                                <label class="radio-inline">
-                                    <input type="radio" name="status" value="budget" checked>Presupuesto
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="status" value="started">Iniciado
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="status" value="ended">Finalizado
-                                </label>
+                                {{--<label class="radio-inline">--}}
+                                    <input type="hidden" name="status" value="budget">
+                                {{--</label>--}}
+                                {{--<label class="radio-inline">--}}
+                                    {{--<input type="radio" name="status" value="started">Iniciado--}}
+                                {{--</label>--}}
+                                {{--<label class="radio-inline">--}}
+                                    {{--<input type="radio" name="status" value="ended">Finalizado--}}
+                                {{--</label>--}}
                             </div>
 
                         </div>
@@ -250,9 +264,63 @@
 
 @section('js')
 
-    <script type="text/javascript" src="{{ asset('AdminLTE/plugins/input-mask/jquery.inputmask.js') }}"></script>
+    <link href="{{asset('AdminLTE/plugins/bootstrap-tagsinput-latest/dist/bootstrap-tagsinput.css')}}" rel="stylesheet">
+
+    <script type="text/javascript"
+            src="{{asset('AdminLTE/plugins/bootstrap-tagsinput-latest/dist/bootstrap-tagsinput.js')}}"></script>
+
+
 
     <script type="text/javascript">
+        //super global
+        var prod;
+
+        //Modal para agregar productos sin salir
+        $("#modal-form").submit(function (event) {
+            event.preventDefault(); //prevent default action
+            console.log('intento 2');
+
+            var token = $("input[name='_token']").val();
+            var code = $(this).closest('#myProductModal').find('.code').val();
+            var name = $(this).closest('#myProductModal').find('.name').val();
+            var cost = $(this).closest('#myProductModal').find('.cost').val();
+            var price = $(this).closest('#myProductModal').find('.price').val();
+            var brand = $(this).closest('#myProductModal').find('.brand').val();
+            var model = $(this).closest('#myProductModal').find('.model').val();
+            var stock = $(this).closest('#myProductModal').find('.stock').val();
+            var category_id = $(this).closest('#myProductModal').find('.category_id').val();
+            var tags = $(this).closest('#myProductModal').find('.tags').val();
+
+            $.ajax({
+                url: "{{route('products.store')}}",
+                method: 'POST',
+                data: {
+                    _token: token,
+                    "code": code,
+                    "name": name,
+                    "cost": cost,
+                    "price": price,
+                    "brand": brand,
+                    "model": model,
+                    "stock": stock,
+                    "category_id": category_id,
+                    "tags": tags
+                },
+                success: function (data) {
+                    console.log("suucees bro")
+                }
+            });
+
+            console.log('DONE');
+            $('#modal-form').modal('hide');
+            $('.close-modal').click();
+            $('.product-saved').fadeIn(2000, function () {
+                $('.product-saved').fadeOut(1000);
+            });
+
+        });
+
+        //Fin Modal para agregar productos sin salir
 
         //SERVICES (Lista dinamica)  formgroup2
         (function ($) {
@@ -328,13 +396,13 @@
         $(document).on('change', '.producto-quantity', function () {
             calculate()
 
-            var quantity = $(this).closest('.multiple-form-group').find('.producto-quantity').val();
-            var stock = $(this).closest('.multiple-form-group').find('.producto-stock').val();
-
-
-            if (stock > 0 && (quantity > stock)) {
-                alert('Advertencia: la cantidad solicitada es mayor al stock!');
-            }
+//            var quantity = $(this).closest('.multiple-form-group').find('.producto-quantity').val();
+//            var stock = $(this).closest('.multiple-form-group').find('.producto-stock').val();
+//
+//
+//            if (stock > 0 && (quantity > stock)) {
+//                alert('Advertencia: la cantidad solicitada es mayor al stock!');
+//            }
 
         });
 
@@ -406,34 +474,35 @@
         })(jQuery);
         //Fin PRODUCTS
 
-        //Agregar producto ajax
-        function add_product_ajax(idproduct, quantity) {
-            var token = $("input[name='_token']").val();
-            $.ajax({
-                url: "{{route('add-ajax')}}",
-                method: 'POST',
-                data: {idproduct: idproduct, quantity: quantity, _token: token},
-                success: function (data) {
-                    console.log("suucees bro")
-                }
-            });
-        }
-        //Fin Agregar producto ajax
+        {{--//Agregar producto ajax--}}
+        {{--function add_product_ajax(idproduct, quantity) {--}}
+            {{--var token = $("input[name='_token']").val();--}}
+            {{--$.ajax({--}}
+                {{--url: "{{route('add-ajax')}}",--}}
+                {{--method: 'POST',--}}
+                {{--data: {idproduct: idproduct, quantity: quantity, _token: token},--}}
+                {{--success: function (data) {--}}
+                    {{--console.log("suucees bro")--}}
+                {{--}--}}
+            {{--});--}}
+        {{--}--}}
+        {{--//Fin Agregar producto ajax--}}
 
-        //Remove producto ajax
-        function remove_product_ajax(idproduct, quantity) {
+        {{--//Remove producto ajax--}}
+        {{--function remove_product_ajax(idproduct, quantity) {--}}
 
-            var token = $("input[name='_token']").val();
-            $.ajax({
-                url: "{{route('remove-ajax')}}",
-                method: 'POST',
-                data: {idproduct: idproduct, quantity: quantity, _token: token},
-                success: function (data) {
-                    console.log("suucees bro")
-                }
-            });
-        }
-        //Fin Remove producto ajax
+            {{--var token = $("input[name='_token']").val();--}}
+            {{--$.ajax({--}}
+                {{--url: "{{route('remove-ajax')}}",--}}
+                {{--method: 'POST',--}}
+                {{--data: {idproduct: idproduct, quantity: quantity, _token: token},--}}
+                {{--success: function (data) {--}}
+                    {{--console.log("suucees bro")--}}
+                {{--}--}}
+            {{--});--}}
+        {{--}--}}
+        {{--//Fin Remove producto ajax--}}
+
 
         //Colocar precio hora en servicios
         $(document).on('change', '.select-service', function () {
@@ -670,6 +739,7 @@
 
         //Initialize Select2 Elements
         $('.select2').select2()
+        $('.product-saved').hide();
 
     </script>
 

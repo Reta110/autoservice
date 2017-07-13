@@ -172,7 +172,7 @@
 
                             <div class="progress sm">
                                 <div class="progress-bar progress-bar-green"
-                                     style="width: 80%">
+                                     style="width: 100%">
 
                                 </div>
                             </div>
@@ -184,6 +184,18 @@
 
                             <div class="progress sm">
                                 <div class="progress-bar progress-bar-light-blue"
+                                     style="width: {{$total_productos}}%">
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="progress-group">
+                            <span class="progress-text">Costo total del almacen</span>
+                            <span class="progress-number"><b>$ {{$total_costos}}</b></span>
+
+                            <div class="progress sm">
+                                <div class="progress-bar progress-bar-yellow"
                                      style="width: {{$total_productos}}%">
 
                                 </div>

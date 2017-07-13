@@ -13,16 +13,13 @@
                 <a href="#">
                     <i class="fa fa-dashboard">
                     </i>
-                    Home
+                    Orden
                 </a>
             </li>
             <li>
                 <a href="#">
-                    Examples
+                    Editar
                 </a>
-            </li>
-            <li class="active">
-                Blank page
             </li>
         </ol>
     </section>
@@ -46,16 +43,17 @@
             </div>
         </div>
         <div class="for text-center">
-            {!! Form::submit('Actualizar', ['class'=> 'btn btn-primary']) !!}
             <a class="btn btn-danger" href="{{ route('orders.index')}}">
                 Cancelar
             </a>
+            {!! Form::button('Enviar', ['class'=> 'btn btn-primary', 'onClick'=>'submit();']) !!}
         </div>
         {!! Form::close() !!}
     </section>
 
-    {{--@include('orders.modals.product-modal')--}}
-    {{--@include('orders.modals.service-modal')--}}
+    @include('orders.modals.product-recommended-modal')
+    @include('orders.modals.product-create-modal')
+    @include('orders.modals.service-modal')
 
 @endsection
 

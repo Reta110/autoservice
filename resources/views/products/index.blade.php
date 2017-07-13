@@ -60,6 +60,7 @@
                                     <th>MARCA</th>
                                     <th>MODELO</th>
                                     <th>DISPONIBLE</th>
+                                    <th>TAGS</th>
                                     <th>ACCIONES</th>
                                 </tr>
                                 </thead>
@@ -89,6 +90,9 @@
                                         </td>
                                         <td>
                                             {{ $product->stock }}
+                                        </td>
+                                        <td>
+                                            {{ $product->tags }}
                                         </td>
                                         <td>
                                             {!! Form::open(['route' => ['products.destroy',$product ], 'method' => 'DELETE']) !!}

@@ -86,19 +86,35 @@
                 <div class="box box-info">
                     <div class="box-header">
                         <h3 class="box-title">Seleccione producto y cantidad</h3>
+                        <div class="pull-right">
+                            @if(count($recommended) > 0)
+                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                        data-target="#myProductRecommendeModal">
+                                    Recomendados
+                                </button>
+                            @endif
+
+                            <button type="button" class="btn btn-success btn-sm" data-toggle="modal"
+                                    data-target="#myProductModal">
+                                Nuevo
+                            </button>
+                            <div class="product-saved">
+                                <p class="info no-print text-success">Guardado!!</p>
+                            </div>
+                        </div>
                     </div>
                     <div class="contacts">
 
                         @foreach($order->products as $oproduct)
 
                             <div class="form-group multiple-form-group input-group">
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <label>Producto</label>
                                     <div class="input-group-btn input-group-select">
                                         <div class="form-group">
                                             {!! Form::hidden('product_id[]', $oproduct->id, ['class' => 'form-control producto-id']) !!}
                                             <span class="has-success has-feedback">
-                                            {!! Form::text('product_code',null, ['class' => 'form-control input-code inputSuccess', 'placeholder' => 'Código / serial:']) !!}
+                                            {!! Form::text('product_code',$oproduct->code, ['class' => 'form-control input-code inputSuccess', 'placeholder' => 'Código / serial:']) !!}
                                             </span>
                                             <span class="help-block">Help block with success</span>
                                             <hr>
@@ -119,7 +135,7 @@
                                         <div class="form-group">
                                             <select class="form-control select-model" name="product_model[]">
                                                 <option selected="selected" disabled="disabled" hidden="hidden"
-                                                        value="">    ---------
+                                                        value=""> ---------
                                                 </option>
                                                 @foreach($modelos as $modelo)
                                                     <option value="{{$modelo}}"
@@ -131,8 +147,11 @@
                                     </div>
                                 </div>
                                 <div class="col-md-2">
+                                    <label>Costo</label>
+                                    {!! Form::text('product_cost[]', $oproduct->cost, ['class' => 'form-control producto-cost', 'placeholder' => 'costo', 'disabled' => 'true']) !!}
+                                </div>
+                                <div class="col-md-2">
                                     <label>Precio</label>
-                                    {!! Form::hidden('product_cost[]', $oproduct->cost, ['class' => 'form-control producto-cost', 'placeholder' => 'costo']) !!}
                                     {!! Form::text('product_price[]', $oproduct->pivot->price, ['class' => 'form-control producto-price', 'placeholder' => 'precio']) !!}
                                 </div>
                                 <div class="col-md-2">
@@ -143,7 +162,7 @@
                                     <label>Cantidad</label>
                                     {!! Form::text('product_quantity[]', $oproduct->pivot->quantity, ['class' => 'form-control producto-quantity', 'placeholder' => 'cantidad']) !!}
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-1">
                                     <label> - </label>
                                     <span class="input-group-btn">
                                         <button type="button" class="btn btn-danger btn-remove">-</button>
@@ -248,7 +267,7 @@
                         <div class="form-group">
                             <label for="inputEmail3" class="col-sm-4 control-label">Forma de pago:</label>
                             <div class="col-sm-8">
-                                <select class="form-control" name="type_pay"
+                                <select class="form-control select2" name="type_pay"
                                         @if($order->type_pay == '') selected="selected" @endif>
                                     <option value="">---
                                         Tipo de pago ---
@@ -320,8 +339,59 @@
 
 
 @section('js')
+    <link href="{{asset('AdminLTE/plugins/bootstrap-tagsinput-latest/dist/bootstrap-tagsinput.css')}}" rel="stylesheet">
+
+    <script type="text/javascript"
+            src="{{asset('AdminLTE/plugins/bootstrap-tagsinput-latest/dist/bootstrap-tagsinput.js')}}"></script>
 
     <script type="text/javascript">
+
+        //Modal para agregar productos sin salir
+        $("#modal-form").submit(function (event) {
+            event.preventDefault(); //prevent default action
+            console.log('intento 2');
+
+            var token = $("input[name='_token']").val();
+            var code = $(this).closest('#myProductModal').find('.code').val();
+            var name = $(this).closest('#myProductModal').find('.name').val();
+            var cost = $(this).closest('#myProductModal').find('.cost').val();
+            var price = $(this).closest('#myProductModal').find('.price').val();
+            var brand = $(this).closest('#myProductModal').find('.brand').val();
+            var model = $(this).closest('#myProductModal').find('.model').val();
+            var stock = $(this).closest('#myProductModal').find('.stock').val();
+            var category_id = $(this).closest('#myProductModal').find('.category_id').val();
+            var tags = $(this).closest('#myProductModal').find('.tags').val();
+
+            $.ajax({
+                url: "{{route('products.store')}}",
+                method: 'POST',
+                data: {
+                    _token: token,
+                    "code": code,
+                    "name": name,
+                    "cost": cost,
+                    "price": price,
+                    "brand": brand,
+                    "model": model,
+                    "stock": stock,
+                    "category_id": category_id,
+                    "tags": tags
+                },
+                success: function (data) {
+                    console.log("suucees bro")
+                }
+            });
+
+            console.log('DONE');
+            $('#modal-form').modal('hide');
+            $('.close-modal').click();
+            $('.product-saved').fadeIn(2000, function () {
+                $('.product-saved').fadeOut(1000);
+            });
+
+        });
+
+        //Fin Modal para agregar productos sin salir
 
         //SERVICES (Lista dinamica)
         (function ($) {
@@ -396,13 +466,13 @@
         $(document).on('change', '.producto-quantity', function () {
             calculate()
 
-            var quantity = $(this).closest('.multiple-form-group').find('.producto-quantity').val();
-            var stock = $(this).closest('.multiple-form-group').find('.producto-stock').val();
-
-
-            if (stock > 0 && (quantity > stock)) {
-                alert('Advertencia: la cantidad solicitada es mayor al stock!');
-            }
+//            var quantity = $(this).closest('.multiple-form-group').find('.producto-quantity').val();
+//            var stock = $(this).closest('.multiple-form-group').find('.producto-stock').val();
+//
+//
+//            if (stock > 0 && (quantity > stock)) {
+//                alert('Advertencia: la cantidad solicitada es mayor al stock!');
+//            }
 
         });
 
@@ -474,34 +544,34 @@
         })(jQuery);
         //Fin PRODUCTS
 
-        //Agregar producto ajax
-        function add_product_ajax(idproduct, quantity) {
-            var token = $("input[name='_token']").val();
-            $.ajax({
-                url: "{{route('add-ajax')}}",
-                method: 'POST',
-                data: {idproduct: idproduct, quantity: quantity, _token: token},
-                success: function (data) {
-                    console.log("suucees bro")
-                }
-            });
-        }
-        //Fin Agregar producto ajax
+        {{--//Agregar producto ajax--}}
+        {{--function add_product_ajax(idproduct, quantity) {--}}
+            {{--var token = $("input[name='_token']").val();--}}
+            {{--$.ajax({--}}
+                {{--url: "{{route('add-ajax')}}",--}}
+                {{--method: 'POST',--}}
+                {{--data: {idproduct: idproduct, quantity: quantity, _token: token},--}}
+                {{--success: function (data) {--}}
+                    {{--console.log("suucees bro")--}}
+                {{--}--}}
+            {{--});--}}
+        {{--}--}}
+        {{--//Fin Agregar producto ajax--}}
 
-        //Remove producto ajax
-        function remove_product_ajax(idproduct, quantity) {
+        {{--//Remove producto ajax--}}
+        {{--function remove_product_ajax(idproduct, quantity) {--}}
 
-            var token = $("input[name='_token']").val();
-            $.ajax({
-                url: "{{route('remove-ajax')}}",
-                method: 'POST',
-                data: {idproduct: idproduct, quantity: quantity, _token: token},
-                success: function (data) {
-                    console.log("suucees bro")
-                }
-            });
-        }
-        //Fin Remove producto ajax
+            {{--var token = $("input[name='_token']").val();--}}
+            {{--$.ajax({--}}
+                {{--url: "{{route('remove-ajax')}}",--}}
+                {{--method: 'POST',--}}
+                {{--data: {idproduct: idproduct, quantity: quantity, _token: token},--}}
+                {{--success: function (data) {--}}
+                    {{--console.log("suucees bro")--}}
+                {{--}--}}
+            {{--});--}}
+        {{--}--}}
+        {{--//Fin Remove producto ajax--}}
 
         //Colocar precio hora en servicio
         $(document).on('change', '.select-service', function () {
@@ -564,31 +634,68 @@
 
         //Colocar precio y stock de los productos
 
-        $(document).on('change', '.select-product', function () {
-            var id = $(this).val();
+        {{--$(document).on('change', '.select-product', function () {--}}
+        {{--var id = $(this).val();--}}
+        {{--var myArray = {!! $prod !!};--}}
+
+        {{--var found = $.map(myArray, function (val) {--}}
+        {{--return val.id == id ? val.price : null;--}}
+        {{--});--}}
+
+        {{--var stock = $.map(myArray, function (val) {--}}
+        {{--return val.id == id ? val.stock : null;--}}
+        {{--});--}}
+
+        {{--var cost = $.map(myArray, function (val) {--}}
+        {{--return val.id == id ? val.cost : null;--}}
+        {{--});--}}
+
+        {{--$(this).closest('.multiple-form-group').find('.producto-price').val(found[0]);--}}
+        {{--$(this).closest('.multiple-form-group').find('.producto-stock').val(stock[0]);--}}
+        {{--$(this).closest('.multiple-form-group').find('.producto-cost').val(cost[0]);--}}
+
+        {{--console.log(found[0]);--}}
+
+        {{--});--}}
+
+        {{--//Fin Colocar precio y stock de los productos--}}
+
+        //Colocar precio, costo y stock de los productos en los fields
+        $(document).on('change', '.select-model', function () {
+
+            var cat = $(this).closest('.multiple-form-group').find('.select-category option:selected').val();
+            var brand = $(this).closest('.multiple-form-group').find('.select-brand option:selected').html();
+            var model = $(this).closest('.multiple-form-group').find('.select-model option:selected').html();
+
+            console.log('cat product=' + cat);
+            console.log('brand product=' + brand);
+            console.log('model product=' + model);
             var myArray = {!! $prod !!};
 
             var found = $.map(myArray, function (val) {
-                return val.id == id ? val.price : null;
+                return (val.category_id == cat && val.brand == brand && val.model == model) ? val.price : null;
             });
 
             var stock = $.map(myArray, function (val) {
-                return val.id == id ? val.stock : null;
+                return (val.category_id == cat && val.brand == brand && val.model == model) ? val.stock : null;
             });
 
             var cost = $.map(myArray, function (val) {
-                return val.id == id ? val.cost : null;
+                return (val.category_id == cat && val.brand == brand && val.model == model) ? val.cost : null;
+            });
+
+            var id = $.map(myArray, function (val) {
+                return (val.category_id == cat && val.brand == brand && val.model == model) ? val.id : null;
             });
 
             $(this).closest('.multiple-form-group').find('.producto-price').val(found[0]);
             $(this).closest('.multiple-form-group').find('.producto-stock').val(stock[0]);
             $(this).closest('.multiple-form-group').find('.producto-cost').val(cost[0]);
+            $(this).closest('.multiple-form-group').find('.producto-id').val(id[0]);
 
             console.log(found[0]);
 
         });
-
-        //Fin Colocar precio y stock de los productos
 
         //Colocar los campos mediante el codigo
         $(document).on('change', '.input-code', function () {
@@ -734,6 +841,8 @@
             calcular_total_costos()
         });
 
+        $('.select2').select2()
+        $('.product-saved').hide();
 
     </script>
 

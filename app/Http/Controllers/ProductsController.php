@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Product;
 use App\ProductCategory;
 use Illuminate\Http\Request;
+use Symfony\Component\VarDumper\Dumper\DataDumperInterface;
 
 class ProductsController extends Controller
 {
@@ -49,7 +50,13 @@ class ProductsController extends Controller
 
         Product::create($request->all());
 
-        return redirect()->route('products.index')->with('success', 'Se ha registrado de manera exitosa!');
+        if ($request->ajax()) {
+            $aux = Product::orderBy('id', 'ASC')->get();
+            $prod = $aux->toJson();
+            return response()->json(['success' => 'Se ha registrado de manera exitosa!','prod' => $prod]);
+        }else{
+            return redirect()->route('products.index')->with('success', 'Se ha registrado de manera exitosa!');
+        }
     }
 
     /**

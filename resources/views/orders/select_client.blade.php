@@ -5,7 +5,11 @@
 @section('contenido')
     <section class="content-header">
         <h1>
-            Nuevo Trabajo
+            @if(!isset($order_id))
+                Nuevo Trabajo
+            @else
+                Duplicando Trabajo
+            @endif
             <small>
             </small>
         </h1>
@@ -14,16 +18,13 @@
                 <a href="#">
                     <i class="fa fa-dashboard">
                     </i>
-                    Home
+                    Ordenes
                 </a>
             </li>
             <li>
                 <a href="#">
-                    Examples
+                    Seleccionar Cliente
                 </a>
-            </li>
-            <li class="active">
-                Blank page
             </li>
         </ol>
     </section>
@@ -40,9 +41,10 @@
 
                     <div class="text-center">
                         <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">
-                            NUEVO CLIENTE
-                        </button>
+                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                    data-target="#myModal">
+                                NUEVO CLIENTE
+                            </button>
                         {{--  <a class="btn btn-success btn-sm" href="{{route('export')}}">
                             IMPRIMIR REPORTE
                         </a> --}}
@@ -93,10 +95,17 @@
                                         </td>
                                         <td class="text-center">
                                             <div class="form-group">
-                                                <a href="{{ route('select-vehicle', $client) }}">
-                                                    Siguiente
-                                                    <i class="glyphicon glyphicon-user" aria-hidden="true"></i>
-                                                </a>
+                                                @if(!isset($order_id))
+                                                    <a href="{{ route('select-vehicle', $client) }}">
+                                                        Siguiente
+                                                        <i class="glyphicon glyphicon-user" aria-hidden="true"></i>
+                                                    </a>
+                                                @else
+                                                    <a href="{{ route('duplicate-select-vehicle', [$order_id, $client->id]) }}">
+                                                        Siguiente
+                                                        <i class="glyphicon glyphicon-user" aria-hidden="true"></i>
+                                                    </a>
+                                                @endif
                                             </div>
                                         </td>
                                     </tr>

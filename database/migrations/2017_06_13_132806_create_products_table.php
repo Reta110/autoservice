@@ -22,6 +22,7 @@ class CreateProductsTable extends Migration
             $table->string('brand')->nullable();
             $table->string('model')->nullable();
             $table->string('stock')->nullable();
+            $table->string('tags')->nullable();
 
             $table->integer('category_id')->unsigned();
             $table->foreign('category_id')->references('id')->on('product_categories')->onDelete('cascade');

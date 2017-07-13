@@ -48,6 +48,7 @@ class StadisticsController extends Controller
         $concretas = Order::where('status', '<>', 'budget')->count();
         $total_products = Product::all();
         $total_productos = $total_products->sum('stock');
+        $total_costos = $total_products->sum('cost');
 
         return view('stadistics.index', compact('total_cost',
             'products_count',
@@ -58,7 +59,8 @@ class StadisticsController extends Controller
             'total_servicios',
             'days_total_cost',
             'days_total',
-            'total_productos'
+            'total_productos',
+            'total_costos'
         ));
     }
 

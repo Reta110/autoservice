@@ -5,26 +5,24 @@
 @section('contenido')
     <section class="content-header">
         <h1>
-            Nuevo trabajo
-            <small>
-                <span class="text-blue">Cliente:</span> {{$client->name.' '.$client->last_name}}
-            </small>
+            @if(!isset($order_id))
+                Nuevo Trabajo
+            @else
+                Duplicando Trabajo
+            @endif
         </h1>
         <ol class="breadcrumb">
             <li>
                 <a href="#">
                     <i class="fa fa-dashboard">
                     </i>
-                    Home
+                    Ordenes
                 </a>
             </li>
             <li>
                 <a href="#">
-                    Examples
+                    Seleccionar Vehiculo
                 </a>
-            </li>
-            <li class="active">
-                Blank page
             </li>
         </ol>
     </section>
@@ -42,11 +40,11 @@
 
                             <div class="text-center">
                                 <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">
+                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                        data-target="#myVehicleModal">
                                     NUEVO VEHICULO
                                 </button>
                             </div>
-
                         </div>
                     </div>
                     <!-- /.box-header -->
@@ -71,10 +69,17 @@
                                     <td>{{$vehicle->year}}</td>
                                     <td class="text-center">
                                         <div class="form-group">
-                                            <a href="{{ route('add-order', [$client, $vehicle]) }}">
-                                                Siguiente
-                                                <i class="glyphicon glyphicon-ok" aria-hidden="true"></i>
-                                            </a>
+                                            @if(!isset($order_id))
+                                                <a href="{{ route('add-order', [$client, $vehicle]) }}">
+                                                    Siguiente
+                                                    <i class="glyphicon glyphicon-ok" aria-hidden="true"></i>
+                                                </a>
+                                            @else
+                                                <a href="{{ route('duplicate-order', [$order_id, $user_id, $vehicle->id]) }}">
+                                                    Siguiente
+                                                    <i class="glyphicon glyphicon-ok" aria-hidden="true"></i>
+                                                </a>
+                                            @endif
                                         </div>
                                     </td>
                                 </tr>

@@ -47,16 +47,12 @@
             </div>
         </div>
         <div class="for text-center">
-            {!! Form::submit('Registrar', ['class'=> 'btn btn-primary']) !!}
+            {!! Form::button('Registrar', ['class'=> 'btn btn-primary', 'onClick'=>'submit();']) !!}
             <a class="btn btn-danger" href="{{ route('products.index')}}">
                 Cancelar
             </a>
         </div>
         {!! Form::close() !!}
     </section>
-
-@endsection
-
-@section('js')
 
 @endsection

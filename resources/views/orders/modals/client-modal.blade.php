@@ -1,7 +1,12 @@
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
-        <form class="form-horizontal" role="form" method="POST" action="{{ route('user-store') }}">
+        <form class="form-horizontal" role="form" method="POST" action="
+        @if(!isset($order_id))
+        {{ route('user-store')}}
+        @else
+        {{ route('user-store', $order_id)}}
+        @endif">
             {{ csrf_field() }}
             <div class="modal-content">
                 <div class="modal-header">
@@ -17,7 +22,7 @@
 
                         <div class="col-md-6">
                             <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}"
-                                    autofocus>
+                                   autofocus>
 
                             @if ($errors->has('name'))
                                 <span class="help-block">
@@ -32,7 +37,7 @@
 
                         <div class="col-md-6">
                             <input id="last_name" type="text" class="form-control" name="last_name"
-                                   value="{{ old('last_name') }}"  autofocus>
+                                   value="{{ old('last_name') }}" autofocus>
 
                             @if ($errors->has('last_name'))
                                 <span class="help-block">
@@ -47,7 +52,7 @@
 
                         <div class="col-md-6">
                             <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}"
-                                   >
+                            >
 
                             @if ($errors->has('email'))
                                 <span class="help-block">
@@ -62,7 +67,7 @@
 
                         <div class="col-md-6">
                             <input id="rut" type="text" class="form-control" name="rut" value="{{ old('rut') }}"
-                                    autofocus>
+                                   autofocus>
 
                             @if ($errors->has('rut'))
                                 <span class="help-block">
@@ -77,7 +82,7 @@
 
                         <div class="col-md-6">
                             <input id="phone" type="text" class="form-control" name="phone" value="{{ old('phone') }}"
-                                    autofocus>
+                                   autofocus>
 
                             @if ($errors->has('phone'))
                                 <span class="help-block">
@@ -92,7 +97,7 @@
 
                         <div class="col-md-6">
                             <input id="address" type="text" class="form-control" name="address"
-                                   value="{{ old('address') }}"  autofocus>
+                                   value="{{ old('address') }}" autofocus>
 
                             @if ($errors->has('address'))
                                 <span class="help-block">

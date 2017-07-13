@@ -22,12 +22,16 @@ class ClientsController extends Controller
         return view('clients.create');
     }
 
-    public function store(Request $request)
+    public function store(Request $request, $order = null)
     {
         $user = User::create($request->all());
 
-        return redirect()->route('select-vehicle',$user)->with('success', 'Se ha registrado de manera exitosa!');
+        if ($order == null) {
+            return redirect()->route('select-vehicle', $user)->with('success', 'Se ha registrado de manera exitosa!');
 
+        } else {
+            return redirect()->route('duplicate-select-vehicle', [$order, $user->id])->with('success', 'Se ha registrado de manera exitosa!');
+        }
     }
 
     public function save(Request $request)

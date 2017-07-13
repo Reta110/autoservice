@@ -29,7 +29,7 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::resource('/product/categories', 'ProductCategoriesController');
 
     Route::resource('/vehicles', 'VehiclesController');
-    Route::post('/vehicle/vehicle-select', 'VehiclesController@vehicleStore')->name('vehicle-select');
+    Route::post('/vehicle/vehicle-select/{order?}/{user?}', 'VehiclesController@vehicleStore')->name('vehicle-select');
 
     Route::post('select-brands-ajax', 'OrdersController@selectBrandsAjax')->name('select-brands-ajax');
 //    Route::post('select-category-ajax', 'OrdersController@selectCategoriesAjax')->name('select-brands-ajax');
@@ -42,9 +42,16 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::post('add-ajax', ['as' => 'add-ajax', 'uses' => 'OrdersController@addAjax']);
     Route::post('remove-ajax', ['as' => 'remove-ajax', 'uses' => 'OrdersController@removeAjax']);
 
+    //Duplicate order
+    Route::get('/orders/duplicate/{order}/select-client', 'OrdersController@duplicateSelectClient')->name('duplicate-select-client');
+    Route::get('/orders/duplicate/{order}/user/{user}/select-vehicle/', 'OrdersController@duplicateSelectVehicle')->name('duplicate-select-vehicle');
+    Route::get('/orders/duplicate/{order}/user/{user}/select-vehicle/{vehicle}', 'OrdersController@duplicateOrder')->name('duplicate-order');
+
+    //End duplicate order
+
     Route::resource('/orders', 'OrdersController');
 
-    Route::post('/user/register', 'ClientsController@store')->name('user-store');
+    Route::post('/user/register/{order?}', 'ClientsController@store')->name('user-store');
     Route::post('/user/save', 'ClientsController@save')->name('user-save');
 
 

@@ -21,6 +21,7 @@ class CreateOrderProductTable extends Migration
 
             $table->integer('quantity');
             $table->integer('price');
+            $table->boolean('discounted')->default(0);
 
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');

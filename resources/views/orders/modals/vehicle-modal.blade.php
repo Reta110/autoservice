@@ -1,7 +1,12 @@
 <!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="myVehicleModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
-        <form class="form-horizontal" role="form" method="POST" action="{{ route('vehicle-select') }}">
+        <form class="form-horizontal" role="form" method="POST" action="
+        @if(!isset($order_id))
+        {{ route('vehicle-select')}}
+        @else
+        {{ route('vehicle-select', [$order_id, $user_id])}}
+        @endif">
             {{ csrf_field() }}
             <div class="modal-content">
                 <div class="modal-header">
@@ -17,7 +22,7 @@
 
                         <div class="col-md-6">
                             <input id="brand" type="text" class="form-control" name="brand" value="{{ old('brand') }}"
-                                    autofocus>
+                                   autofocus>
 
                             @if ($errors->has('brand'))
                                 <span class="help-block">
@@ -32,7 +37,7 @@
 
                         <div class="col-md-6">
                             <input id="model" type="text" class="form-control" name="model" value="{{ old('model') }}"
-                                    autofocus>
+                                   autofocus>
 
                             @if ($errors->has('model'))
                                 <span class="help-block">
@@ -46,7 +51,7 @@
 
                         <div class="col-md-6">
                             <input id="vin" type="text" class="form-control" name="vin" value="{{ old('vin') }}"
-                                    autofocus>
+                                   autofocus>
 
                             @if ($errors->has('vin'))
                                 <span class="help-block">
@@ -60,7 +65,7 @@
 
                         <div class="col-md-6">
                             <input id="year" type="text" class="form-control" name="year" value="{{ old('year') }}"
-                                    autofocus>
+                                   autofocus>
 
                             @if ($errors->has('year'))
                                 <span class="help-block">
@@ -74,7 +79,7 @@
 
                         <div class="col-md-6">
                             <input id="motor" type="text" class="form-control" name="motor" value="{{ old('motor') }}"
-                                    autofocus>
+                                   autofocus>
 
                             @if ($errors->has('motor'))
                                 <span class="help-block">
@@ -87,8 +92,9 @@
                         <label for="patente" class="col-md-4 control-label">Patente</label>
 
                         <div class="col-md-6">
-                            <input id="patente" type="text" class="form-control" name="patente" value="{{ old('patente') }}"
-                                    autofocus>
+                            <input id="patente" type="text" class="form-control" name="patente"
+                                   value="{{ old('patente') }}"
+                                   autofocus>
 
                             @if ($errors->has('patente'))
                                 <span class="help-block">

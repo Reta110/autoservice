@@ -193,16 +193,25 @@
         <div class="row text-center no-print">
             {!! Form::open(['route' => 'print-work-paper', 'method' => 'POST', 'class' => 'pull-left']) !!}
             {!! Form::hidden('id', $order->id, ['class' => 'form-control']) !!}
-            <button type="submit" class="btn btn-primary" id="print">Hoja de trabajo
+            <button type="submit" class="btn btn-primary" id="print" title="Hoja de trabajo">Hoja de trabajo
                 <i class="glyphicon glyphicon-file"></i>
             </button>
             {!! Form::close() !!}
-            <button type="button" class="btn btn-success printer" id="print">Imprimir Boleta
+            <a class="btn btn-info" title="Editar Orden" href="{{ route('orders.edit',$order->id)}}">Editar Orden
+                <i class="glyphicon glyphicon-edit" aria-hidden="true"></i>
+            </a>
+            <button type="button" class="btn btn-success printer" id="print" title="Imprimir Boleta">Imprimir Boleta
                 <i class="glyphicon glyphicon-print"></i>
             </button>
-            <a class="btn btn-danger" href="{{ route('orders.index')}}">
-                Volver
+            <a class="btn btn-danger" href="{{ route('orders.index')}}" title="Volver">
+                Volver al listado
+                <i class="glyphicon glyphicon-backward"></i>
             </a>
+            <div class="pull-right">
+                <a class="btn btn-warning" title="Duplicar Orden" href="{{ route('duplicate-select-client',$order->id)}}">Duplicar Orden
+                    <i class="glyphicon glyphicon-duplicate" aria-hidden="true"></i>
+                </a>
+            </div>
         </div>
 
         <br>

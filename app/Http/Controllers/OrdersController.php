@@ -28,16 +28,20 @@ class OrdersController extends Controller
         return view('orders.index', compact('orders'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function selectClient()
     {
         $clients = User::where('role', 'client')->get();
 
         return view('orders.select_client', compact('clients'));
+    }
+
+    public function duplicateSelectClient($order)
+    {
+        $order_id = $order;
+
+        $clients = User::where('role', 'client')->get();
+
+        return view('orders.select_client', compact('clients', 'order_id'));
     }
 
     /**
@@ -50,6 +54,16 @@ class OrdersController extends Controller
         $client = User::where('role', 'client')->find($user);
 
         return view('orders.select_vehicle', compact('client'));
+    }
+
+    public function duplicateSelectVehicle($order, $user)
+    {
+        $order_id = $order;
+        $user_id = $user;
+
+        $client = User::where('role', 'client')->find($user);
+
+        return view('orders.select_vehicle', compact('client', 'user_id', 'order_id'));
     }
 
     /**
@@ -67,16 +81,59 @@ class OrdersController extends Controller
         $services = Service::orderBy('name', 'ASC')->get();
         //dd($services->toArray());
 
+        $recommended = Product::orderBy('name', 'ASC')->where('tags', 'like', '%' . $vehicle->brand . '%')->orWhere('tags', 'like', '%' . $vehicle->model . '%')->get();
         $serv = $services->toJson();
         $aux = Product::orderBy('name', 'ASC')->get();
         $prod = $aux->toJson();
 
         $config = Configuration::first();
-        $marcas = Product::orderBy('name', 'ASC')->pluck('brand')->all();
-        $modelos = Product::orderBy('name', 'ASC')->pluck('model')->all();
+//        $marcas = Product::orderBy('name', 'ASC')->pluck('brand')->all();
+//        $modelos = Product::orderBy('name', 'ASC')->pluck('model')->all();
+        $marcas = [];
+        $modelos = [];
         $categories = ProductCategory::orderBy('name', 'ASC')->pluck('name', 'id')->all();
 
-        return view('orders.create', compact('client', 'vehicle', 'products', 'services', 'serv', 'prod', 'config', 'marcas', 'modelos', 'categories'));
+
+        return view('orders.create', compact('client', 'vehicle', 'products', 'services', 'serv', 'prod', 'config', 'marcas', 'modelos', 'categories', 'recommended'));
+    }
+
+    public function duplicateOrder($order, $user, $vehicle)
+    {
+        $order = Order::find($order);
+
+        $order_copy = Order::create([
+            'title' => $order->title,
+            'user_id' => $user,
+            'vehicle_id' => $vehicle,
+            'status' => 'budget',
+            'start_date' => Carbon::now(),
+            'total_cost' => $order->total_cost,
+            'neto' => $order->neto,
+            'iva' => $order->iva,
+            'total' => $order->total,
+            'observations' => $order->observations,
+            'hh' => $order->hh,
+            'discount' => $order->discount,
+            'paid' => 'no',
+            'type_pay' => '',
+            'pay_observations' => '',
+        ]);
+
+        if (count($order->products) > 0) {
+            foreach ($order->products as $product) {
+                $order_copy->products()->attach($product->id, ['quantity' => $product->pivot->quantity, 'price' => $product->pivot->price]);
+            }
+        }
+
+        if (count($order->services) > 0) {
+            foreach ($order->services as $service) {
+                $order_copy->services()->attach($service->id, ['hh' => $service->pivot->hh]);
+            }
+        }
+
+        $order_copy->save();
+
+        return redirect()->route('orders.edit', $order_copy->id)->with('success', 'Se ha duplicado de manera exitosa!. Ya puede editarlo.');;
     }
 
     /**
@@ -110,23 +167,27 @@ class OrdersController extends Controller
             'pay_observations' => $request->get('pay_observations'),
         ]);
 
-
-        for ($i = 0; $i < count($request->product_id); $i++) {
-            $order->products()->attach($request->product_id[$i], ['quantity' => $request->product_quantity[$i], 'price' => $request->product_price[$i]]);
+        if (count($request->product_id) > 0) {
+            for ($i = 0; $i < count($request->product_id); $i++) {
+                $order->products()->attach($request->product_id[$i], ['quantity' => $request->product_quantity[$i], 'price' => $request->product_price[$i]]);
+            }
         }
 
-        for ($i = 0; $i < count($request->service_id); $i++) {
-            $order->services()->attach($request->service_id[$i], ['hh' => $request->service_hh[$i]]);
+        if (count($request->service_id) > 0) {
+            for ($i = 0; $i < count($request->service_id); $i++) {
+                $order->services()->attach($request->service_id[$i], ['hh' => $request->service_hh[$i]]);
+            }
         }
 
         //$order->products()->attach(1, ['quantity' => $request->get('product_quantity'), 'price' => $request->get('product_price')]);
 
         $order->save();
 
-        $orders = Order::with('vehicle')->get();
+//        $orders = Order::with('vehicle')->get();
+//
+//        return view('orders.index', compact('orders'))->with('success', 'Se ha registrado de manera exitosa!');
 
-        return view('orders.index', compact('orders'))->with('success', 'Se ha registrado de manera exitosa!');
-
+        return redirect()->route('orders.show', $order->id);
     }
 
     /**
@@ -151,6 +212,8 @@ class OrdersController extends Controller
         $services = Service::orderBy('name', 'ASC')->pluck('name', 'id', 'price')->all();
         $servi = Service::orderBy('name', 'ASC')->get();
 
+        $recommended = Product::orderBy('name', 'ASC')->where('tags', 'like', '%' . $order->vehicle->brand . '%')->orWhere('tags', 'like', '%' . $order->vehicle->model . '%')->get();
+
         $serv = $servi->toJson();
         $aux = Product::orderBy('name', 'ASC')->get();
         $prod = $aux->toJson();
@@ -158,10 +221,10 @@ class OrdersController extends Controller
         $config = Configuration::first();
 
         $categories = ProductCategory::orderBy('name', 'ASC')->pluck('name', 'id')->all();
-        $marcas = Product::orderBy('name', 'ASC')->pluck('brand')->all();
-        $modelos = Product::orderBy('name', 'ASC')->pluck('model')->all();
+        $marcas = [];
+        $modelos = [];
 
-        return view('orders.edit', compact('order', 'client', 'vehicle', 'products', 'services', 'serv', 'prod', 'config', 'marcas','modelos','categories'));
+        return view('orders.edit', compact('order', 'client', 'vehicle', 'products', 'services', 'serv', 'prod', 'config', 'marcas', 'modelos', 'categories', 'recommended'));
     }
 
     /**
@@ -180,8 +243,19 @@ class OrdersController extends Controller
 
         //Limpiar servicios y productos relacionandos a la orden
         $order = Order::find($id);
-
         if ($order->products()->count() > 0) {
+
+//            //Agregar todos de nuevo al stock
+//
+//            if ($request->get('status') != 'budget') {
+//                //todo hacer agergar todos
+//                foreach ($order->products as $product) {
+//                    dd($product->pivot->quantity);
+//                    $this->addToStock($product->id, $product->pivot->quantity);
+//
+//                }
+//            }
+            //borrar todos
             $order->products()->detach();
         }
 
@@ -194,6 +268,12 @@ class OrdersController extends Controller
 
         for ($i = 0; $i < count($request->product_id); $i++) {
             $order->products()->attach($request->product_id[$i], ['quantity' => $request->product_quantity[$i], 'price' => $request->product_price[$i]]);
+
+
+            //Descontar todos de nuevo del stock
+            if ($request->get('status') != 'budget') {
+                //todo hacer descontar todos
+            }
         }
 
         for ($i = 0; $i < count($request->service_id); $i++) {
@@ -238,6 +318,17 @@ class OrdersController extends Controller
 
     }
 
+    public function addToStock($producto_id, $quantity)
+    {
+        $product = Product::find($producto_id);
+
+        $product->stock = $product->stock + $quantity;
+
+        $product->save();
+
+    }
+
+
     public function removeAjax(Request $request)
     {
         $id = request()->get('idproduct');
@@ -256,7 +347,18 @@ class OrdersController extends Controller
 
     }
 
-    public function printWorkPaper(Request $request)
+    public function removeFromStock($producto_id, $quantity)
+    {
+        $product = Product::find($producto_id);
+
+        $product->stock = $product->stock - $quantity;
+
+        $product->save();
+
+    }
+
+    public
+    function printWorkPaper(Request $request)
     {
         $id = $request->get('id');
         $order = Order::find($id);
@@ -266,7 +368,8 @@ class OrdersController extends Controller
 
     }
 
-    public function selectBrandsAjax(Request $request)
+    public
+    function selectBrandsAjax(Request $request)
     {
         //id categroy
         $id = request()->get('id');
@@ -279,7 +382,8 @@ class OrdersController extends Controller
         }
     }
 
-    public function selectModelsAjax(Request $request)
+    public
+    function selectModelsAjax(Request $request)
     {
         //id category
         $id = request()->get('id');
@@ -292,7 +396,8 @@ class OrdersController extends Controller
         }
     }
 
-    public function destroy($id)
+    public
+    function destroy($id)
     {
         Order::destroy($id);
 

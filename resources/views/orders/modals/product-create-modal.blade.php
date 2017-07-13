@@ -1,7 +1,7 @@
 <!-- Modal -->
-<div class="modal fade" id="myProductModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="myProductModal" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
-        {!! Form::open(['route' => 'products.store', 'method' => 'POST']) !!}
+        {!! Form::open(['route' => 'products.store', 'method' => 'POST', 'id' => 'modal-form']) !!}
         <div class="row">
             <div class="col-md-12">
                 <div class="box">
@@ -20,7 +20,8 @@
         </div>
 
         <div class="for text-center">
-            {!! Form::submit('Registrar', ['class'=> 'btn btn-primary']) !!}
+            <button type="button" class="btn btn-default close-modal" data-dismiss="modal">Cancelar</button>
+            {!! Form::submit('Registrar', ['class'=> 'btn btn-primary','id' => 'modal-product']) !!}
         </div>
         {!! Form::close() !!}
     </div>

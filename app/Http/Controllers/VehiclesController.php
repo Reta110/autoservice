@@ -42,11 +42,16 @@ class VehiclesController extends Controller
         return redirect()->route('vehicles.index')->with('success', 'Se ha registrado de manera exitosa!');
     }
 
-    public function vehicleStore(Request $request)
+    public function vehicleStore(Request $request, $order = null, $user = null)
     {
+//        dd('order'.$order.'user'.$user);
         $vehicle = Vehicle::create($request->all());
 
-        return redirect()->route('add-order', [ $request->get('user_id'), $vehicle])->with('success', 'Se ha registrado de manera exitosa!');
+        if ($order == null && $user == null) {
+            return redirect()->route('add-order', [$request->get('user_id'), $vehicle])->with('success', 'Se ha registrado de manera exitosa!');
+        } else {
+            return redirect()->route('duplicate-order', [$order, $user, $vehicle->id])->with('success', 'Se ha duplicado la orden y ha sido agregado el vehiculo exitosamente!. ');
+        }
     }
 
     /**
@@ -55,7 +60,8 @@ class VehiclesController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public
+    function show($id)
     {
         $vehicle = Vehicle::find($id);
         return view('vehicles.show', compact('vehicle'));
@@ -67,7 +73,8 @@ class VehiclesController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public
+    function edit($id)
     {
         $vehicle = Vehicle::find($id);
         return view('vehicles.edit', compact('vehicle'));
@@ -80,7 +87,8 @@ class VehiclesController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public
+    function update(Request $request, $id)
     {
         $vehicle = Vehicle::find($id);
         $vehicle->update($request->all());
@@ -94,7 +102,8 @@ class VehiclesController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public
+    function destroy($id)
     {
         Vehicle::destroy($id);
 
