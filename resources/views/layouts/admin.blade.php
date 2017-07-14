@@ -303,9 +303,16 @@ folder instead of downloading all of them to reduce the load. -->
 <script type="text/javascript" src="{{ asset('AdminLTE/plugins/datatables/datatables.min.js') }}"></script>
 
 <script src="{{ asset('js/autoNumeric.min.js') }}"></script>
+<script type="text/javascript" src="{{asset('js/bootstrap-confirmation.min.js')}}"></script>
+
 <script type="text/javascript">
-    jQuery(function($) {
-        $('.money').autoNumeric('init',{aSep: '.', aDec: ',', aSign: '$ ', mDec: '0'});
+    jQuery(function ($) {
+        $('.money').autoNumeric('init', {aSep: '.', aDec: ',', aSign: '$ ', mDec: '0'});
+    });
+
+    $('[data-toggle=confirmation]').confirmation({
+        rootSelector: '[data-toggle=confirmation]',
+        container: 'body'
     });
 </script>
 

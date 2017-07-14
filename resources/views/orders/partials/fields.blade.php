@@ -30,14 +30,21 @@
                     <div class="box-header">
                         <h3 class="box-title">Agregue los servicios</h3>
                         <div class="pull-right no-print">
-                            <fieldset>
-                                <label>Precio HH</label>
-                                {!! Form::text('hh', $config->price_hh, ['class' => 'form-control order_hh', 'placeholder' => 'HH']) !!}
-                            </fieldset>
-                            {{--<button type="button" class="btn btn-success btn-sm" data-toggle="modal"--}}
-                            {{--data-target="#myServiceModal">--}}
-                            {{--Nuevo Servicio--}}
-                            {{--</button>--}}
+                            <div class="col-md-5">
+                                <fieldset>
+                                    <label>Precio HH</label>
+                                    {!! Form::text('hh', $config->price_hh, ['class' => 'form-control order_hh', 'placeholder' => 'HH']) !!}
+                                </fieldset>
+                            </div>
+                            <div class="col-md-2">
+                                <button type="button" class="btn btn-success btn-sm" data-toggle="modal"
+                                        data-target="#myServiceModal">
+                                    Nuevo Servicio
+                                </button>
+                                <div class="service-saved">
+                                    <p class="info no-print text-success">Guardado!!</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="contacts">
@@ -90,7 +97,7 @@
 
                             <button type="button" class="btn btn-success btn-sm" data-toggle="modal"
                                     data-target="#myProductModal">
-                                Nuevo
+                                Nuevo Producto
                             </button>
                             <div class="product-saved">
                                 <p class="info no-print text-success">Guardado!!</p>
@@ -161,18 +168,18 @@
                 <div class="box box-info">
                     <div class="box-header">
                         <div class="form-group">
-                            {{--<label for="inputEmail3" class="col-sm-2 control-label">Estatus</label>--}}
+                            <label for="inputEmail3" class="col-sm-2 control-label">Estatus</label>
 
                             <div class="col-sm-10">
-                                {{--<label class="radio-inline">--}}
-                                <input type="hidden" name="status" value="budget">
-                                {{--</label>--}}
-                                {{--<label class="radio-inline">--}}
-                                {{--<input type="radio" name="status" value="started">Iniciado--}}
-                                {{--</label>--}}
-                                {{--<label class="radio-inline">--}}
-                                {{--<input type="radio" name="status" value="ended">Finalizado--}}
-                                {{--</label>--}}
+                                <label class="radio-inline">
+                                    <input type="radio" name="status" value="budget" checked>Presupuesto
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="status" value="started">Iniciado
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="status" value="ended">Finalizado
+                                </label>
                             </div>
 
                         </div>
@@ -317,10 +324,51 @@
             $('.product-saved').fadeIn(2000, function () {
                 $('.product-saved').fadeOut(1000);
             });
-
         });
 
         //Fin Modal para agregar productos sin salir
+
+        //Modal para agregar servicios sin salir
+        $("#modal-form-service").submit(function (event) {
+            event.preventDefault(); //prevent default action
+            console.log('service ajax');
+
+            var token = $("input[name='_token']").val();
+            var code = $(this).closest('#myServiceModal').find('.code').val();
+            var name = $(this).closest('#myServiceModal').find('.name').val();
+            var hh = $(this).closest('#myServiceModal').find('.hh').val();
+            var description = $(this).closest('#myServiceModal').find('.description').val();
+
+            console.log("token" + token)
+            console.log("code" + code)
+            console.log("name" + name)
+            console.log("hh" + hh)
+            console.log("description" + description)
+
+            $.ajax({
+                url: "{{route('services.store')}}",
+                method: 'POST',
+                data: {
+                    _token: token,
+                    "code": code,
+                    "name": name,
+                    "hh": hh,
+                    "description": description,
+                },
+                success: function (data) {
+                    console.log("suucees bro")
+                }
+            });
+
+            console.log('DONE');
+            $('#modal-form').modal('hide');
+            $('.close-modal').click();
+            $('.service-saved').fadeIn(2000, function () {
+                $('.service-saved').fadeOut(1000);
+            });
+        });
+
+        //Fin Modal para agregar servicios sin salir
 
         //SERVICES (Lista dinamica)  formgroup2
         (function ($) {
@@ -747,6 +795,7 @@
         //Initialize Select2 Elements
         $('.select2').select2()
         $('.product-saved').hide();
+        $('.service-saved').hide();
 
     </script>
 

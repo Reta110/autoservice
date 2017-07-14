@@ -101,7 +101,7 @@
                             <tr>
                                 <td>{{$service->name}}</td>
                                 <td>{{$service->pivot->hh}}</td>
-                                <td class="money">{{$service->pivot->hh * $order->hh }}</td>
+                                <td>{{$service->pivot->hh * $order->hh }}</td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -128,8 +128,8 @@
                         <tbody>
                         @foreach($order->products as $product)
                             <tr>
-                                <td>{{ $product->name   }}</td>
-                                <td class="money">{{ $product->price }}</td>
+                                <td>{{ $product->name }}</td>
+                                <td>{{ $product->pivot->price }}</td>
                                 <td>{{ $product->pivot->quantity }}</td>
                                 <td class="money">{{ $product->pivot->quantity * $product->pivot->price }}</td>
                             </tr>

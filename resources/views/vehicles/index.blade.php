@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Listado de productos')
+@section('title', 'Listado de vehiculos')
 
 @section('contenido')
     <section class="content-header">
@@ -33,15 +33,15 @@
             @include('common.success')
             <div class="box-header with-border">
                 <h3 class="box-title">
-                    Listado de productos
+                    Listado de vehiculos
                 </h3>
                 <div class="box-tools">
 
-                    <div class="text-center">
-                        <a class="btn btn-danger btn-sm" href="{{ route('products.create') }}">
-                            NUEVO REGISTRO
-                        </a>
-                    </div>
+                    {{--<div class="text-center">--}}
+                        {{--<a class="btn btn-danger btn-sm" href="{{ route('products.create') }}">--}}
+                            {{--NUEVO REGISTRO--}}
+                        {{--</a>--}}
+                    {{--</div>--}}
 
                 </div>
             </div>
@@ -107,7 +107,7 @@
                                                 </a>
                                             </div>
                                             <div class="form-group">
-                                                <button type="submit" class="btn btn-link">
+                                                <button type="submit" class="btn btn-link" title="Eliminar" data-toggle="confirmation">
                                                     <i class="fa fa-trash" aria-hidden="true"></i>
                                                 </button>
                                             </div>

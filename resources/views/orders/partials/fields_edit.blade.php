@@ -42,7 +42,11 @@
 
                                     <div class="input-group-btn input-group-select">
                                         <div class="form-group">
-                                            {!! Form::select('service_id[]', $services, $oservice->id, ['class' => 'form-control select-service', 'placeholder' => '--- Indique servicio ---']) !!}
+                                            @if($order->status != 'ended')
+                                                {!! Form::select('service_id[]', $services, $oservice->id, ['class' => 'form-control select-service', 'placeholder' => '--- Indique servicio ---']) !!}
+                                            @else
+                                                {!! Form::select('service_id[]', $services, $oservice->id, ['class' => 'form-control select-service', 'placeholder' => '--- Indique servicio ---', 'readonly' => 'true']) !!}
+                                            @endif
                                         </div>
                                     </div>
 
@@ -50,7 +54,11 @@
 
                                 <div class="col-md-2">
                                     <label>Horas</label>
-                                    {!! Form::text('service_hh[]', $oservice->pivot->hh, ['class' => 'form-control hh-service', 'placeholder' => 'Horas']) !!}
+                                    @if($order->status != 'ended')
+                                        {!! Form::text('service_hh[]', $oservice->pivot->hh, ['class' => 'form-control hh-service', 'placeholder' => 'Horas']) !!}
+                                    @else
+                                        {!! Form::text('service_hh[]', $oservice->pivot->hh, ['class' => 'form-control hh-service', 'placeholder' => 'Horas', 'readonly' => 'true']) !!}
+                                    @endif
                                 </div>
                                 <div class="col-md-2">
                                     <label> - </label>
@@ -60,29 +68,36 @@
                                 </div>
                             </div>
                         @endforeach
-                        <div class="form-group multiple-form-group2 input-group">
-                            <div class="col-md-6">
-                                <label>Servicio</label>
+                        @if($order->status != 'ended')
+                            <div class="form-group multiple-form-group2 input-group">
+                                <div class="col-md-6">
+                                    <label>Servicio</label>
 
-                                <div class="input-group-btn input-group-select">
-                                    <div class="form-group">
-                                        {!! Form::select('service_id[]', $services, null, ['class' => 'form-control select-service', 'placeholder' => '--- Indique servicio ---']) !!}
+                                    <div class="input-group-btn input-group-select">
+                                        <div class="form-group">
+                                            @if($order->status != 'ended')
+                                                {!! Form::select('service_id[]', $services, null, ['class' => 'form-control select-service', 'placeholder' => '--- Indique servicio ---']) !!}
+                                            @else
+                                                {!! Form::select('service_id[]', $services, null, ['class' => 'form-control select-service', 'placeholder' => '--- Indique servicio ---', 'disabled' => 'true']) !!}
+                                            @endif
+                                        </div>
                                     </div>
+
                                 </div>
 
-                            </div>
+                                <div class="col-md-2">
+                                    <label>Horas</label>
+                                    {!! Form::text('service_hh[]', null, ['class' => 'form-control hh-service', 'placeholder' => 'Horas']) !!}
 
-                            <div class="col-md-2">
-                                <label>Horas</label>
-                                {!! Form::text('service_hh[]', null, ['class' => 'form-control hh-service', 'placeholder' => 'Horas']) !!}
-                            </div>
-                            <div class="col-md-2">
-                                <label> - </label>
-                                <span class="input-group-btn">
+                                </div>
+                                <div class="col-md-2">
+                                    <label> - </label>
+                                    <span class="input-group-btn">
                                         <button type="button" class="btn btn-success btn-add2">+</button>
                                     </span>
+                                </div>
                             </div>
-                        </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -97,14 +112,15 @@
                                     Recomendados
                                 </button>
                             @endif
-
-                            <button type="button" class="btn btn-success btn-sm" data-toggle="modal"
-                                    data-target="#myProductModal">
-                                Nuevo
-                            </button>
-                            <div class="product-saved">
-                                <p class="info no-print text-success">Guardado!!</p>
-                            </div>
+                            @if($order->status != 'ended')
+                                <button type="button" class="btn btn-success btn-sm" data-toggle="modal"
+                                        data-target="#myProductModal">
+                                    Nuevo
+                                </button>
+                                <div class="product-saved">
+                                    <p class="info no-print text-success">Guardado!!</p>
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="contacts">
@@ -116,17 +132,29 @@
                                     <label>Producto</label>
                                     <div class="input-group-btn input-group-select">
                                         <div class="form-group">
+
                                             {!! Form::hidden('product_id[]', $oproduct->id, ['class' => 'form-control producto-id']) !!}
                                             <span class="has-success has-feedback">
-                                            {!! Form::text('product_code',$oproduct->code, ['class' => 'form-control input-code inputSuccess', 'placeholder' => 'Código / serial:']) !!}
+                                                @if($order->status != 'ended')
+                                                    {!! Form::text('product_code',$oproduct->code, ['class' => 'form-control input-code inputSuccess', 'placeholder' => 'Código / serial:']) !!}
+                                                @else
+                                                    {!! Form::text('product_code',$oproduct->code, ['class' => 'form-control input-code inputSuccess', 'placeholder' => 'Código / serial:', 'disabled' => 'true']) !!}
+                                                @endif
                                             </span>
                                             <span class="help-block">Help block with success</span>
                                             <hr>
-                                            {!! Form::select('product_category[]', $categories, $oproduct->category_id, ['class' => 'form-control select-category', 'placeholder' => '--- Categoria ---']) !!}
+                                            @if($order->status != 'ended')
+                                                {!! Form::select('product_category[]', $categories, $oproduct->category_id, ['class' => 'form-control select-category', 'placeholder' => '--- Categoria ---']) !!}
+                                            @else
+                                                {!! Form::select('product_category[]', $categories, $oproduct->category_id, ['class' => 'form-control select-category', 'placeholder' => '--- Categoria ---','disabled'=>'true']) !!}
+                                            @endif
                                         </div>
                                         <div class="form-group">
-                                            <select class="form-control select-brand" name="product_brand[]">
-                                                <option selected="selected" disabled="disabled" hidden="hidden"
+
+                                            <select class="form-control select-brand" name="product_brand[]"
+                                                    @if($order->status == 'ended') disabled="disabled" @endif>
+                                                <option selected="selected"
+                                                        hidden="hidden"
                                                         value=""> ---------
                                                 </option>
                                                 @foreach($marcas as $marca)
@@ -134,10 +162,10 @@
                                                             @if($marca == $oproduct->brand) selected="selected" @endif>{{$marca}}</option>
                                                 @endforeach
                                             </select>
-                                            {{--{!! Form::select('product_brand[]',$marcas , $oproduct->brand, ['class' => 'form-control select-brand', 'placeholder' => '--- Marca---']) !!}--}}
                                         </div>
                                         <div class="form-group">
-                                            <select class="form-control select-model" name="product_model[]">
+                                            <select class="form-control select-model" name="product_model[]"
+                                                    @if($order->status == 'ended') disabled="disabled" @endif>
                                                 <option selected="selected" disabled="disabled" hidden="hidden"
                                                         value=""> ---------
                                                 </option>
@@ -148,6 +176,7 @@
                                             </select>
                                             {{--{!! Form::select('product_model[]',$modelos , $oproduct->model, ['class' => 'form-control select-model ', 'placeholder' => '--- Modelo---']) !!}--}}
                                         </div>
+
                                     </div>
                                 </div>
                                 <div class="col-md-2">
@@ -164,59 +193,69 @@
                                 </div>
                                 <div class="col-md-2">
                                     <label>Cantidad</label>
-                                    {!! Form::text('product_quantity[]', $oproduct->pivot->quantity, ['class' => 'form-control producto-quantity', 'placeholder' => 'cantidad']) !!}
+                                    @if($order->status != 'ended')
+                                        {!! Form::text('product_quantity[]', $oproduct->pivot->quantity, ['class' => 'form-control producto-quantity', 'placeholder' => 'cantidad']) !!}
+                                    @else
+                                        {!! Form::text('product_quantity[]', $oproduct->pivot->quantity, ['class' => 'form-control producto-quantity', 'placeholder' => 'cantidad', 'readonly' => 'true']) !!}
+                                    @endif
                                 </div>
                                 <div class="col-md-1">
-                                    <label> - </label>
-                                    <span class="input-group-btn">
+                                    @if($order->status != 'ended')
+                                        <label> - </label>
+                                        <span class="input-group-btn">
                                         <button type="button" class="btn btn-danger btn-remove">-</button>
                                     </span>
+                                    @endif
                                 </div>
                             </div>
                         @endforeach
-                        <div class="form-group multiple-form-group input-group">
-                            <div class="col-md-3">
-                                <label>Producto</label>
-                                <div class="input-group-btn input-group-select">
+                        @if($order->status != 'ended')
+                            <div class="form-group multiple-form-group input-group">
+                                <div class="col-md-3">
+                                    <label>Producto</label>
+                                    <div class="input-group-btn input-group-select">
 
-                                    <div class="form-group">
-                                        {!! Form::hidden('product_id[]', null, ['class' => 'form-control producto-id']) !!}
-                                        <span class="has-success has-feedback">
+                                        <div class="form-group">
+                                            {!! Form::hidden('product_id[]', null, ['class' => 'form-control producto-id']) !!}
+                                            <span class="has-success has-feedback">
                                         {!! Form::text('product_code',null, ['class' => 'form-control input-code inputSuccess', 'placeholder' => 'Código / serial:']) !!}
                                         </span>
-                                        <span class="help-block">Help block with success</span>
-                                        <hr>
-                                        {!! Form::select('product_category[]', $categories, null, ['class' => 'form-control select-category', 'placeholder' => '--------']) !!}
-                                        {!! Form::select('product_brand[]', $marcas, null, ['class' => 'form-control select-brand', 'placeholder' => '---------']) !!}
-                                        {!! Form::select('product_model[]', $modelos, null, ['class' => 'form-control select-model', 'placeholder' => '---------']) !!}
-                                    </div>
+                                            <span class="help-block">Help block with success</span>
+                                            <hr>
+                                            {!! Form::select('product_category[]', $categories, null, ['class' => 'form-control select-category', 'placeholder' => '--------']) !!}
+                                            {!! Form::select('product_brand[]', $marcas, null, ['class' => 'form-control select-brand', 'placeholder' => '---------']) !!}
+                                            {!! Form::select('product_model[]', $modelos, null, ['class' => 'form-control select-model', 'placeholder' => '---------']) !!}
+                                        </div>
 
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-2">
-                                <label>Costo</label>
-                                {!! Form::text('product_cost[]', null, ['class' => 'form-control producto-cost', 'placeholder' => 'costo', 'disabled' => 'true']) !!}
-                            </div>
-                            <div class="col-md-2">
-                                <label>Precio</label>
-                                {!! Form::hidden('product_cost[]', null, ['class' => 'form-control producto-cost', 'placeholder' => 'costo']) !!}
-                                {!! Form::text('product_price[]', null, ['class' => 'form-control producto-price', 'placeholder' => 'precio']) !!}
-                            </div>
-                            <div class="col-md-2">
-                                <label>Stock</label>
-                                {!! Form::text('stock[]', null, ['class' => 'form-control producto-stock', 'placeholder' => 'stock', 'disabled' => 'true']) !!}
-                            </div>
-                            <div class="col-md-2">
-                                <label>Cantidad</label>
-                                {!! Form::text('product_quantity[]', null, ['class' => 'form-control producto-quantity', 'placeholder' => 'cantidad']) !!}
-                            </div>
-                            <div class="col-md-1">
-                                <label> - </label>
-                                <span class="input-group-btn">
+                                <div class="col-md-2">
+                                    <label>Costo</label>
+                                    {!! Form::text('product_cost[]', null, ['class' => 'form-control producto-cost', 'placeholder' => 'costo', 'disabled' => 'true']) !!}
+                                </div>
+                                <div class="col-md-2">
+                                    <label>Precio</label>
+                                    {!! Form::hidden('product_cost[]', null, ['class' => 'form-control producto-cost', 'placeholder' => 'costo']) !!}
+                                    {!! Form::text('product_price[]', null, ['class' => 'form-control producto-price', 'placeholder' => 'precio']) !!}
+                                </div>
+                                <div class="col-md-2">
+                                    <label>Stock</label>
+                                    {!! Form::text('stock[]', null, ['class' => 'form-control producto-stock', 'placeholder' => 'stock', 'disabled' => 'true']) !!}
+                                </div>
+                                <div class="col-md-2">
+                                    <label>Cantidad</label>
+                                    {!! Form::text('product_quantity[]', null, ['class' => 'form-control producto-quantity', 'placeholder' => 'cantidad']) !!}
+                                </div>
+                                <div class="col-md-1">
+                                    @if($order->status != 'ended')
+                                        <label> - </label>
+                                        <span class="input-group-btn">
                                         <button type="button" class="btn btn-success btn-add">+</button>
                                     </span>
+                                    @endif
+                                </div>
                             </div>
-                        </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -237,14 +276,16 @@
                             <label for="inputEmail3" class="col-sm-2 control-label">Estatus</label>
 
                             <div class="col-sm-10">
-                                <label class="radio-inline">
-                                    <input type="radio" name="status" value="budget"
-                                           @if($order->status == 'budget') checked @endif>Presupuesto
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="status" value="started"
-                                           @if($order->status == 'started') checked @endif>Iniciado
-                                </label>
+                                @if($order->status != 'ended')
+                                    <label class="radio-inline">
+                                        <input type="radio" name="status" value="budget"
+                                               @if($order->status == 'budget') checked @endif>Presupuesto
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="status" value="started"
+                                               @if($order->status == 'started') checked @endif>Iniciado
+                                    </label>
+                                @endif
                                 <label class="radio-inline">
                                     <input type="radio" name="status" value="ended"
                                            @if($order->status == 'ended') checked @endif>Finalizado
@@ -550,30 +591,30 @@
 
         {{--//Agregar producto ajax--}}
         {{--function add_product_ajax(idproduct, quantity) {--}}
-            {{--var token = $("input[name='_token']").val();--}}
-            {{--$.ajax({--}}
-                {{--url: "{{route('add-ajax')}}",--}}
-                {{--method: 'POST',--}}
-                {{--data: {idproduct: idproduct, quantity: quantity, _token: token},--}}
-                {{--success: function (data) {--}}
-                    {{--console.log("suucees bro")--}}
-                {{--}--}}
-            {{--});--}}
+        {{--var token = $("input[name='_token']").val();--}}
+        {{--$.ajax({--}}
+        {{--url: "{{route('add-ajax')}}",--}}
+        {{--method: 'POST',--}}
+        {{--data: {idproduct: idproduct, quantity: quantity, _token: token},--}}
+        {{--success: function (data) {--}}
+        {{--console.log("suucees bro")--}}
+        {{--}--}}
+        {{--});--}}
         {{--}--}}
         {{--//Fin Agregar producto ajax--}}
 
         {{--//Remove producto ajax--}}
         {{--function remove_product_ajax(idproduct, quantity) {--}}
 
-            {{--var token = $("input[name='_token']").val();--}}
-            {{--$.ajax({--}}
-                {{--url: "{{route('remove-ajax')}}",--}}
-                {{--method: 'POST',--}}
-                {{--data: {idproduct: idproduct, quantity: quantity, _token: token},--}}
-                {{--success: function (data) {--}}
-                    {{--console.log("suucees bro")--}}
-                {{--}--}}
-            {{--});--}}
+        {{--var token = $("input[name='_token']").val();--}}
+        {{--$.ajax({--}}
+        {{--url: "{{route('remove-ajax')}}",--}}
+        {{--method: 'POST',--}}
+        {{--data: {idproduct: idproduct, quantity: quantity, _token: token},--}}
+        {{--success: function (data) {--}}
+        {{--console.log("suucees bro")--}}
+        {{--}--}}
+        {{--});--}}
         {{--}--}}
         {{--//Fin Remove producto ajax--}}
 

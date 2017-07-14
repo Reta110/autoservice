@@ -62,7 +62,7 @@
                 <label for="km" class="col-sm-2 control-label">km</label>
 
                 <div class="col-sm-10">
-                    <input type="type" name="km" class="form-control" value="{{$order->km}}">
+                    <input type="type" name="km" class="form-control" value="@if(isset($order->km)){{$order->km}}@endif" required>
                 </div>
             </div>
         </div>

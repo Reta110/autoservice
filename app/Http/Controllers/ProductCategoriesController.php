@@ -96,6 +96,6 @@ class ProductCategoriesController extends Controller
     {
         ProductCategory::destroy($id);
 
-        return redirect()->route('product_categories.index')->with('success', 'Se ha eleminado de manera exitosa!');
+        return redirect()->route('categories.index')->with('success', 'Se ha eleminado de manera exitosa!');
     }
 }

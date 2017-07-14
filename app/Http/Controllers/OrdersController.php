@@ -133,7 +133,7 @@ class OrdersController extends Controller
 
         $order_copy->save();
 
-        return redirect()->route('orders.edit', $order_copy->id)->with('success', 'Se ha duplicado de manera exitosa!. Ya puede editarlo.');;
+        return redirect()->route('orders.edit', $order_copy->id)->with('success', 'Se ha duplicado de manera exitosa!. Ya puede comenzar a editarlo.');;
     }
 
     /**
@@ -180,7 +180,13 @@ class OrdersController extends Controller
             }
         }
 
-        //$order->products()->attach(1, ['quantity' => $request->get('product_quantity'), 'price' => $request->get('product_price')]);
+        //Descontar productos del stock si estado es ended
+        if ($order->status == 'ended') {
+            foreach ($order->products as $product) {
+                $this->removeFromStock($product->id, $product->pivot->quantity);
+            }
+        }
+        //Fin descontar productos del stock si estado es ended
 
         $order->save();
 
@@ -225,8 +231,14 @@ class OrdersController extends Controller
         $config = Configuration::first();
 
         $categories = ProductCategory::orderBy('name', 'ASC')->pluck('name', 'id')->all();
+
         $marcas = [];
         $modelos = [];
+
+        if ($order->status == 'ended') {
+            $marcas = Product::orderBy('brand', 'ASC')->pluck('brand', 'id')->all();
+            $modelos = Product::orderBy('model', 'ASC')->pluck('model', 'id')->all();
+        }
 
         return view('orders.edit', compact('order', 'client', 'vehicle', 'products', 'services', 'serv', 'prod', 'config', 'marcas', 'modelos', 'categories', 'recommended'));
     }
@@ -248,18 +260,6 @@ class OrdersController extends Controller
         //Limpiar servicios y productos relacionandos a la orden
         $order = Order::find($id);
         if ($order->products()->count() > 0) {
-
-//            //Agregar todos de nuevo al stock
-//
-//            if ($request->get('status') != 'budget') {
-//                //todo hacer agergar todos
-//                foreach ($order->products as $product) {
-//                    dd($product->pivot->quantity);
-//                    $this->addToStock($product->id, $product->pivot->quantity);
-//
-//                }
-//            }
-            //borrar todos
             $order->products()->detach();
         }
 
@@ -273,11 +273,6 @@ class OrdersController extends Controller
         for ($i = 0; $i < count($request->product_id); $i++) {
             $order->products()->attach($request->product_id[$i], ['quantity' => $request->product_quantity[$i], 'price' => $request->product_price[$i]]);
 
-
-            //Descontar todos de nuevo del stock
-            if ($request->get('status') != 'budget') {
-                //todo hacer descontar todos
-            }
         }
 
         for ($i = 0; $i < count($request->service_id); $i++) {
@@ -297,6 +292,15 @@ class OrdersController extends Controller
         $order->paid = $request->get('paid');
         $order->type_pay = $request->get('type_pay');
         $order->pay_observations = $request->get('pay_observations');
+        $order->km = $request->get('km');
+
+        //Descontar productos del stock si estado es ended
+        if ($order->status == 'ended') {
+            foreach ($order->products as $product) {
+                $this->removeFromStock($product->id, $product->pivot->quantity);
+            }
+        }
+        //Fin descontar productos del stock si estado es ended
 
         $order->save();
 

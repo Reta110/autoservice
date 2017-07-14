@@ -31,7 +31,7 @@ class ServicesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -43,13 +43,19 @@ class ServicesController extends Controller
 
         Service::create($request->all());
 
-        return redirect()->route('services.index')->with('success', 'Se ha registrado de manera exitosa!');
+        if ($request->ajax()) {
+            $aux = Service::orderBy('id', 'ASC')->get();
+            $servi = $aux->toJson();
+            return response()->json(['success' => 'Se ha registrado de manera exitosa!', 'servi' => $servi]);
+        } else {
+            return redirect()->route('services.index')->with('success', 'Se ha registrado de manera exitosa!');
+        }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -61,7 +67,7 @@ class ServicesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -73,8 +79,8 @@ class ServicesController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -88,7 +94,7 @@ class ServicesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

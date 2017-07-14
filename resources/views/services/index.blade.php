@@ -90,7 +90,7 @@
                                                 </a>
                                             </div>
                                             <div class="form-group">
-                                                <button type="submit" class="btn btn-link">
+                                                <button type="submit" class="btn btn-link" title="Eliminar" data-toggle="confirmation">
                                                     <i class="fa fa-trash" aria-hidden="true"></i>
                                                 </button>
                                             </div>
