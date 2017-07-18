@@ -45,7 +45,7 @@
                         <td><strong>Año</strong></td>
                         <td>{{ $order->vehicle->year }}</td>
                         <td><strong>Km</strong></td>
-                        <td>{{ $order->vehicle->km }}</td>
+                        <td>{{ $order->km }}</td>
                     </tr>
                 </table>
 
@@ -113,12 +113,23 @@
             <!-- /.row -->
     @endif
     <!-- /.row -->
+        <div class="row">
+            <!-- accepted payments column -->
+            @if($order->ot_observations != '')
+                <div class="col-xs-6">
+                    <p class="lead">Observaciones:</p>
+                    <p class="text-muted well well-sm " style="margin-top: 10px;">
+                        {{$order->ot_observations}}
+                    </p>
+                </div>
+            @endif
         <div class="row text-center no-print">
             <button type="button" class="btn btn-success printer" id="print">Imprimir Boleta de trabajo
                 <i class="glyphicon glyphicon-print"></i>
             </button>
             <a class="btn btn-danger" href="{{ route('orders.show', $order)}}">
                 Volver
+                <i class="glyphicon glyphicon-backward"></i>
             </a>
         </div>
     </section>

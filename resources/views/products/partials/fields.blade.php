@@ -44,7 +44,7 @@
         </div>
         <div class="col-md-12">
             <div class="col-md-12">
-                {!! Form::label('tags', 'Marcas o modelos recomendados para este producto (Separados por , )') !!}
+                {!! Form::label('tags', 'Modelos de vehiculos recomendados para este producto (Separados por , )') !!}
                 <br>
                 {!! Form::text('tags', null, ['class' => 'form-control tags','data-role'=>'tagsinput']) !!}
             </div>

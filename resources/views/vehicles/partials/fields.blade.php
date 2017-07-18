@@ -36,10 +36,10 @@
                     {!! Form::label('patente', 'Patente') !!}
                     {!! Form::text('patente', null, ['class' => 'form-control', 'placeholder' => 'Patente']) !!}
                 </div>
-                <div class="form-group">
-                    {!! Form::label('km', 'Km') !!}
-                    {!! Form::text('km', null, ['class' => 'form-control', 'placeholder' => 'Km']) !!}
-                </div>
+                {{--<div class="form-group">--}}
+                    {{--{!! Form::label('km', 'Km') !!}--}}
+                    {{--{!! Form::text('km', null, ['class' => 'form-control', 'placeholder' => 'Km']) !!}--}}
+                {{--</div>--}}
                 <div class="form-group">
                     {!! Form::hidden('user_id', null, ['class' => 'form-control', 'placeholder' => 'Km']) !!}
                 </div>

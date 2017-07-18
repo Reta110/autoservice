@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Product;
 use App\ProductCategory;
+use App\Service;
 use Illuminate\Http\Request;
 use Symfony\Component\VarDumper\Dumper\DataDumperInterface;
 

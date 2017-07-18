@@ -22,6 +22,7 @@ class CreateOrdersTable extends Migration
             $table->string('iva')->nullable();
             $table->string('total')->nullable();
             $table->text('observations')->nullable();
+            $table->text('ot_observations')->nullable();
             $table->text('hh');
             $table->enum('paid',['si','no']);
             $table->text('type_pay')->nullable();

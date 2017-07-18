@@ -36,7 +36,12 @@
                                     {!! Form::text('hh', $config->price_hh, ['class' => 'form-control order_hh', 'placeholder' => 'HH']) !!}
                                 </fieldset>
                             </div>
+                            <div class="col-md-3">
+                                <label>Total HH</label>
+                                {!! Form::text('total_hh', 0, ['class' => 'form-control total_hh', 'placeholder' => 'Total HH', 'disabled' => 'true']) !!}
+                            </div>
                             <div class="col-md-2">
+                                <label> </label>
                                 <button type="button" class="btn btn-success btn-sm" data-toggle="modal"
                                         data-target="#myServiceModal">
                                     Nuevo Servicio
@@ -80,6 +85,7 @@
                         </span>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -157,10 +163,20 @@
             <div class="col-md-6">
                 <div class="box box-info">
                     <div class="box-header">
-                        <label>Observaciones de boleta:</label>
+                        <label>Observaciones de Boleta:</label>
                         <div class="form-group">
 
-                            {!! Form::textarea('observations', null, ['class' => 'form-control', 'placeholder' => 'Observaciones', 'rows' => '5']) !!}
+                            {!! Form::textarea('observations', null, ['class' => 'form-control', 'placeholder' => 'Observaciones', 'rows' => '4']) !!}
+
+                        </div>
+                    </div>
+                </div>
+                <div class="box box-info">
+                    <div class="box-header">
+                        <label>Observaciones de OT:</label>
+                        <div class="form-group">
+
+                            {!! Form::textarea('ot_observations', null, ['class' => 'form-control', 'placeholder' => 'Observaciones de OT', 'rows' => '4']) !!}
 
                         </div>
                     </div>
@@ -201,7 +217,7 @@
                     <div class="box-header">
                         <div class="form-group type_pay" style="visibility: false">
                             <label for="inputEmail3" class="col-sm-4 control-label">Forma de pago:</label>
-                            <div class="col-sm-8">
+                            <div class="col-sm-6">
                                 <select class="form-control select2" name="type_pay">
                                     <option selected="selected" value="">---
                                         Tipo de pago ---
@@ -223,7 +239,7 @@
                         </div>
                     </div>
                     <div class="box-header">
-                        <label>Observación de pago:</label>
+                        <label>Observación de Pago:</label>
                         <div class="form-group">
 
                             {!! Form::textarea('pay_observations', null, ['class' => 'form-control', 'placeholder' => 'Observaciones', 'rows' => '2']) !!}
@@ -232,7 +248,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 pull-right">
+            <div class="col-md-4 pull-right">
                 <div class="box box-info">
                     <div class="box-header">
                         <h3 class="box-title">Total</h3>
@@ -276,55 +292,63 @@
     <script type="text/javascript"
             src="{{asset('AdminLTE/plugins/bootstrap-tagsinput-latest/dist/bootstrap-tagsinput.js')}}"></script>
 
+    {{--<link href="{{asset('css/hierarchySelect.css')}}" rel="stylesheet">--}}
+
+    {{--<script type="text/javascript"--}}
+    {{--src="{{asset('js/hierarchySelect.js')}}"></script>--}}
+
 
 
     <script type="text/javascript">
         //super global
-        var prod;
+        var prod = {!! $prod !!};
+        var serv = {!! $serv !!}
 
-        //Modal para agregar productos sin salir
-        $("#modal-form").submit(function (event) {
-            event.preventDefault(); //prevent default action
-            console.log('intento 2');
+                //Modal para agregar productos sin salir
+                $("#modal-form").submit(function (event) {
+                    event.preventDefault(); //prevent default action
+                    console.log('intento 2');
 
-            var token = $("input[name='_token']").val();
-            var code = $(this).closest('#myProductModal').find('.code').val();
-            var name = $(this).closest('#myProductModal').find('.name').val();
-            var cost = $(this).closest('#myProductModal').find('.cost').val();
-            var price = $(this).closest('#myProductModal').find('.price').val();
-            var brand = $(this).closest('#myProductModal').find('.brand').val();
-            var model = $(this).closest('#myProductModal').find('.model').val();
-            var stock = $(this).closest('#myProductModal').find('.stock').val();
-            var category_id = $(this).closest('#myProductModal').find('.category_id').val();
-            var tags = $(this).closest('#myProductModal').find('.tags').val();
+                    var token = $("input[name='_token']").val();
+                    var code = $(this).closest('#myProductModal').find('.code').val();
+                    var name = $(this).closest('#myProductModal').find('.name').val();
+                    var cost = $(this).closest('#myProductModal').find('.cost').val();
+                    var price = $(this).closest('#myProductModal').find('.price').val();
+                    var brand = $(this).closest('#myProductModal').find('.brand').val();
+                    var model = $(this).closest('#myProductModal').find('.model').val();
+                    var stock = $(this).closest('#myProductModal').find('.stock').val();
+                    var category_id = $(this).closest('#myProductModal').find('.category_id').val();
+                    var tags = $(this).closest('#myProductModal').find('.tags').val();
 
-            $.ajax({
-                url: "{{route('products.store')}}",
-                method: 'POST',
-                data: {
-                    _token: token,
-                    "code": code,
-                    "name": name,
-                    "cost": cost,
-                    "price": price,
-                    "brand": brand,
-                    "model": model,
-                    "stock": stock,
-                    "category_id": category_id,
-                    "tags": tags
-                },
-                success: function (data) {
-                    console.log("suucees bro")
-                }
-            });
+                    $.ajax({
+                        url: "{{route('products.store')}}",
+                        method: 'POST',
+                        data: {
+                            _token: token,
+                            "code": code,
+                            "name": name,
+                            "cost": cost,
+                            "price": price,
+                            "brand": brand,
+                            "model": model,
+                            "stock": stock,
+                            "category_id": category_id,
+                            "tags": tags
+                        },
+                        success: function (data) {
+                            prod = JSON.parse(data.prod);
+                        }
+                    });
 
-            console.log('DONE');
-            $('#modal-form').modal('hide');
-            $('.close-modal').click();
-            $('.product-saved').fadeIn(2000, function () {
-                $('.product-saved').fadeOut(1000);
-            });
-        });
+                    console.log('DONE');
+                    $('#modal-form').trigger("reset");
+                    $('#modal-form').modal('hide');
+
+                    $('.close-modal').click();
+                    $('.product-saved').fadeIn(2000, function () {
+                        $('.product-saved').fadeOut(1000);
+                    });
+                });
 
         //Fin Modal para agregar productos sin salir
 
@@ -356,12 +380,15 @@
                     "description": description,
                 },
                 success: function (data) {
+                    serv = JSON.parse(data.servi);
+                    $('.select-service').last().html(data.serv)
                     console.log("suucees bro")
                 }
             });
 
             console.log('DONE');
-            $('#modal-form').modal('hide');
+            // $('#modal-form-service').trigger("reset");
+            $('#modal-form-service').modal('hide');
             $('.close-modal').click();
             $('.service-saved').fadeIn(2000, function () {
                 $('.service-saved').fadeOut(1000);
@@ -480,7 +507,7 @@
 
                     var idproduct = $(this).closest('.multiple-form-group').find('.select-product').val();
                     var quantity = $(this).closest('.multiple-form-group').find('.producto-quantity').val();
-                    remove_product_ajax(idproduct, quantity);
+                    //remove_product_ajax(idproduct, quantity);
 
                     //fin
                 };
@@ -500,7 +527,7 @@
 
                     var idproduct = $(this).closest('.multiple-form-group').find('.select-product').val();
                     var quantity = $(this).closest('.multiple-form-group').find('.producto-quantity').val();
-                    add_product_ajax(idproduct, quantity);
+                    //add_product_ajax(idproduct, quantity);
 
                     //Fin
                 };
@@ -555,7 +582,7 @@
         //Colocar precio hora en servicios
         $(document).on('change', '.select-service', function () {
             var id = $(this).val();
-            var myArray = {!! $serv !!};
+            var myArray = serv;
 
             var found = $.map(myArray, function (val) {
                 return val.id == id ? val.hh : null;
@@ -621,7 +648,8 @@
             console.log('cat product=' + cat);
             console.log('brand product=' + brand);
             console.log('model product=' + model);
-            var myArray = {!! $prod !!};
+
+            myArray = prod;
 
             var found = $.map(myArray, function (val) {
                 return (val.category_id == cat && val.brand == brand && val.model == model) ? val.price : null;
@@ -655,34 +683,35 @@
 
             var code = $(this).closest('.multiple-form-group').find('.input-code').val();
             console.log('code product=' + code);
-            var myArray = {!! $prod !!};
+            var myArray = prod;
 
-            var found = $.map(myArray, function (val) {
-                return (val.code == code) ? val.price : null;
-            });
+            if (code != null) {
+                var found = $.map(myArray, function (val) {
+                    return (val.code == code) ? val.price : null;
+                });
 
-            var stock = $.map(myArray, function (val) {
-                return (val.code == code) ? val.stock : null;
-            });
+                var stock = $.map(myArray, function (val) {
+                    return (val.code == code) ? val.stock : null;
+                });
 
-            var cost = $.map(myArray, function (val) {
-                return (val.code == code) ? val.cost : null;
-            });
+                var cost = $.map(myArray, function (val) {
+                    return (val.code == code) ? val.cost : null;
+                });
 
-            var id = $.map(myArray, function (val) {
-                return (val.code == code) ? val.id : null;
-            });
+                var id = $.map(myArray, function (val) {
+                    return (val.code == code) ? val.id : null;
+                });
 
-            var category_id = $.map(myArray, function (val) {
-                return (val.code == code) ? val.category_id : null;
-            });
+                var category_id = $.map(myArray, function (val) {
+                    return (val.code == code) ? val.category_id : null;
+                });
 
-            $(this).closest('.multiple-form-group').find('.producto-price').val(found[0]);
-            $(this).closest('.multiple-form-group').find('.producto-stock').val(stock[0]);
-            $(this).closest('.multiple-form-group').find('.producto-cost').val(cost[0]);
-            $(this).closest('.multiple-form-group').find('.producto-id').val(id[0]);
-            $(this).closest('.multiple-form-group').find('.select-category option[value=' + category_id + ']').attr("selected", true);
-
+                $(this).closest('.multiple-form-group').find('.producto-price').val(found[0]);
+                $(this).closest('.multiple-form-group').find('.producto-stock').val(stock[0]);
+                $(this).closest('.multiple-form-group').find('.producto-cost').val(cost[0]);
+                $(this).closest('.multiple-form-group').find('.producto-id').val(id[0]);
+                $(this).closest('.multiple-form-group').find('.select-category option[value=' + category_id + ']').attr("selected", true);
+            }
             console.log(found[0]);
 
         });
@@ -717,6 +746,7 @@
         function calcular_total_servicios() {
 
             servicios_total = 0
+            total_hh = 0
 
             var hh = eval($(".order_hh").val());
 
@@ -726,13 +756,20 @@
                     function (index, value) {
                         if (eval($(this).val() != '')) {
                             servicios_total = servicios_total + (eval($(this).val()) * hh);
+                            //Total hh
+                            total_hh = total_hh + eval($(this).val());
                         }
-                        //eval($(this).closest('.multiple-form-group2').find('.hh-service').val()
                     });
 
             if (isNaN(servicios_total)) {
                 servicios_total = 0
             }
+
+            if (isNaN(total_hh)) {
+                total_hh = 0
+            }
+
+            $('.total_hh').val(total_hh)
 
             return servicios_total;
         }

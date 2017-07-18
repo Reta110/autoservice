@@ -44,9 +44,14 @@ class ServicesController extends Controller
         Service::create($request->all());
 
         if ($request->ajax()) {
+
+            $serv = Service::orderBy('name','ASC')->pluck('name', 'id')->all();
+            $optionss = array_unique($serv);
+            $serv = view('orders.partials.select-ajax', compact('optionss'))->render();
+
             $aux = Service::orderBy('id', 'ASC')->get();
             $servi = $aux->toJson();
-            return response()->json(['success' => 'Se ha registrado de manera exitosa!', 'servi' => $servi]);
+            return response()->json(['success' => 'Se ha registrado de manera exitosa!', 'servi' => $servi,'serv' => $serv]);
         } else {
             return redirect()->route('services.index')->with('success', 'Se ha registrado de manera exitosa!');
         }

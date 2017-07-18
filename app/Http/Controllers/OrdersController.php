@@ -112,6 +112,7 @@ class OrdersController extends Controller
             'iva' => $order->iva,
             'total' => $order->total,
             'observations' => $order->observations,
+            'ot_observations' => $order->ot_observations,
             'hh' => $order->hh,
             'discount' => $order->discount,
             'paid' => 'no',
@@ -144,10 +145,11 @@ class OrdersController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'title' => 'required',
-            'status' => 'required'
-        ]);
+//        $this->validate($request, [
+//            'title' => 'required',
+//            'status' => 'required',
+//            'km' => 'required'
+//        ]);
 
         $order = Order::create([
             'title' => $request->get('title'),
@@ -288,6 +290,7 @@ class OrdersController extends Controller
         $order->iva = $request->get('iva');
         $order->total = $request->get('total');
         $order->observations = $request->get('observations');
+        $order->ot_observations = $request->get('ot_observations');
         $order->discount = $request->get('discount');
         $order->paid = $request->get('paid');
         $order->type_pay = $request->get('type_pay');

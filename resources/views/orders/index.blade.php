@@ -147,8 +147,9 @@
         $(document).ready(function () {
             $('#table').DataTable({
                 "language": {
-                    "url": "{{ asset('AdminLTE/plugins/datatables/esp.lang') }}"
-                }
+                    "url": "{{ asset('AdminLTE/plugins/datatables/esp.lang') }}",
+                },
+                "order": [[ 0, "desc" ]],
             });
         });
     </script>
