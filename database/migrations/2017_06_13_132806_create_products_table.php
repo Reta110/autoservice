@@ -17,11 +17,12 @@ class CreateProductsTable extends Migration
             $table->increments('id');
             $table->string('code')->nullable();
             $table->string('name');
-            $table->string('cost')->nullable();
-            $table->string('price')->nullable();
+            $table->string('cost')->default(0)->nullable();
+            $table->string('price')->default(0)->nullable();
             $table->string('brand')->nullable();
             $table->string('model')->nullable();
             $table->string('stock')->nullable();
+            $table->integer('stock_minimum')->default(0)->nullable();
             $table->string('tags')->nullable();
 
             $table->integer('category_id')->unsigned();

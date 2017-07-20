@@ -19,7 +19,7 @@ class CreateOrderServiceTable extends Migration
             $table->integer('order_id')->unsigned();
             $table->integer('service_id')->unsigned();
 
-            $table->float('hh');
+            $table->float('hh')->nullable();
 
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
             $table->foreign('service_id')->references('id')->on('services')->onDelete('cascade');

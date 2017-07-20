@@ -9,6 +9,7 @@ use App\ProductCategory;
 use App\Service;
 use App\User;
 use App\Vehicle;
+use Barryvdh\DomPDF\PDF;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -234,13 +235,8 @@ class OrdersController extends Controller
 
         $categories = ProductCategory::orderBy('name', 'ASC')->pluck('name', 'id')->all();
 
-        $marcas = [];
-        $modelos = [];
-
-        if ($order->status == 'ended') {
-            $marcas = Product::orderBy('brand', 'ASC')->pluck('brand', 'id')->all();
-            $modelos = Product::orderBy('model', 'ASC')->pluck('model', 'id')->all();
-        }
+        $marcas = Product::orderBy('brand', 'ASC')->pluck('brand', 'id')->all();
+        $modelos = Product::orderBy('model', 'ASC')->pluck('model', 'id')->all();
 
         return view('orders.edit', compact('order', 'client', 'vehicle', 'products', 'services', 'serv', 'prod', 'config', 'marcas', 'modelos', 'categories', 'recommended'));
     }
@@ -254,10 +250,10 @@ class OrdersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'title' => 'required',
-            'status' => 'required'
-        ]);
+//        $this->validate($request, [
+//            'title' => 'required',
+//            'status' => 'required'
+//        ]);
 
         //Limpiar servicios y productos relacionandos a la orden
         $order = Order::find($id);
@@ -298,10 +294,11 @@ class OrdersController extends Controller
         $order->km = $request->get('km');
 
         //Descontar productos del stock si estado es ended
-        if ($order->status == 'ended') {
+        if ($order->status == 'ended' && $order->delete_stock == 0) {
             foreach ($order->products as $product) {
                 $this->removeFromStock($product->id, $product->pivot->quantity);
             }
+            $order->delete_stock = 1;
         }
         //Fin descontar productos del stock si estado es ended
 

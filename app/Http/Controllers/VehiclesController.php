@@ -91,9 +91,24 @@ class VehiclesController extends Controller
     function update(Request $request, $id)
     {
         $vehicle = Vehicle::find($id);
-        $vehicle->update($request->all());
 
-        return redirect()->route('vehicles.index')->with('success', 'Se ha actualizado de manera exitosa!');
+        if ($request->ajax()) {
+
+            $vehicle->brand = $request->get('brand');
+            $vehicle->model = $request->get('model');
+            $vehicle->vin = $request->get('vin');
+            $vehicle->year = $request->get('year');
+            $vehicle->motor = $request->get('motor');
+            $vehicle->patente = $request->get('patente');
+            $vehicle->save();
+
+            $vehicle = $vehicle->toJson();
+
+            return response()->json(['success' => 'Se ha actualizado de manera exitosa!', 'vehicle' => $vehicle]);
+        } else {
+            $vehicle->update($request->all());
+            return redirect()->route('vehicles.index')->with('success', 'Se ha actualizado de manera exitosa!');
+        }
     }
 
     /**

@@ -314,6 +314,10 @@ folder instead of downloading all of them to reduce the load. -->
         rootSelector: '[data-toggle=confirmation]',
         container: 'body'
     });
+
+    $( document ).ready(function() {
+        $('.alert-dismissable').fadeOut(10000);
+    });
 </script>
 
 @yield('js')

@@ -15,7 +15,7 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title');
+            $table->string('title')->default('Sin titulo')->nullable();
             $table->string('total_cost')->default(0)->nullable();
             $table->string('discount')->default(0)->nullable();
             $table->string('neto')->nullable();
@@ -23,11 +23,12 @@ class CreateOrdersTable extends Migration
             $table->string('total')->nullable();
             $table->text('observations')->nullable();
             $table->text('ot_observations')->nullable();
-            $table->text('hh');
+            $table->text('hh')->nullable();
             $table->enum('paid',['si','no']);
             $table->text('type_pay')->nullable();
             $table->text('pay_observations')->nullable();
             $table->text('km')->nullable();
+            $table->boolean('delete_stock')->default(0);
 
             $table->enum('status', ['budget','started', 'template', 'ended']);
 

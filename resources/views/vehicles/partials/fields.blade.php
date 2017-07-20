@@ -5,20 +5,16 @@
             <div class="col-md-6">
                 <div class="form-group">
                     {!! Form::label('brand', 'Marca') !!}
-                    {!! Form::text('brand', null, ['class' => 'form-control', 'placeholder' => 'Marca']) !!}
+                    {!! Form::text('brand', null, ['class' => 'form-control brand', 'placeholder' => 'Marca']) !!}
                 </div>
 
                 <div class="form-group">
                     {!! Form::label('model', 'Modelo') !!}
-                    {!! Form::text('model', null, ['class' => 'form-control', 'placeholder' => 'Modelo']) !!}
-                </div>
-                <div class="form-group">
-                    {!! Form::label('cost', 'Costo') !!}
-                    {!! Form::text('cost', null, ['class' => 'form-control', 'placeholder' => 'Costo']) !!}
+                    {!! Form::text('model', null, ['class' => 'form-control model', 'placeholder' => 'Modelo']) !!}
                 </div>
                 <div class="form-group">
                     {!! Form::label('vin', 'Vin') !!}
-                    {!! Form::text('vin', null, ['class' => 'form-control', 'placeholder' => 'Vin']) !!}
+                    {!! Form::text('vin', null, ['class' => 'form-control vin', 'placeholder' => 'Vin']) !!}
                 </div>
 
             </div>
@@ -26,22 +22,18 @@
 
                 <div class="form-group">
                     {!! Form::label('year', 'Year') !!}
-                    {!! Form::text('year', null, ['class' => 'form-control', 'placeholder' => 'Year']) !!}
+                    {!! Form::text('year', null, ['class' => 'form-control year', 'placeholder' => 'Year']) !!}
                 </div>
                 <div class="form-group">
                     {!! Form::label('motor', 'Motor') !!}
-                    {!! Form::text('motor', null, ['class' => 'form-control', 'placeholder' => 'Motor']) !!}
+                    {!! Form::text('motor', null, ['class' => 'form-control motor', 'placeholder' => 'Motor']) !!}
                 </div>
                 <div class="form-group">
                     {!! Form::label('patente', 'Patente') !!}
-                    {!! Form::text('patente', null, ['class' => 'form-control', 'placeholder' => 'Patente']) !!}
+                    {!! Form::text('patente', null, ['class' => 'form-control patente', 'placeholder' => 'Patente']) !!}
                 </div>
-                {{--<div class="form-group">--}}
-                    {{--{!! Form::label('km', 'Km') !!}--}}
-                    {{--{!! Form::text('km', null, ['class' => 'form-control', 'placeholder' => 'Km']) !!}--}}
-                {{--</div>--}}
                 <div class="form-group">
-                    {!! Form::hidden('user_id', null, ['class' => 'form-control', 'placeholder' => 'Km']) !!}
+                    {!! Form::hidden('user_id', null, ['class' => 'form-control', 'placeholder' => 'user_id']) !!}
                 </div>
             </div>
         </div>

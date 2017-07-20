@@ -19,9 +19,9 @@ class CreateOrderProductTable extends Migration
             $table->integer('order_id')->unsigned();;
             $table->integer('product_id')->unsigned();;
 
-            $table->integer('quantity');
-            $table->integer('price');
-            $table->boolean('discounted')->default(0);
+            $table->integer('quantity')->default(0)->nullable();
+            $table->integer('price')->default(0);
+            $table->boolean('discounted')->default(0);//no usada
 
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');

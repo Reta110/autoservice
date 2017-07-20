@@ -1,7 +1,10 @@
 @extends('layouts.admin')
 
-@section('title', 'Editar Trabajo')
-
+@if($order->status != 'ended')
+    @section('title', 'Editar Trabajo')
+@else
+    @section('title', 'Trabajo Finalizado')
+@endif
 @section('contenido')
     <section class="content-header">
         <h1>
@@ -18,7 +21,7 @@
             </li>
             <li>
                 <a href="#">
-                    Editar
+                    Editar Orden Nr. #0{{ $order->id }}
                 </a>
             </li>
         </ol>
@@ -31,7 +34,11 @@
                 <div class="box">
                     <div class="box-header with-border">
                         @include('common.errors')
-                        <h3 class="box-title">Editar Trabajo</h3>
+                        @if($order->status != 'ended')
+                            <h3 class="box-title">Editar Trabajo</h3>
+                        @else
+                            <h3 class="box-title">Trabajo Finalizado</h3>
+                        @endif
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
@@ -54,6 +61,7 @@
     @include('orders.modals.product-recommended-modal')
     @include('orders.modals.product-create-modal')
     @include('orders.modals.service-modal')
+    @include('orders.modals.vehicle-edit-modal')
 
 @endsection
 

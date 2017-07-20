@@ -58,6 +58,7 @@
     @include('orders.modals.product-recommended-modal')
     @include('orders.modals.product-create-modal')
     @include('orders.modals.service-modal')
+    @include('orders.modals.vehicle-edit-modal')
 
 
 @endsection

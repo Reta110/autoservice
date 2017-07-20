@@ -20,6 +20,7 @@
         <!-- title row -->
         <div class="row">
             <div class="col-xs-12">
+                @include('common.errors')
                 <h1 class="page-header">
                     <img alt="User Image" src="{{ asset ('images/logo.png') }}">
                     {{--<small class="pull-right">Fecha: {{ $order->created_at }}</small>--}}
@@ -55,7 +56,7 @@
                     <b>Fecha registro: </b>{{ $order->created_at }}<br>
                     <b>Orden Nro:</b> {{ $order->id }}<br>
                     <b>Telf:</b> 232666335<br>
-                    <b>Email:</b>contacto@automec.cl
+                    <b>Email: </b>contacto@automec.cl
                 </address>
             </div>
             <!-- /.col -->
@@ -76,6 +77,7 @@
                     <b>Modelo:</b> {{ $order->vehicle->model }}<br>
                     <b>Motor:</b> {{ $order->vehicle->motor }}<br>
                     <b>Vin:</b> {{ $order->vehicle->vin }}<br>
+                    <b>Patente:</b> {{ $order->vehicle->patente }}<br>
                     <b>Km:</b> {{ $order->km }}<br>
                 </address>
             </div>
@@ -101,7 +103,7 @@
                             <tr>
                                 <td>{{$service->name}}</td>
                                 <td>{{$service->pivot->hh}}</td>
-                                <td>{{$service->pivot->hh * $order->hh }}</td>
+                                <td class="money">{{$service->pivot->hh * $order->hh }}</td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -120,6 +122,7 @@
                         <thead>
                         <tr>
                             <th>DESCRIPCION</th>
+                            <th class="no-print">COSTO UNITARIO</th>
                             <th>PRECIO UNITARIO</th>
                             <th>CANTIDAD</th>
                             <th>TOTAL</th>
@@ -129,7 +132,8 @@
                         @foreach($order->products as $product)
                             <tr>
                                 <td>{{ $product->name }}</td>
-                                <td>{{ $product->pivot->price }}</td>
+                                <td class="money no-print">{{ $product->cost }}</td>
+                                <td class="money">{{ $product->pivot->price }}</td>
                                 <td>{{ $product->pivot->quantity }}</td>
                                 <td class="money">{{ $product->pivot->quantity * $product->pivot->price }}</td>
                             </tr>
@@ -153,7 +157,7 @@
                 </div>
         @endif
         <!-- /.col -->
-            <div class="col-xs-4 pull-right">
+            <div class="col-xs-5 pull-right">
 
                 <div class="form-group">
 
@@ -209,6 +213,10 @@
                 Volver al listado
                 <i class="glyphicon glyphicon-backward"></i>
             </a>
+            <a class="btn btn-info" href="{{ route('email-order', $order->id)}}" title="Enviar al mail">
+                Enviar al mail
+                <i class="glyphicon glyphicon-send"></i>
+            </a>
             <div class="pull-right">
                 <a class="btn btn-warning" title="Duplicar Orden"
                    href="{{ route('duplicate-select-client',$order->id)}}">Duplicar Orden
@@ -241,5 +249,6 @@
         $('.printer').on('click', function () {
             window.print();
         });
+
     </script>
 @endsection

@@ -54,6 +54,7 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::post('/user/register/{order?}', 'ClientsController@store')->name('user-store');
     Route::post('/user/save', 'ClientsController@save')->name('user-save');
 
-
+    //Emails
+    Route::get('/email/order/{id}', 'EmailsController@sendOrderByEmail')->name('email-order');
 
 });

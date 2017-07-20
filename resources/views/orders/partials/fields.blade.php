@@ -304,51 +304,110 @@
         var prod = {!! $prod !!};
         var serv = {!! $serv !!}
 
-                //Modal para agregar productos sin salir
-                $("#modal-form").submit(function (event) {
+                //Modal para editar vehicle sin salir
+                $("#modal-edit-vehicle-form").submit(function (event) {
                     event.preventDefault(); //prevent default action
-                    console.log('intento 2');
+                    console.log('actualizando vehiculo');
 
                     var token = $("input[name='_token']").val();
-                    var code = $(this).closest('#myProductModal').find('.code').val();
-                    var name = $(this).closest('#myProductModal').find('.name').val();
-                    var cost = $(this).closest('#myProductModal').find('.cost').val();
-                    var price = $(this).closest('#myProductModal').find('.price').val();
-                    var brand = $(this).closest('#myProductModal').find('.brand').val();
-                    var model = $(this).closest('#myProductModal').find('.model').val();
-                    var stock = $(this).closest('#myProductModal').find('.stock').val();
-                    var category_id = $(this).closest('#myProductModal').find('.category_id').val();
-                    var tags = $(this).closest('#myProductModal').find('.tags').val();
+                    var brand = $(this).closest('#myEditVehicleModal').find('.brand').val();
+                    var model = $(this).closest('#myEditVehicleModal').find('.model').val();
+                    var vin = $(this).closest('#myEditVehicleModal').find('.vin').val();
+                    var year = $(this).closest('#myEditVehicleModal').find('.year').val();
+                    var motor = $(this).closest('#myEditVehicleModal').find('.motor').val();
+                    var patente = $(this).closest('#myEditVehicleModal').find('.patente').val();
+
+                    console.log("brand" + brand)
+                    console.log("model" + model)
+                    console.log("vin" + vin)
+                    console.log("year" + year)
+                    console.log("motor" + motor)
+                    console.log("patente" + patente)
 
                     $.ajax({
-                        url: "{{route('products.store')}}",
-                        method: 'POST',
+                        url: "{{route('vehicles.update', $vehicle)}}",
+                        method: 'PUT',
                         data: {
                             _token: token,
-                            "code": code,
-                            "name": name,
-                            "cost": cost,
-                            "price": price,
                             "brand": brand,
                             "model": model,
-                            "stock": stock,
-                            "category_id": category_id,
-                            "tags": tags
+                            "vin": vin,
+                            "year": year,
+                            "motor": motor,
+                            "patente": patente,
                         },
                         success: function (data) {
-                            prod = JSON.parse(data.prod);
+                            console.log('Success');
+
+                            vehicle = JSON.parse(data.vehicle)
+
+                            $('#partial-vehicle-data .brand').val(vehicle.brand);
+                            $('#partial-vehicle-data .model').val(vehicle.model);
+                            $('#partial-vehicle-data .vin').val(vehicle.vin);
+                            $('#partial-vehicle-data .year').val(vehicle.year);
+                            $('#partial-vehicle-data .motor').val(vehicle.motor);
+                            $('#partial-vehicle-data .patente').val(vehicle.patente);
                         }
                     });
 
                     console.log('DONE');
-                    $('#modal-form').trigger("reset");
-                    $('#modal-form').modal('hide');
-
+                    $('#modal-edit-vehicle-form').modal('hide');
                     $('.close-modal').click();
-                    $('.product-saved').fadeIn(2000, function () {
-                        $('.product-saved').fadeOut(1000);
+                    $('.edit-vehicle-saved').fadeIn(2000, function () {
+                        $('.edit-vehicle-saved').fadeOut(1000);
                     });
+
                 });
+
+        //Fin Modal para editar vehiculos sin salir
+
+        //Modal para agregar productos sin salir
+        $("#modal-form").submit(function (event) {
+            event.preventDefault(); //prevent default action
+            console.log('intento 2');
+
+            var token = $("input[name='_token']").val();
+            var code = $(this).closest('#myProductModal').find('.code').val();
+            var name = $(this).closest('#myProductModal').find('.name').val();
+            var cost = $(this).closest('#myProductModal').find('.cost').val();
+            var price = $(this).closest('#myProductModal').find('.price').val();
+            var brand = $(this).closest('#myProductModal').find('.brand').val();
+            var model = $(this).closest('#myProductModal').find('.model').val();
+            var stock = $(this).closest('#myProductModal').find('.stock').val();
+            var stock_minimum = $(this).closest('#myProductModal').find('.stock_minimum').val();
+            var category_id = $(this).closest('#myProductModal').find('.category_id').val();
+            var tags = $(this).closest('#myProductModal').find('.tags').val();
+
+            $.ajax({
+                url: "{{route('products.store')}}",
+                method: 'POST',
+                data: {
+                    _token: token,
+                    "code": code,
+                    "name": name,
+                    "cost": cost,
+                    "price": price,
+                    "brand": brand,
+                    "model": model,
+                    "stock": stock,
+                    "stock_minimum": stock_minimum,
+                    "category_id": category_id,
+                    "tags": tags
+                },
+                success: function (data) {
+                    prod = JSON.parse(data.prod);
+                }
+            });
+
+            console.log('DONE');
+            $('#modal-form').trigger("reset");
+            $('#modal-form').modal('hide');
+
+            $('.close-modal').click();
+            $('.product-saved').fadeIn(2000, function () {
+                $('.product-saved').fadeOut(1000);
+            });
+        });
 
         //Fin Modal para agregar productos sin salir
 
