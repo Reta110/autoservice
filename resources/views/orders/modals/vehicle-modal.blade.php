@@ -103,21 +103,6 @@
                             @endif
                         </div>
                     </div>
-                    <div class="form-group{{ $errors->has('km') ? ' has-error' : '' }}">
-                        <label for="km" class="col-md-4 control-label">Km</label>
-
-                        <div class="col-md-6">
-                            <input id="km" type="text" class="form-control" name="km" value="{{ old('km') }}"
-                                   autofocus>
-
-                            @if ($errors->has('km'))
-                                <span class="help-block">
-                                        <strong>{{ $errors->first('km') }}</strong>
-                                    </span>
-                            @endif
-                        </div>
-                    </div>
-
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>

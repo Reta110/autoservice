@@ -769,7 +769,7 @@
                 $(this).closest('.multiple-form-group').find('.producto-stock').val(stock[0]);
                 $(this).closest('.multiple-form-group').find('.producto-cost').val(cost[0]);
                 $(this).closest('.multiple-form-group').find('.producto-id').val(id[0]);
-                $(this).closest('.multiple-form-group').find('.select-category option[value=' + category_id + ']').attr("selected", true);
+//                $(this).closest('.multiple-form-group').find('.select-category option[value=' + category_id + ']').attr("selected", true);
             }
             console.log(found[0]);
 

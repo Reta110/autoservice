@@ -39,4 +39,9 @@ class Order extends Model
     {
         return $date = \Carbon\Carbon::parse($date)->format('d-m-Y');
     }
+
+    public function getEndedDateAtAttribute($date)
+    {
+        return $date = \Carbon\Carbon::parse($date)->format('d-m-Y');
+    }
 }

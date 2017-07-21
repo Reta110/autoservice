@@ -22,7 +22,7 @@ class StadisticsController extends Controller
 
         $date = Carbon::now()->subWeek(1);
 
-        $orders = Order::where('status', '<>', 'budget')
+        $orders = Order::where('status', 'ended')
             ->where('created_at', '>', $date)
             ->get();
 
@@ -45,7 +45,7 @@ class StadisticsController extends Controller
 
         //Contando datos
         $total_ordenes = Order::count();
-        $concretas = Order::where('status', '<>', 'budget')->count();
+        $concretas = Order::where('status', 'ended')->count();
         $total_products = Product::all();
         $total_productos = $total_products->sum('stock');
         $total_costos = $total_products->sum('cost');
@@ -106,7 +106,7 @@ class StadisticsController extends Controller
 
         //Contando datos
         $total_ordenes = Order::count();
-        $concretas = Order::where('status', '<>', 'budget')->count();
+        $concretas = Order::where('status', 'ended')->count();
 
 
         return view('stadistics.show', compact('total_cost',

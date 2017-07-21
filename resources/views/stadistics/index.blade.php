@@ -68,46 +68,63 @@
                                 <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>TITULO</th>
+                                    <th>FECHA</th>
                                     <th>CLIENTE</th>
-                                    <th>RUT</th>
                                     <th>MARCA</th>
                                     <th>MODELO</th>
-                                    <th>AÑO</th>
+                                    <th>KM</th>
+                                    <th>TITLE</th>
                                     <th>NETO</th>
                                     <th>IVA</th>
                                     <th>TOTAL</th>
+                                    <th>COSTOS</th>
+                                    <th>GANANCIAS</th>
                                     <th>STATUS</th>
+                                    <th>PAGADO</th>
+                                    <th>TIPO</th>
+                                    <th>OBSERVACION</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($orders as $order)
-                                    <tr>
+                                    <tr @if($order->paid == 'no' && $order->status != 'budget')class="bg-danger" @endif>
                                         <td>
                                             {{ $order->id }}
                                         </td>
                                         <td>
+                                            {{ $order->ended_date }}
+                                        </td>
+                                        <td>
+                                            {{ $order->user->name.' '.$order->user->last_name}}
+                                        </td>
+                                        <td>
+                                            {{ $order->vehicle->brand }}
+                                        </td>
+                                        <td>
+                                            {{ $order->vehicle->model }}
+                                        </td>
+                                        <td>
+                                            {{ $order->km }}
+                                        </td>
+                                        <td>
                                             {{ $order->title }}
-                                        </td>
-                                        <td>
-                                            {{ $order->user->name . ' '. $order->user->last_name }}
-                                        </td>
-                                        <td>
-                                            {{ $order->user->rut }}
-                                        </td>
-                                        <td>
-                                            {{ $order->vehicle->brand }}                                        </td>
-                                        </td>
-                                        <td>
-                                            {{ $order->vehicle->model }}                                        </td>
-                                        </td>
-                                        <td>
-                                            {{ $order->vehicle->year }}                                        </td>
                                         </td>
                                         <td class="money">{{ $order->neto }}</td>
                                         <td class="money">{{ $order->iva }}</td>
-                                        <td class="money">{{ $order->total }}<td>
+                                        <td class="money">{{ $order->total }}</td>
+                                        <td class="money">{{ $order->total_cost }}</td>
+                                        <td class="money">{{ $order->total - $order->total_cost}}</td>
+                                        <td>
                                             {{ $order->status }}
+                                        </td>
+                                        <td>
+                                            {{ $order->paid }}
+                                        </td>
+                                        <td>
+                                            {{ $order->type_pay }}
+                                        </td>
+                                        <td>
+                                            {{ $order->pay_observations }}
                                         </td>
                                     </tr>
                                 @endforeach

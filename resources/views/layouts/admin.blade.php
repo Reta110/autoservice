@@ -6,7 +6,7 @@
     <title>
         @yield('title')
     </title>
-    <link rel="icon" type="image/png" href="{{asset("images/icon.png")}}/>
+    <link rel="icon" type="image/png" href="{{asset("images/icon.png")}}">
     <!-- Tell the browser to be responsive to screen width -->
     <meta content=" width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.6 -->
@@ -307,7 +307,7 @@ folder instead of downloading all of them to reduce the load. -->
 
 <script type="text/javascript">
     jQuery(function ($) {
-        $('.money').autoNumeric('init', {aSep: '.', aDec: ',', aSign: '$ ', mDec: '0'});
+        $('.money').autoNumeric('init', {aSep: '.', aDec: ',', aSign: '$', mDec: '0'});
     });
 
     $('[data-toggle=confirmation]').confirmation({

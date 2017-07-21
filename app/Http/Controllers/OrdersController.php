@@ -82,7 +82,7 @@ class OrdersController extends Controller
         $services = Service::orderBy('name', 'ASC')->get();
         //dd($services->toArray());
 
-        $recommended = Product::orderBy('name', 'ASC')->where('tags', 'like', '%' . $vehicle->brand . '%')->orWhere('tags', 'like', '%' . $vehicle->model . '%')->get();
+        $recommended = Product::orderBy('name', 'ASC')->orWhere('tags', 'like', '%' . $vehicle->model . '%')->get();
         $serv = $services->toJson();
         $aux = Product::orderBy('name', 'ASC')->get();
         $prod = $aux->toJson();
@@ -299,6 +299,9 @@ class OrdersController extends Controller
                 $this->removeFromStock($product->id, $product->pivot->quantity);
             }
             $order->delete_stock = 1;
+            $order->ended_date = Carbon::now();
+
+
         }
         //Fin descontar productos del stock si estado es ended
 
@@ -360,12 +363,22 @@ class OrdersController extends Controller
 
         $product->stock = $product->stock - $quantity;
 
+        if ($product->stock <= $product->stock_minimum) {
+            $this->sendProductNotification($product);
+        }
+
         $product->save();
 
     }
 
-    public
-    function printWorkPaper(Request $request)
+    public function sendProductNotification($product)
+    {
+        $automec = env('MAIL_FROM_ADDRESS');
+
+        Mail::to($automec)->send(new SendProductStockMinimum($product));
+    }
+
+    public function printWorkPaper(Request $request)
     {
         $id = $request->get('id');
         $order = Order::find($id);

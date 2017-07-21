@@ -76,19 +76,19 @@
                                             {{ $order->title }}
                                         </td>
                                         <td>
-                                            {{ $order->user->name }}
+                                            {{ $order->user->name.' '.$order->user->last_name}}
                                         </td>
                                         <td>
                                             {{ $order->user->rut }}
                                         </td>
                                         <td>
-                                            {{ $order->vehicle->brand }}                                        </td>
+                                            {{ $order->vehicle->brand }}
                                         </td>
                                         <td>
-                                            {{ $order->vehicle->model }}                                        </td>
+                                            {{ $order->vehicle->model }}
                                         </td>
                                         <td>
-                                            {{ $order->vehicle->year }}                                        </td>
+                                            {{ $order->vehicle->year }}
                                         </td>
                                         <td>
                                             {{ $order->neto }}

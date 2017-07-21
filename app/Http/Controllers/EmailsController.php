@@ -39,13 +39,11 @@ class EmailsController extends Controller
         $pdf->save(public_path() . '/pdf/Order-' . $id . '.pdf');
 
         $mail = $order->user->mail;
-        $automec =env('MAIL_FROM_ADDRESS');
+        $automec = env('MAIL_FROM_ADDRESS');
 
-//        if ($mail != '') {
-//            Mail::to($mail)->from($automec)->cc($automec)->send(new OrderShipped($order));
-//        } else {
-            Mail::to($automec)->send(new OrderShipped($order));
-//        }
+        while (file_exists(public_path() . '/pdf/Order-' . $id . '.pdf') == false) {
+            Mail::to($automec)->queue(new OrderShipped($order));
+        }
 
         return redirect()->to(route('orders.show', $order))->with('success', 'Se ha enviado de manera exitosa!');
     }
