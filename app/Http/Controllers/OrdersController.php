@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Configuration;
+use App\Mail\SendProductStockMinimum;
 use App\Order;
 use App\Product;
 use App\ProductCategory;
@@ -14,6 +15,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use PhpParser\Node\Stmt\DeclareDeclare;
+use Illuminate\Support\Facades\Mail;
 
 class OrdersController extends Controller
 {

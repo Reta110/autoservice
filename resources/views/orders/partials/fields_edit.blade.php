@@ -481,8 +481,6 @@
 
                 });
 
-        //Fin Modal para editar vehiculos sin salir
-
         //Modal para agregar productos sin salir
         $("#modal-form").submit(function (event) {
             event.preventDefault(); //prevent default action
@@ -496,6 +494,7 @@
             var brand = $(this).closest('#myProductModal').find('.brand').val();
             var model = $(this).closest('#myProductModal').find('.model').val();
             var stock = $(this).closest('#myProductModal').find('.stock').val();
+            var stock_minimum = $(this).closest('#myProductModal').find('.stock_minimum').val();
             var category_id = $(this).closest('#myProductModal').find('.category_id').val();
             var tags = $(this).closest('#myProductModal').find('.tags').val();
 
@@ -511,6 +510,7 @@
                     "brand": brand,
                     "model": model,
                     "stock": stock,
+                    "stock_minimum": stock_minimum,
                     "category_id": category_id,
                     "tags": tags
                 },

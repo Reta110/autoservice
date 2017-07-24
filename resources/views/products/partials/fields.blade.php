@@ -38,7 +38,7 @@
                 </div>
                 <div class="form-group">
                     {!! Form::label('stock_minimum', 'Stock mínimo deseado') !!}
-                    {!! Form::text('stock_minimum', null, ['class' => 'form-control stock_minimum', 'placeholder' => 'Stock mínimo deseado']) !!}
+                    {!! Form::text('stock_minimum', null, ['class' => 'form-control stock_minimum', 'placeholder' => 'Stock mínimo deseado', 'value' => '0']) !!}
                 </div>
                 <div class="form-group">
                     {!! Form::label('category_id', 'Categoria') !!}

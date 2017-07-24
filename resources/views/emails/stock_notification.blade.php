@@ -1,5 +1,7 @@
 <h2>Notificación de stock mínimo</h2>
 
+<p>El siguiente produtcto se agotó:</p>
+
 <table class="table table-striped">
     <tbody>
     <tr>
@@ -35,8 +37,16 @@
         <td>{{ $product->stock }}</td>
     </tr>
     <tr>
-        <td>Stock:</td>
+        <td>Stock mínimo:</td>
         <td>{{ $product->stock_minimum }}</td>
     </tr>
     </tbody>
 </table>
+
+<p>
+    <a href="{{route('products.edit',$product->id)}}">Editar los detalles de este producto.</a><br>
+</p>
+
+<div class="pull-right">
+    <img src="{{ $message->embed(asset("images/logo2.png")) }}">
+</div>
