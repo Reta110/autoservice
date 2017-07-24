@@ -171,6 +171,18 @@ folder instead of downloading all of them to reduce the load. -->
                     </a>
                 </li>
                 <li class="treeview">
+                    <a href="{{route('debts.index')}}">
+                        <i class="fa fa-user-secret "></i>
+                        </i>
+                        <span>
+                Deudores
+                </span>
+                        <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+                </span>
+                    </a>
+                </li>
+                <li class="treeview">
 
                     <a href="{{route('orders.index')}}">
                         <i class="fa fa-car">
@@ -315,7 +327,7 @@ folder instead of downloading all of them to reduce the load. -->
         container: 'body'
     });
 
-    $( document ).ready(function() {
+    $(document).ready(function () {
         $('.alert-dismissable').fadeOut(10000);
     });
 </script>

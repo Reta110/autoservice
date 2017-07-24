@@ -369,6 +369,28 @@
                         </div>
                     </div>
                     <div class="box-header">
+                        <div class="form-group " style="visibility: false">
+                            <label for="inputEmail3" class="col-sm-4 control-label">Nro de cuotas:</label>
+                            <div class="col-sm-6">
+                                <select class="form-control select2" name="pay_fees_quantity">
+                                    <option selected="selected" value="">---Nro de cuota ---</option>
+                                    <option value="1" @if($order->pay_feeds_quantity == '1') selected="selected" @endif>1</option>
+                                    <option value="2" @if($order->pay_feeds_quantity == '2') selected="selected" @endif>2</option>
+                                    <option value="3" @if($order->pay_feeds_quantity == '3') selected="selected" @endif>3</option>
+                                    <option value="4" @if($order->pay_feeds_quantity == '4') selected="selected" @endif>4</option>
+                                    <option value="5" @if($order->pay_feeds_quantity == '5') selected="selected" @endif>5</option>
+                                    <option value="6" @if($order->pay_feeds_quantity == '6') selected="selected" @endif>6</option>
+                                    <option value="7" @if($order->pay_feeds_quantity == '7') selected="selected" @endif>7</option>
+                                    <option value="8" @if($order->pay_feeds_quantity == '8') selected="selected" @endif>8</option>
+                                    <option value="9" @if($order->pay_feeds_quantity == '9') selected="selected" @endif>9</option>
+                                    <option value="10" @if($order->pay_feeds_quantity == '10') selected="selected" @endif>10</option>
+                                    <option value="11" @if($order->pay_feeds_quantity == '11') selected="selected" @endif>11</option>
+                                    <option value="12" @if($order->pay_feeds_quantity == '12') selected="selected" @endif>12</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-header">
                         <label>Observación de Pago:</label>
                         <div class="form-group">
 

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-    protected $fillable = ['title', 'user_id', 'vehicle_id', 'total_cost', 'hh', 'discount', 'neto', 'iva', 'total', 'status', 'observations', 'ot_observations','paid', 'type_pay','pay_observations', 'km','start_date', 'ended_date'];
+    protected $fillable = ['title', 'user_id', 'vehicle_id', 'total_cost', 'hh', 'discount', 'neto', 'iva', 'total', 'status', 'observations', 'ot_observations', 'paid', 'type_pay', 'pay_observations', 'pay_fees_quantity', 'km', 'start_date', 'ended_date'];
 
 
     public function products()
@@ -43,5 +43,13 @@ class Order extends Model
     public function getEndedDateAtAttribute($date)
     {
         return $date = \Carbon\Carbon::parse($date)->format('d-m-Y');
+    }
+
+    public function scopeEndedPaid($query)
+    {
+        return $query->where('status', 'ended')
+            ->where('paid', 'si')
+            ->where('pay_fees_quantity', '>', '0')
+            ->orderBy('ended_date', 'DESC');
     }
 }

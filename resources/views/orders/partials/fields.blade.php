@@ -239,6 +239,28 @@
                         </div>
                     </div>
                     <div class="box-header">
+                        <div class="form-group type_pay" style="visibility: false">
+                            <label for="inputEmail3" class="col-sm-4 control-label">Nro de cuotas:</label>
+                            <div class="col-sm-6">
+                                <select class="form-control select2" name="pay_fees_quantity">
+                                    <option selected="selected" value="">---Nro de cuota ---</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-header">
                         <label>Observación de Pago:</label>
                         <div class="form-group">
 

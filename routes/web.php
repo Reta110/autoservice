@@ -57,4 +57,8 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     //Emails
     Route::get('/email/order/{id}', 'EmailsController@sendOrderByEmail')->name('email-order');
 
+    //Deudas por cobrar
+    Route::get('/debts/', 'DebtsController@index')->name('debts.index');
+
+
 });

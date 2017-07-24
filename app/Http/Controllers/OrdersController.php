@@ -121,6 +121,7 @@ class OrdersController extends Controller
             'paid' => 'no',
             'type_pay' => '',
             'pay_observations' => '',
+            'pay_fees_quantity' => '',
         ]);
 
         if (count($order->products) > 0) {
@@ -170,6 +171,7 @@ class OrdersController extends Controller
             'paid' => $request->get('paid'),
             'type_pay' => $request->get('type_pay'),
             'pay_observations' => $request->get('pay_observations'),
+            'pay_fees_quantity' => $request->get('pay_fees_quantity'),
             'km' => $request->get('km'),
         ]);
 
@@ -293,6 +295,7 @@ class OrdersController extends Controller
         $order->paid = $request->get('paid');
         $order->type_pay = $request->get('type_pay');
         $order->pay_observations = $request->get('pay_observations');
+        $order->pay_fees_quantity = $request->get('pay_fees_quantity');
         $order->km = $request->get('km');
 
         //Descontar productos del stock si estado es ended

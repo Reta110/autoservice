@@ -24,9 +24,12 @@ class CreateOrdersTable extends Migration
             $table->text('observations')->nullable();
             $table->text('ot_observations')->nullable();
             $table->text('hh')->nullable();
+
             $table->enum('paid',['si','no']);
-            $table->text('type_pay')->nullable();
+            $table->enum('type_pay', ['TransBank','Transferencia', 'Efectivo', 'Cheque'])->nullable();
             $table->text('pay_observations')->nullable();
+            $table->text('pay_fees_quantity')->default(0)->nullable();
+
             $table->text('km')->nullable();
             $table->boolean('delete_stock')->default(0);
 
