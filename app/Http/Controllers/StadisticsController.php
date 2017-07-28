@@ -6,6 +6,7 @@ use App\Order;
 use App\Product;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class StadisticsController extends Controller
 {
@@ -48,7 +49,7 @@ class StadisticsController extends Controller
         $concretas = Order::where('status', 'ended')->count();
         $total_products = Product::all();
         $total_productos = $total_products->sum('stock');
-        $total_costos = $total_products->sum('cost');
+        $total_costos = $this->countTotalProducts($total_products);
 
         return view('stadistics.index', compact('total_cost',
             'products_count',
@@ -64,22 +65,18 @@ class StadisticsController extends Controller
         ));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+
+    public function countTotalProducts($products)
     {
-        //
+        $total = 0;
+
+//            foreach ($products as $product) {
+//                $total = $total + $product->pivot->price * $product->pivot->quantity;
+//            }
+
+        return $total;
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         //Otener fecha inicio y fin
@@ -120,49 +117,38 @@ class StadisticsController extends Controller
         ));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+
+    public function lowStock()
     {
-        //
+        $products = Product::all();
+
+        $c = 0;
+        foreach ($products as $product) {
+            if ($product->stock >= $product->stock_minimum) {
+                $products->forget($c);
+            }
+            $c++;
+        }
+
+        return view('stadistics.stock', compact('products'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function budget()
     {
-        //
-    }
+        $products = DB::table('products')->orderBy('category_id')->get();
+        $products = Product::all();
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+        // $products = Product::all();
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+//        $c=0;
+//        foreach ($products as $product) {
+//            if ($product->stock >= $product->stock_minimum) {
+//                $products->forget($c);
+//            }
+//            $c++;
+//        }
+
+        return view('stadistics.demand', compact('products'));
     }
 
     /**
@@ -222,7 +208,7 @@ class StadisticsController extends Controller
         $days_total = [];
 
         foreach ($orders as $order) {
-             $day_total = $day_total + $order->total;
+            $day_total = $day_total + $order->total;
         }
 
         $days_total = array_prepend($days_total, $day_total);

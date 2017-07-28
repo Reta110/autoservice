@@ -25,7 +25,7 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::resource('/products', 'ProductsController');
     Route::resource('/services', 'ServicesController');
     Route::resource('/configurations', 'ConfigurationsController');
-    Route::resource('/stadistics', 'StadisticsController');
+   // Route::resource('/stadistics', 'StadisticsController');
     Route::resource('/product/categories', 'ProductCategoriesController');
 
     Route::resource('/vehicles', 'VehiclesController');
@@ -60,5 +60,10 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     //Deudas por cobrar
     Route::get('/debts/', 'DebtsController@index')->name('debts.index');
 
-
+    //Stadistics
+    Route::get('/stadistics', 'StadisticsController@index')->name('stadistics.index');
+    Route::post('/stadistics', 'StadisticsController@store')->name('stadistics.store');
+    Route::get('/stadistics/stock', 'StadisticsController@lowStock')->name('stadistics.stock');
+    Route::get('/stadistics/demand', 'StadisticsController@demand')->name('stadistics.demand');
+    Route::get('/stadistics/demand', 'StadisticsController@budget')->name('stadistics.budget');
 });

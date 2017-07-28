@@ -16,21 +16,21 @@
     </section>
 
     <!-- Main content -->
-    <section class="invoice">
+    <section class="invoice  FontSmaller">
         <!-- title row -->
         <div class="row">
             <div class="col-xs-12">
                 @include('common.errors')
-                <h1 class="page-header">
+                <h3 class="page-header">
                     <img alt="User Image" src="{{ asset ('images/logo.png') }}">
                     {{--<small class="pull-right">Fecha: {{ $order->created_at }}</small>--}}
-                </h1>
+                </h3>
 
             </div>
         </div>
         <div class="row no-print">
             <div class="col-xs-12">
-                <table class="table table-bordered">
+                <table class="table table-bordered" cellpadding="0" cellspacing="0">
                     <tr>
                         <td><b>Estatus:</b></td>
                         <td>{{$order->status }}</td>
@@ -89,7 +89,7 @@
         <!-- Table row -->
             <div class="row">
                 <div class="col-xs-12 table-responsive">
-                    <h3>Servicios</h3>
+                    <h4>Servicios</h4>
                     <table class="table table-striped table-condensed">
                         <thead>
                         <tr>
@@ -106,6 +106,10 @@
                                 <td class="money">{{$service->pivot->hh * $order->hh }}</td>
                             </tr>
                         @endforeach
+                        <tr>
+                            <td colspan="2" class="text-right"><strong>Total:</strong></td>
+                            <td class="money">{{$total_services}}</td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -113,11 +117,11 @@
             </div>
             <!-- /.row -->
     @endif
-    @if(count($order->products)>0)
         <!-- Table row -->
             <div class="row">
                 <div class="col-xs-12">
-                    <h3>Productos</h3>
+                    <h4>Productos</h4>
+                    @if(count($order->products)>0)
                     <table class="table table-striped table-condensed">
                         <thead>
                         <tr>
@@ -138,17 +142,45 @@
                                 <td class="money">{{ $product->pivot->quantity * $product->pivot->price }}</td>
                             </tr>
                         @endforeach
+                        {{--<tr>--}}
+                        {{--<td colspan="3" class="text-right"><strong>Total:</strong></td>--}}
+                        {{--<td class="money">{{$total_products}}</td>--}}
+                        {{--</tr>--}}
                         </tbody>
                     </table>
+                    @endif
+                    @if($order->status == 'budget' && $cells != '')
+                        <table class="table table-striped table-condensed" id="example">
+                            <thead>
+                            <tr>
+                                <th>DESCRIPCION</th>
+                                <th>PRECIO UNITARIO</th>
+                                <th>CANTIDAD</th>
+                                <th>TOTAL</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    @endif
                 </div>
                 <!-- /.col -->
             </div>
             <!-- /.row -->
-        @endif
+
 
         <div class="row">
-            <!-- accepted payments column -->
+            @php($sum = count($order->products)+count($order->services))
+            @if($sum == 10 || $sum == 11 || $sum == 12 || $sum == 13)
+                <br><br>
+                <br><br>
+                <br><br>
+                <br><br>
+            @endif
+        <!-- accepted payments column -->
             @if($order->observations != '')
+                <br><br>
                 <div class="col-xs-6">
                     <p class="lead">Observaciones:</p>
                     <p class="text-muted well well-sm " style="margin-top: 10px;">
@@ -156,14 +188,17 @@
                     </p>
                 </div>
         @endif
+
+
         <!-- /.col -->
             <div class="col-xs-5 pull-right">
 
                 <div class="form-group">
 
                     <table class="table">
-                        <br>
+
                         @if($order->discount > 0)
+                            <br><br>
                             <tr>
                                 <td>Descuento:</td>
                                 <td><b>{{$order->discount}} %</b></td>
@@ -191,7 +226,8 @@
                 <h3>Ganancias:</h3>
                 <h4 class="text-info bg-info">Total: <span class="money">{{$order->total}}</span></h4>
                 <h4 class="text-danger bg-danger">Costo total: <span class="money">{{$order->total_cost}}</span></h4>
-                <h4 class="text-success bg-success">Ganancia: <span class="money">{{$order->total - $order->total_cost}}</span></h4>
+                <h4 class="text-success bg-success">Ganancia: <span
+                            class="money">{{$order->total - $order->total_cost}}</span></h4>
             </div>
 
         </div>
@@ -248,6 +284,26 @@
     <script type="text/javascript">
         $('.printer').on('click', function () {
             window.print();
+        });
+
+        $(document).ready(function () {
+            var dataSet = [
+                {!! $cells!!}
+            ];
+
+            $('#example').DataTable({
+                data: dataSet,
+                "paging": false,
+                "ordering": false,
+                "info": false,
+                "searching": false,
+                "columnDefs": [
+                    {"width": "28%", "targets": 0},
+                    {"width": "24%", "targets": 1},
+                    {"width": "16%", "targets": 2},
+                    {"width": "32%", "targets": 3}
+                ]
+            });
         });
 
     </script>

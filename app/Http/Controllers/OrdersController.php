@@ -96,7 +96,7 @@ class OrdersController extends Controller
         $modelos = [];
         $categories = ProductCategory::orderBy('name', 'ASC')->pluck('name', 'id')->all();
 
-
+        //TEST
         return view('orders.create', compact('client', 'vehicle', 'products', 'services', 'serv', 'prod', 'config', 'marcas', 'modelos', 'categories', 'recommended'));
     }
 
@@ -119,9 +119,8 @@ class OrdersController extends Controller
             'hh' => $order->hh,
             'discount' => $order->discount,
             'paid' => 'no',
-            'type_pay' => '',
             'pay_observations' => '',
-            'pay_fees_quantity' => '',
+            'pay_fees_quantity' => '0',
         ]);
 
         if (count($order->products) > 0) {
@@ -149,12 +148,6 @@ class OrdersController extends Controller
      */
     public function store(Request $request)
     {
-//        $this->validate($request, [
-//            'title' => 'required',
-//            'status' => 'required',
-//            'km' => 'required'
-//        ]);
-
         $order = Order::create([
             'title' => $request->get('title'),
             'user_id' => $request->get('user_id'),
@@ -173,6 +166,9 @@ class OrdersController extends Controller
             'pay_observations' => $request->get('pay_observations'),
             'pay_fees_quantity' => $request->get('pay_fees_quantity'),
             'km' => $request->get('km'),
+            'express_products' => $request->get('express_products'),
+            'total_express' => $request->get('total_express'),
+
         ]);
 
         if (count($request->product_id) > 0) {
@@ -215,7 +211,32 @@ class OrdersController extends Controller
         $order = Order::find($id);
         $config = Configuration::first();
 
-        return view('orders.show', compact('order', 'config'));
+        $total_products = $this->countTotalProducts($order);
+        $total_services = $this->countTotalServices($order);
+
+        $cells = $this->getExpressProductsCells($order);
+
+        return view('orders.show', compact('order', 'config', 'total_services', 'total_products', 'cells'));
+    }
+
+    public function countTotalProducts($order)
+    {
+        $total = 0;
+        foreach ($order->products as $product) {
+            $total = $total + $product->pivot->price * $product->pivot->quantity;
+        }
+
+        return $total;
+    }
+
+    public function countTotalServices($order)
+    {
+        $total = 0;
+        foreach ($order->services as $item) {
+            $total = $total + $item->pivot->hh * $order->hh;
+        }
+
+        return $total;
     }
 
     public function edit($id)
@@ -229,7 +250,7 @@ class OrdersController extends Controller
         $services = Service::orderBy('name', 'ASC')->pluck('name', 'id', 'price')->all();
         $servi = Service::orderBy('name', 'ASC')->get();
 
-        $recommended = Product::orderBy('name', 'ASC')->where('tags', 'like', '%' . $order->vehicle->brand . '%')->orWhere('tags', 'like', '%' . $order->vehicle->model . '%')->get();
+        $recommended = Product::orderBy('name', 'ASC')->where('tags', 'like', ' % ' . $order->vehicle->brand . ' % ')->orWhere('tags', 'like', ' % ' . $order->vehicle->model . ' % ')->get();
 
         $serv = $servi->toJson();
         $aux = Product::orderBy('name', 'ASC')->get();
@@ -242,7 +263,9 @@ class OrdersController extends Controller
         $marcas = Product::orderBy('brand', 'ASC')->pluck('brand', 'id')->all();
         $modelos = Product::orderBy('model', 'ASC')->pluck('model', 'id')->all();
 
-        return view('orders.edit', compact('order', 'client', 'vehicle', 'products', 'services', 'serv', 'prod', 'config', 'marcas', 'modelos', 'categories', 'recommended'));
+        $cells = $this->getExpressProductsCells($order);
+
+        return view('orders.edit', compact('order', 'client', 'vehicle', 'products', 'services', 'serv', 'prod', 'config', 'marcas', 'modelos', 'categories', 'recommended', 'cells'));
     }
 
     /**
@@ -254,10 +277,6 @@ class OrdersController extends Controller
      */
     public function update(Request $request, $id)
     {
-//        $this->validate($request, [
-//            'title' => 'required',
-//            'status' => 'required'
-//        ]);
 
         //Limpiar servicios y productos relacionandos a la orden
         $order = Order::find($id);
@@ -297,6 +316,8 @@ class OrdersController extends Controller
         $order->pay_observations = $request->get('pay_observations');
         $order->pay_fees_quantity = $request->get('pay_fees_quantity');
         $order->km = $request->get('km');
+        $order->express_products = $request->get('express_products');
+        $order->total_express = $request->get('total_express');
 
         //Descontar productos del stock si estado es ended
         if ($order->status == 'ended' && $order->delete_stock == 0) {
@@ -389,7 +410,9 @@ class OrdersController extends Controller
         $order = Order::find($id);
         $config = Configuration::first();
 
-        return view('orders.work_paper', compact('order', 'config'));
+        $cells = $this->getExpressProductsCellsWorkPaper($order);
+
+        return view('orders.work_paper', compact('order', 'config', 'cells'));
 
     }
 
@@ -427,5 +450,83 @@ class OrdersController extends Controller
         Order::destroy($id);
 
         return redirect()->route('orders.index')->with('success', 'Se ha eleminado de manera exitosa!');
+    }
+
+    /**
+     * @param $order
+     * @return array|string
+     */
+    private function getExpressProductsCells($order)
+    {
+        $order->express_products = str_replace(",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,", "", $order->express_products);
+        $order->express_products = str_replace(",,,,", "", $order->express_products);
+        $order->express_products = str_replace(",,", "", $order->express_products);
+
+        $cell = explode(",", $order->express_products);
+
+        $count = count($cell) - 1;
+
+        if ($count > 0) {
+            $cells = '["' . $cell[0] . "\",\"" . $cell[1] . "\",\"" . $cell[2] . "\",\"" . $cell[3] . '"],';
+            if ($count > 3)
+                $cells = $cells . '["' . $cell[4] . "\",\"" . $cell[5] . "\",\"" . $cell[6] . "\",\"" . $cell[7] . '"],';
+            if ($count > 7)
+                $cells = $cells . '["' . $cell[8] . "\",\"" . $cell[9] . "\",\"" . $cell[10] . "\",\"" . $cell[11] . '"],';
+            if ($count > 11)
+                $cells = $cells . '["' . $cell[12] . "\",\"" . $cell[13] . "\",\"" . $cell[14] . "\",\"" . $cell[15] . '"],';
+            if ($count > 15)
+                $cells = $cells . '["' . $cell[16] . "\",\"" . $cell[17] . "\",\"" . $cell[18] . "\",\"" . $cell[19] . '"],';
+            if ($count > 19)
+                $cells = $cells . '["' . $cell[20] . "\",\"" . $cell[21] . "\",\"" . $cell[22] . "\",\"" . $cell[23] . '"],';
+            if ($count > 23)
+                $cells = $cells . '["' . $cell[24] . "\",\"" . $cell[25] . "\",\"" . $cell[26] . "\",\"" . $cell[27] . '"],';
+            if ($count > 27)
+                $cells = $cells . '["' . $cell[28] . "\",\"" . $cell[29] . "\",\"" . $cell[30] . "\",\"" . $cell[31] . '"],';
+            if ($count > 31)
+                $cells = $cells . '["' . $cell[32] . "\",\"" . $cell[33] . "\",\"" . $cell[34] . "\",\"" . $cell[35] . '"],';
+            if ($count > 35)
+                $cells = $cells . '["' . $cell[36] . "\",\"" . $cell[37] . "\",\"" . $cell[38] . "\",\"" . $cell[39] . '"],';
+
+            return $cells;
+
+        }
+        return $cells = '';
+    }
+
+    private function getExpressProductsCellsWorkPaper($order)
+    {
+        $order->express_products = str_replace(",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,", "", $order->express_products);
+        $order->express_products = str_replace(",,,,", "", $order->express_products);
+        $order->express_products = str_replace(",,", "", $order->express_products);
+
+        $cell = explode(",", $order->express_products);
+
+        $count = count($cell) - 1;
+
+        if ($count > 0) {
+            $cells = '["' . $cell[0] . "\",\"" . $cell[2] . "\",\"" . '"],';
+            if ($count > 3)
+                $cells = $cells . '["' . $cell[4] . "\",\"" . $cell[6] . "\",\"" . '"],';
+            if ($count > 7)
+                $cells = $cells . '["' . $cell[8] . "\",\"" . "\",\"" . $cell[10] . "\",\"" . '"],';
+            if ($count > 11)
+                $cells = $cells . '["' . $cell[12] . "\",\"" . "\",\"" . $cell[14] . "\",\"" . '"],';
+            if ($count > 15)
+                $cells = $cells . '["' . $cell[16] . "\",\"" . "\",\"" . $cell[18] . "\",\"" . '"],';
+            if ($count > 19)
+                $cells = $cells . '["' . $cell[20] . "\",\"" . "\",\"" . $cell[22] . "\",\"" . '"],';
+            if ($count > 23)
+                $cells = $cells . '["' . $cell[24] . "\",\"" . "\",\"" . $cell[26] . "\",\"" . '"],';
+            if ($count > 27)
+                $cells = $cells . '["' . $cell[28] . "\",\"" . "\",\"" . $cell[30] . "\",\"" . '"],';
+            if ($count > 31)
+                $cells = $cells . '["' . $cell[32] . "\",\"" . "\",\"" . $cell[34] . "\",\"" . '"],';
+            if ($count > 35)
+                $cells = $cells . '["' . $cell[36] . "\",\"" . "\",\"" . $cell[38] . "\",\"" . '"],';
+
+            return $cells;
+
+        }
+        return $cells = '';
     }
 }

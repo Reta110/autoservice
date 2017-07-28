@@ -14,7 +14,7 @@
                 </div>
                 <div class="form-group">
                     {!! Form::label('hh', 'Tiempo sugerido') !!}
-                    {!! Form::text('hh', 0, ['class' => 'form-control hh', 'placeholder' => 'Tiempo sgerido', 'required' => 'true']) !!}
+                    {!! Form::text('hh', null, ['class' => 'form-control hh', 'placeholder' => 'Tiempo sgerido', 'required' => 'true']) !!}
                 </div>
                 <div class="form-group">
                     {!! Form::label('description', 'Descripción') !!}

@@ -92,7 +92,7 @@
             <div class="col-md-12">
                 <div class="box box-info">
                     <div class="box-header">
-                        <h3 class="box-title">Seleccione producto y cantidad</h3>
+                        <h3 class="box-title">Seleccione productos y cantidad</h3>
                         <div class="pull-right">
                             @if(count($recommended) > 0)
                                 <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
@@ -159,6 +159,24 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-6 text-center">Denominación</div>
+                    <div class="col-md-1 text-center">$ Precio</div>
+                    <div class="col-md-1 text-center">Cantidad</div>
+                    <div class="col-md-1 text-center">$ Total</div>
+                    <div class="col-md-4 text-center"></div>
+                </div>
+                {{--- Tabla ---}}
+                <div id="t1">
+
+                </div>
+                <div class="col-md-3 col-lg-offset-7">
+                    <label for="total_express">Total</label>
+                    {!! Form::text('total_express', null, ['class' => 'form-control total_express', 'placeholder' => 'Total productos express']) !!}
+                </div>
+                {!! Form::hidden('express_products', null, ['class' => 'form-control express_products']) !!}
+                {{--- Fin Tabla ---}}
+
             </div>
             <div class="col-md-6">
                 <div class="box box-info">
@@ -188,13 +206,13 @@
 
                             <div class="col-sm-10">
                                 <label class="radio-inline">
-                                    <input type="radio" name="status" value="budget" checked>Presupuesto
+                                    <input type="radio" name="status" value="budget" checked="true" class="status">Presupuesto
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" name="status" value="started">Iniciado
+                                    <input type="radio" name="status" value="started" class="status">Iniciado
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" name="status" value="ended">Finalizado
+                                    <input type="radio" name="status" value="ended" class="status">Finalizado
                                 </label>
                             </div>
 
@@ -243,7 +261,7 @@
                             <label for="inputEmail3" class="col-sm-4 control-label">Nro de cuotas:</label>
                             <div class="col-sm-6">
                                 <select class="form-control select2" name="pay_fees_quantity">
-                                    <option selected="selected" value="">---Nro de cuota ---</option>
+                                    <option selected="selected" value="0">--- Nro de cuota ---</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
@@ -319,9 +337,27 @@
     {{--<script type="text/javascript"--}}
     {{--src="{{asset('js/hierarchySelect.js')}}"></script>--}}
 
+    <script type="text/javascript"
+            src="http://www.jqueryscript.net/demo/Excel-Like-jQuery-Data-Table-Plugin-xTab/xtab.js"></script>
+    <link rel="stylesheet" href="http://www.jqueryscript.net/demo/Excel-Like-jQuery-Data-Table-Plugin-xTab/xtab.css"/>
 
 
     <script type="text/javascript">
+
+
+        //Table xtab jquery
+        $("#t1").xtab("init", {
+            rows: 10,
+            cols: 4,
+            headers: true,
+            width: [450, 100, 100, 100],
+        });
+        $(document).on('change', '#t1 td', function () {
+            console.log($('#t1').xtab("get"))
+            $(".express_products").val($('#t1').xtab("get"))
+        });
+        //Fin table xtab jquery
+
         //super global
         var prod = {!! $prod !!};
         var serv = {!! $serv !!}
@@ -380,6 +416,54 @@
                     });
 
                 });
+
+        //Modal para editar client sin salir
+        $("#modal-edit-client-form").submit(function (event) {
+            event.preventDefault(); //prevent default action
+            console.log('actualizando client');
+
+            var token = $("input[name='_token']").val();
+            var name = $(this).closest('#myEditClientModal').find('.name').val();
+            var last_name = $(this).closest('#myEditClientModal').find('.last_name').val();
+            var email = $(this).closest('#myEditClientModal').find('.email').val();
+            var rut = $(this).closest('#myEditClientModal').find('.rut').val();
+            var phone = $(this).closest('#myEditClientModal').find('.phone').val();
+            var address = $(this).closest('#myEditClientModal').find('.address').val();
+
+            $.ajax({
+                url: "{{route('clients.update', $client)}}",
+                method: 'PUT',
+                data: {
+                    _token: token,
+                    "name": name,
+                    "last_name": last_name,
+                    "email": email,
+                    "rut": rut,
+                    "phone": phone,
+                    "address": address,
+                },
+                success: function (data) {
+                    console.log('Success');
+
+                    client = JSON.parse(data.client)
+
+                    $('#partial-client-data .name').val(client.name);
+                    $('#partial-client-data .last_name').val(client.last_name);
+                    $('#partial-client-data .email').val(client.email);
+                    $('#partial-client-data .rut').val(client.rut);
+                    $('#partial-client-data .phone').val(client.phone);
+                    $('#partial-client-data .address').val(client.address);
+                }
+            });
+
+            console.log('DONE');
+            $('#modal-edit-client-form').modal('hide');
+            $('.close-modal').click();
+            $('.edit-client-saved').fadeIn(2000, function () {
+                $('.edit-client-saved').fadeOut(1000);
+            });
+
+        });
 
         //Fin Modal para editar vehiculos sin salir
 
@@ -536,6 +620,21 @@
         $(document).on('change', '.order_hh', function () {
             calculate()
         });
+        //Si cambian el status de la orden, se calculan los numeros nuevamente
+        $(document).on('change', '.status', function () {
+            //cambia el estoad e los radios
+            $('input[name=status]').mouseup(function () {
+            }).change(function () {
+            })
+            //Fin cambia el estoad e los radios
+
+            calculate()
+        });
+        //Si cambian el total de productos express, se calculan los numeros nuevamente
+        $(document).on('change', '.total_express', function () {
+            calculate()
+        });
+
         //Si cambian el discount de la orden, se calculan los numeros nuevamente
         $(document).on('change', '.discount', function () {
             calculate()
@@ -813,6 +912,15 @@
                     }
             );
 
+            console.log($("input[name='status']:checked").val())
+            //Si status  es presupuesto vamos a meter en la cuenta lo de total express
+            if ($(".status:checked").val() == 'budget') {
+                if ($(".total_express").val() != '') {
+                    productos_total = productos_total + eval($(".total_express").val());
+                }
+            }
+            //Fin status es presupuesto vamos a meter en la cuenta lo de total express
+
             if (isNaN(productos_total)) {
                 productos_total = 0
             }
@@ -891,13 +999,6 @@
                 var sum = eval(calcular_total_producto() + calcular_total_servicios());
             }
 
-//            var iva = eval(sum * (conf_iva / 100))
-//            var neto = eval(sum - iva)
-//
-//            $(".neto").val(neto)
-//            $(".iva").val(iva)
-//
-//            $(".total").val(sum)
             var iva = eval(sum * (conf_iva / 100))
             var neto = eval(sum)
 

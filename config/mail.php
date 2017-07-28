@@ -56,7 +56,7 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'contacto@automec.cl'),
+        'address' => env('MAIL_FROM_ADDRESS', 'webautomec@automec.cl'),
         'name' => env('MAIL_FROM_NAME', 'Automec - Servicio Automotriz'),
     ],
 

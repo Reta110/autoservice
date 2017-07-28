@@ -35,6 +35,8 @@ class CreateOrdersTable extends Migration
 
             $table->enum('status', ['budget','started', 'template', 'ended']);
 
+            $table->mediumText('express_products')->nullable();
+            $table->text('total_express')->default(0)->nullable();
 
             $table->date('start_date')->nullable();
             $table->date('ended_date')->nullable();

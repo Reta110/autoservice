@@ -6,8 +6,7 @@
 @section('contenido')
     <section class="content-header">
         <h1>
-            Orden Nr.
-            <small>#0{{$order->id }}</small>
+            Orden Nr. #0{{$order->id }}
         </h1>
     </section>
 
@@ -20,8 +19,7 @@
                     <img alt="User Image" src="{{ asset ('images/logo.png') }}" class="pull-left">
                 </h1>
                 <h4 class="pull-right">
-                    Orden Nr.
-                    <small> 0{{$order->id }}</small>
+                    Orden Nr.  0{{$order->id }}
                 </h4>
 
             </div>
@@ -80,11 +78,12 @@
             </div>
             <!-- /.row -->
     @endif
-    @if(count($order->products)>0)
-        <!-- Table row -->
-            <div class="row">
-                <div class="col-xs-12">
-                    <h3>Productos</h3>
+
+    <!-- Table row -->
+        <div class="row">
+            <div class="col-xs-12">
+                <h3>Productos</h3>
+                @if(count($order->products)>0)
                     <table class="table table-striped table-bordered table-condensed">
                         <thead>
                         <tr>
@@ -107,10 +106,20 @@
                         @endforeach
                         </tbody>
                     </table>
-                </div>
-                <!-- /.col -->
+                @endif
+                @if($order->status == 'budget' && $cells != '')
+                    <table class="table table-striped table-condensed" id="example">
+                        <thead>
+                        <tr>
+                            <th>DESCRIPCION</th>
+                            <th>CANTIDAD</th>
+                        </tr>
+                        </thead>
+                    </table>
             </div>
-            <!-- /.row -->
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
     @endif
     <!-- /.row -->
         <div class="row">
@@ -123,15 +132,15 @@
                     </p>
                 </div>
             @endif
-        <div class="row text-center no-print">
-            <button type="button" class="btn btn-success printer" id="print">Imprimir Boleta de trabajo
-                <i class="glyphicon glyphicon-print"></i>
-            </button>
-            <a class="btn btn-danger" href="{{ route('orders.show', $order)}}">
-                Volver
-                <i class="glyphicon glyphicon-backward"></i>
-            </a>
-        </div>
+            <div class="row text-center no-print">
+                <button type="button" class="btn btn-success printer" id="print">Imprimir Boleta de trabajo
+                    <i class="glyphicon glyphicon-print"></i>
+                </button>
+                <a class="btn btn-danger" href="{{ route('orders.show', $order)}}">
+                    Volver
+                    <i class="glyphicon glyphicon-backward"></i>
+                </a>
+            </div>
     </section>
     <!-- /.content -->
     <div class="clearfix"></div>
@@ -142,6 +151,24 @@
     <script type="text/javascript">
         $('.printer').on('click', function () {
             window.print();
+        });
+
+        $(document).ready(function () {
+            var dataSet = [
+                {!! $cells!!}
+            ];
+
+            $('#example').DataTable({
+                data: dataSet,
+                "paging": false,
+                "ordering": false,
+                "info": false,
+                "searching": false,
+                "columnDefs": [
+                    {"width": "60%", "targets": 0},
+                    {"width": "40%", "targets": 1},
+                ]
+            });
         });
     </script>
 @endsection

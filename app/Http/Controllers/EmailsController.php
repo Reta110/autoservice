@@ -42,7 +42,7 @@ class EmailsController extends Controller
         $automec = env('MAIL_FROM_ADDRESS');
 
         while (file_exists(public_path() . '/pdf/Order-' . $id . '.pdf') == false) {
-            Mail::to($automec)->queue(new OrderShipped($order));
+            Mail::to($automec)->send(new OrderShipped($order));
         }
 
         return redirect()->to(route('orders.show', $order))->with('success', 'Se ha enviado de manera exitosa!');

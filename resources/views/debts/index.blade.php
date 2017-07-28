@@ -60,11 +60,9 @@
                                         <td>
                                             {{ $order->user->name.' '.$order->user->last_name}}
                                         </td>
+                                        <td class="money">{{ $order->total }}</td>
                                         <td>
-                                            {{ $order->total }}
-                                        </td>
-                                        <td>
-                                            {{ $order->ended_date }}
+                                            {{ \Carbon\Carbon::parse($order->ended_date)->format('d-m-Y') }}
                                         </td>
                                         <td class="text-center">
                                             <div class="form-group">
@@ -104,9 +102,7 @@
                                                 <td>
                                                     {{ $transbank->user->name.' '.$transbank->user->last_name}}
                                                 </td>
-                                                <td>
-                                                    {{ $transbank->total / $transbank->pay_fees_quantity}}
-                                                </td>
+                                                <td class="money">{{ $transbank->total / $transbank->pay_fees_quantity}}</td>
                                                 <td>
                                                     {{ \Carbon\Carbon::parse($transbank->ended_date)
                                                         ->addMonth($i)->format('d-m-Y') }}
@@ -149,9 +145,7 @@
                                                 <td>
                                                     {{ $check->user->name.' '.$check->user->last_name}}
                                                 </td>
-                                                <td>
-                                                    {{ $check->total / $check->pay_fees_quantity}}
-                                                </td>
+                                                <td class="money">{{ $check->total / $check->pay_fees_quantity}}</td>
                                                 <td>
                                                     {{ \Carbon\Carbon::parse($check->ended_date)
                                                             ->addMonth($i)->format('d-m-Y') }}

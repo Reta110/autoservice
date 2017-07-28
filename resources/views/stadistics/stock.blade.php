@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Listado de ordenes')
+@section('title', 'Listado de productos menos que stock deseado')
 
 @section('contenido')
     <section class="content-header">
@@ -13,13 +13,16 @@
                 <a href="#">
                     <i class="fa fa-dashboard">
                     </i>
-                    Ordenes
+                    Home
                 </a>
             </li>
             <li>
                 <a href="#">
-                    Listado
+                    Examples
                 </a>
+            </li>
+            <li class="active">
+                Blank page
             </li>
         </ol>
     </section>
@@ -30,18 +33,9 @@
             @include('common.success')
             <div class="box-header with-border">
                 <h3 class="box-title">
-                    Listado de ordenes
+                    Productos con stock bajo
                 </h3>
                 <div class="box-tools">
-
-                    <div class="text-center">
-                        <a class="btn btn-danger btn-sm" href="{{ route('select-client') }}">
-                            NUEVO REGISTRO
-                        </a>
-                        {{--  <a class="btn btn-success btn-sm" href="{{route('export')}}">
-                            IMPRIMIR REPORTE
-                        </a> --}}
-                    </div>
 
                 </div>
             </div>
@@ -53,64 +47,56 @@
                                 <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>TITULO</th>
-                                    <th>CLIENTE</th>
-                                    <th>RUT</th>
+                                    <th>CODIGO</th>
+                                    <th>NOMBRE</th>
+                                    <th>COSTO</th>
+                                    <th>PRECIO</th>
                                     <th>MARCA</th>
                                     <th>MODELO</th>
-                                    <th>AÑO</th>
-                                    <th>NETO</th>
-                                    <th>IVA</th>
-                                    <th>TOTAL</th>
-                                    <th>STATUS</th>
+                                    <th>DISPONIBLE</th>
+                                    <th>STOCK MINIMO</th>
+                                    <th>TAGS</th>
                                     <th>ACCIONES</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($orders as $order)
-                                    <tr @if($order->paid == 'no' && $order->status != 'budget')class="bg-danger" @endif>
+                                @foreach($products as $product)
+                                    <tr>
                                         <td>
-                                            {{ $order->id }}
+                                            {{ $product->id }}
                                         </td>
                                         <td>
-                                            {{ $order->title }}
+                                            {{ $product->code }}
                                         </td>
                                         <td>
-                                            {{ $order->user->name.' '.$order->user->last_name}}
+                                            {{ $product->name }}
+                                        </td>
+                                        <td class="money">{{ $product->cost }}</td>
+                                        <td class="money">{{ $product->price }}</td>
+                                        <td>
+                                            {{ $product->brand }}
                                         </td>
                                         <td>
-                                            {{ $order->user->rut }}
+                                            {{ $product->model }}
                                         </td>
                                         <td>
-                                            {{ $order->vehicle->brand }}
+                                            {{ $product->stock }}
                                         </td>
                                         <td>
-                                            {{ $order->vehicle->model }}
+                                            {{ $product->stock_minimum }}
                                         </td>
                                         <td>
-                                            {{ $order->vehicle->year }}
+                                            {{ $product->tags }}
                                         </td>
                                         <td>
-                                            {{ $order->neto }}
-                                        </td>
-                                        <td>
-                                            {{ $order->iva }}
-                                        </td>
-                                        <td>
-                                            {{ $order->total }}
-                                        </td>
-                                        <td>
-                                            {{ $order->status }}
-                                        </td>
-                                        <td>
-                                            {!! Form::open(['route' => ['orders.destroy',$order ], 'method' => 'DELETE']) !!}
+                                            {!! Form::open(['route' => ['products.destroy',$product ], 'method' => 'DELETE']) !!}
                                             <div class="form-group">
-                                                <a href="{{ route('orders.show', $order) }}" title="">
+                                                <a href="{{ route('products.show', $product) }}">
                                                     <i class="fa fa-eye" aria-hidden="true"></i>
                                                 </a>
                                             </div>
                                             <div class="form-group">
-                                                <a href="{{ route('orders.edit', $order) }}" title="Editar">
+                                                <a href="{{ route('products.edit', $product) }}">
                                                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                                 </a>
                                             </div>
@@ -142,14 +128,12 @@
 @endsection
 
 @section('js')
-
     <script type="text/javascript">
         $(document).ready(function () {
             $('#table').DataTable({
                 "language": {
-                    "url": "{{ asset('AdminLTE/plugins/datatables/esp.lang') }}",
-                },
-                "aaSorting": [ [10,'desc'],[0,'desc'] ],
+                    "url": "{{ asset('AdminLTE/plugins/datatables/esp.lang') }}"
+                }
             });
         });
     </script>

@@ -126,7 +126,7 @@
             <div class="col-md-12">
                 <div class="box box-info">
                     <div class="box-header">
-                        <h3 class="box-title">Seleccione producto y cantidad</h3>
+                        <h3 class="box-title">Productos y cantidad</h3>
                         <div class="pull-right">
                             @if(count($recommended) > 0)
                                 <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
@@ -280,6 +280,24 @@
                         @endif
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-6 text-center">Denominación</div>
+                    <div class="col-md-1 text-center">$ Precio</div>
+                    <div class="col-md-1 text-center">Cantidad</div>
+                    <div class="col-md-1 text-center">$ Total</div>
+                    <div class="col-md-4 text-center"></div>
+
+                </div>
+                {{--- Tabla ---}}
+                <div id="t1">
+
+                </div>
+                <div class="col-md-3 col-lg-offset-7">
+                    <label for="total_express">Total</label>
+                    {!! Form::text('total_express', null, ['class' => 'form-control total_express', 'placeholder' => 'Total productos express']) !!}
+                </div>
+                {!! Form::hidden('express_products', null, ['class' => 'form-control express_products']) !!}
+                {{--- Fin Tabla ---}}
             </div>
             <div class="col-md-6">
                 <div class="box box-info">
@@ -310,17 +328,17 @@
                             <div class="col-sm-10">
                                 @if($order->status != 'ended')
                                     <label class="radio-inline">
-                                        <input type="radio" name="status" value="budget"
-                                               @if($order->status == 'budget') checked @endif>Presupuesto
+                                        <input type="radio" name="status" value="budget" class="status"
+                                               @if($order->status == 'budget')checked="true" @endif>Presupuesto
                                     </label>
                                     <label class="radio-inline">
-                                        <input type="radio" name="status" value="started"
-                                               @if($order->status == 'started') checked @endif>Iniciado
+                                        <input type="radio" name="status" value="started" class="status"
+                                               @if($order->status == 'started')checked="true" @endif>Iniciado
                                     </label>
                                 @endif
                                 <label class="radio-inline">
-                                    <input type="radio" name="status" value="ended"
-                                           @if($order->status == 'ended') checked @endif>Finalizado
+                                    <input type="radio" name="status" value="ended" class="status"
+                                           @if($order->status == 'ended')checked="true" @endif>Finalizado
                                 </label>
                             </div>
 
@@ -373,19 +391,43 @@
                             <label for="inputEmail3" class="col-sm-4 control-label">Nro de cuotas:</label>
                             <div class="col-sm-6">
                                 <select class="form-control select2" name="pay_fees_quantity">
-                                    <option selected="selected" value="">---Nro de cuota ---</option>
-                                    <option value="1" @if($order->pay_feeds_quantity == '1') selected="selected" @endif>1</option>
-                                    <option value="2" @if($order->pay_feeds_quantity == '2') selected="selected" @endif>2</option>
-                                    <option value="3" @if($order->pay_feeds_quantity == '3') selected="selected" @endif>3</option>
-                                    <option value="4" @if($order->pay_feeds_quantity == '4') selected="selected" @endif>4</option>
-                                    <option value="5" @if($order->pay_feeds_quantity == '5') selected="selected" @endif>5</option>
-                                    <option value="6" @if($order->pay_feeds_quantity == '6') selected="selected" @endif>6</option>
-                                    <option value="7" @if($order->pay_feeds_quantity == '7') selected="selected" @endif>7</option>
-                                    <option value="8" @if($order->pay_feeds_quantity == '8') selected="selected" @endif>8</option>
-                                    <option value="9" @if($order->pay_feeds_quantity == '9') selected="selected" @endif>9</option>
-                                    <option value="10" @if($order->pay_feeds_quantity == '10') selected="selected" @endif>10</option>
-                                    <option value="11" @if($order->pay_feeds_quantity == '11') selected="selected" @endif>11</option>
-                                    <option value="12" @if($order->pay_feeds_quantity == '12') selected="selected" @endif>12</option>
+                                    <option selected="selected" value="0">--- Nro de cuota ---</option>
+                                    <option value="1" @if($order->pay_feeds_quantity == '1') selected="selected" @endif>
+                                        1
+                                    </option>
+                                    <option value="2" @if($order->pay_feeds_quantity == '2') selected="selected" @endif>
+                                        2
+                                    </option>
+                                    <option value="3" @if($order->pay_feeds_quantity == '3') selected="selected" @endif>
+                                        3
+                                    </option>
+                                    <option value="4" @if($order->pay_feeds_quantity == '4') selected="selected" @endif>
+                                        4
+                                    </option>
+                                    <option value="5" @if($order->pay_feeds_quantity == '5') selected="selected" @endif>
+                                        5
+                                    </option>
+                                    <option value="6" @if($order->pay_feeds_quantity == '6') selected="selected" @endif>
+                                        6
+                                    </option>
+                                    <option value="7" @if($order->pay_feeds_quantity == '7') selected="selected" @endif>
+                                        7
+                                    </option>
+                                    <option value="8" @if($order->pay_feeds_quantity == '8') selected="selected" @endif>
+                                        8
+                                    </option>
+                                    <option value="9" @if($order->pay_feeds_quantity == '9') selected="selected" @endif>
+                                        9
+                                    </option>
+                                    <option value="10"
+                                            @if($order->pay_feeds_quantity == '10') selected="selected" @endif>10
+                                    </option>
+                                    <option value="11"
+                                            @if($order->pay_feeds_quantity == '11') selected="selected" @endif>11
+                                    </option>
+                                    <option value="12"
+                                            @if($order->pay_feeds_quantity == '12') selected="selected" @endif>12
+                                    </option>
                                 </select>
                             </div>
                         </div>
@@ -443,7 +485,25 @@
     <script type="text/javascript"
             src="{{asset('AdminLTE/plugins/bootstrap-tagsinput-latest/dist/bootstrap-tagsinput.js')}}"></script>
 
+    <script type="text/javascript"
+            src="http://www.jqueryscript.net/demo/Excel-Like-jQuery-Data-Table-Plugin-xTab/xtab.js"></script>
+    <link rel="stylesheet" href="http://www.jqueryscript.net/demo/Excel-Like-jQuery-Data-Table-Plugin-xTab/xtab.css"/>
+
     <script type="text/javascript">
+        //Table xtab jquery
+        $("#t1").xtab("init", {
+            rows: 10,
+            cols: 4,
+            headers: true,
+            width: [450, 100, 100, 100],
+            values: [{!! $cells !!}],
+        });
+        $(document).on('change', '#t1 td', function () {
+            console.log($('#t1').xtab("get"))
+            $(".express_products").val($('#t1').xtab("get"))
+        });
+        //Fin table xtab jquery
+
         //super global
         var prod = {!! $prod !!};
         var serv = {!! $serv !!}
@@ -460,13 +520,6 @@
                     var year = $(this).closest('#myEditVehicleModal').find('.year').val();
                     var motor = $(this).closest('#myEditVehicleModal').find('.motor').val();
                     var patente = $(this).closest('#myEditVehicleModal').find('.patente').val();
-
-                    console.log("brand" + brand)
-                    console.log("model" + model)
-                    console.log("vin" + vin)
-                    console.log("year" + year)
-                    console.log("motor" + motor)
-                    console.log("patente" + patente)
 
                     $.ajax({
                         url: "{{route('vehicles.update', $vehicle)}}",
@@ -502,6 +555,54 @@
                     });
 
                 });
+
+        //Modal para editar client sin salir
+        $("#modal-edit-client-form").submit(function (event) {
+            event.preventDefault(); //prevent default action
+            console.log('actualizando client');
+
+            var token = $("input[name='_token']").val();
+            var name = $(this).closest('#myEditClientModal').find('.name').val();
+            var last_name = $(this).closest('#myEditClientModal').find('.last_name').val();
+            var email = $(this).closest('#myEditClientModal').find('.email').val();
+            var rut = $(this).closest('#myEditClientModal').find('.rut').val();
+            var phone = $(this).closest('#myEditClientModal').find('.phone').val();
+            var address = $(this).closest('#myEditClientModal').find('.address').val();
+
+            $.ajax({
+                url: "{{route('clients.update', $client)}}",
+                method: 'PUT',
+                data: {
+                    _token: token,
+                    "name": name,
+                    "last_name": last_name,
+                    "email": email,
+                    "rut": rut,
+                    "phone": phone,
+                    "address": address,
+                },
+                success: function (data) {
+                    console.log('Success');
+
+                    client = JSON.parse(data.client)
+
+                    $('#partial-client-data .name').val(client.name);
+                    $('#partial-client-data .last_name').val(client.last_name);
+                    $('#partial-client-data .email').val(client.email);
+                    $('#partial-client-data .rut').val(client.rut);
+                    $('#partial-client-data .phone').val(client.phone);
+                    $('#partial-client-data .address').val(client.address);
+                }
+            });
+
+            console.log('DONE');
+            $('#modal-edit-client-form').modal('hide');
+            $('.close-modal').click();
+            $('.edit-client-saved').fadeIn(2000, function () {
+                $('.edit-client-saved').fadeOut(1000);
+            });
+
+        });
 
         //Modal para agregar productos sin salir
         $("#modal-form").submit(function (event) {
@@ -563,12 +664,6 @@
             var name = $(this).closest('#myServiceModal').find('.name').val();
             var hh = $(this).closest('#myServiceModal').find('.hh').val();
             var description = $(this).closest('#myServiceModal').find('.description').val();
-
-//            console.log("token" + token)
-//            console.log("code" + code)
-//            console.log("name" + name)
-//            console.log("hh" + hh)
-//            console.log("description" + description)
 
             $.ajax({
                 url: "{{route('services.store')}}",
@@ -655,6 +750,21 @@
         $(document).on('change', '.order_hh', function () {
             calculate()
         });
+        //Si cambian el status de la orden, se calculan los numeros nuevamente
+        $(document).on('change', '.status', function () {
+            //cambia el estoad e los radios
+            $('input[name=status]').mouseup(function () {
+            }).change(function () {
+            })
+            //Fin cambia el estoad e los radios
+
+            calculate()
+        });
+        //Si cambian el total de los productos express, se calculan los numeros nuevamente
+        $(document).on('change', '.total_express', function () {
+            calculate()
+        });
+
         //Si cambian el discount de la orden, se calculan los numeros nuevamente
         $(document).on('change', '.discount', function () {
             calculate()
@@ -670,14 +780,6 @@
         //Si cambian la cantidad de algun producto de la orden, se calculan los numeros nuevamente
         $(document).on('change', '.producto-quantity', function () {
             calculate()
-
-//            var quantity = $(this).closest('.multiple-form-group').find('.producto-quantity').val();
-//            var stock = $(this).closest('.multiple-form-group').find('.producto-stock').val();
-//
-//
-//            if (stock > 0 && (quantity > stock)) {
-//                alert('Advertencia: la cantidad solicitada es mayor al stock!');
-//            }
 
         });
 
@@ -749,35 +851,6 @@
         })(jQuery);
         //Fin PRODUCTS
 
-        {{--//Agregar producto ajax--}}
-        {{--function add_product_ajax(idproduct, quantity) {--}}
-        {{--var token = $("input[name='_token']").val();--}}
-        {{--$.ajax({--}}
-        {{--url: "{{route('add-ajax')}}",--}}
-        {{--method: 'POST',--}}
-        {{--data: {idproduct: idproduct, quantity: quantity, _token: token},--}}
-        {{--success: function (data) {--}}
-        {{--console.log("suucees bro")--}}
-        {{--}--}}
-        {{--});--}}
-        {{--}--}}
-        {{--//Fin Agregar producto ajax--}}
-
-        {{--//Remove producto ajax--}}
-        {{--function remove_product_ajax(idproduct, quantity) {--}}
-
-        {{--var token = $("input[name='_token']").val();--}}
-        {{--$.ajax({--}}
-        {{--url: "{{route('remove-ajax')}}",--}}
-        {{--method: 'POST',--}}
-        {{--data: {idproduct: idproduct, quantity: quantity, _token: token},--}}
-        {{--success: function (data) {--}}
-        {{--console.log("suucees bro")--}}
-        {{--}--}}
-        {{--});--}}
-        {{--}--}}
-        {{--//Fin Remove producto ajax--}}
-
         //Colocar precio hora en servicio
         $(document).on('change', '.select-service', function () {
             var id = $(this).val();
@@ -836,34 +909,6 @@
             });
         });
         //Fin buscar los modelos cuando cambie el producto
-
-        //Colocar precio y stock de los productos
-
-        {{--$(document).on('change', '.select-product', function () {--}}
-        {{--var id = $(this).val();--}}
-        {{--var myArray = {!! $prod !!};--}}
-
-        {{--var found = $.map(myArray, function (val) {--}}
-        {{--return val.id == id ? val.price : null;--}}
-        {{--});--}}
-
-        {{--var stock = $.map(myArray, function (val) {--}}
-        {{--return val.id == id ? val.stock : null;--}}
-        {{--});--}}
-
-        {{--var cost = $.map(myArray, function (val) {--}}
-        {{--return val.id == id ? val.cost : null;--}}
-        {{--});--}}
-
-        {{--$(this).closest('.multiple-form-group').find('.producto-price').val(found[0]);--}}
-        {{--$(this).closest('.multiple-form-group').find('.producto-stock').val(stock[0]);--}}
-        {{--$(this).closest('.multiple-form-group').find('.producto-cost').val(cost[0]);--}}
-
-        {{--console.log(found[0]);--}}
-
-        {{--});--}}
-
-        {{--//Fin Colocar precio y stock de los productos--}}
 
         //Colocar precio, costo y stock de los productos en los fields
         $(document).on('change', '.select-model', function () {
@@ -957,6 +1002,15 @@
                         }
                     }
             );
+
+            console.log($("input[name='status']:checked").val())
+            //Si status  es presupuesto vamos a meter en la cuenta lo de total express
+            if ($(".status:checked").val() == 'budget') {
+                if ($(".total_express").val() != '') {
+                    productos_total = productos_total + eval($(".total_express").val());
+                }
+            }
+            //Fin status es presupuesto vamos a meter en la cuenta lo de total express
 
             if (isNaN(productos_total)) {
                 productos_total = 0
