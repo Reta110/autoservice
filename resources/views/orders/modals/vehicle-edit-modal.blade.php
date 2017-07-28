@@ -7,7 +7,7 @@
                 <div class="box">
                     <div class="box-header with-border">
                         @include('common.errors')
-                        <h3 class="box-title">Nuevo Producto</h3>
+                        <h3 class="box-title">Editar Producto</h3>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">

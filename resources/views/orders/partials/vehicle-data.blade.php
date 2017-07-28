@@ -17,7 +17,7 @@
             <div class="form-group">
                 <input type="hidden" value="{{$vehicle->id}}" name="vehicle_id" id="vehicle_id">
 
-                <label for="inputPassword3" class="col-sm-2 control-label">Marca</label>
+                <label for="Brand" class="col-sm-2 control-label">Marca</label>
 
                 <div class="col-sm-10">
                     <input type="text" class="form-control brand"
@@ -25,7 +25,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="inputPassword3" class="col-sm-2 control-label">Modelo</label>
+                <label for="Model" class="col-sm-2 control-label">Modelo</label>
 
                 <div class="col-sm-10">
                     <input type="text" class="form-control model"
@@ -33,7 +33,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="inputPassword3" class="col-sm-2 control-label">Vin</label>
+                <label for="Vin" class="col-sm-2 control-label">Vin</label>
 
                 <div class="col-sm-10">
                     <input type="text" class="form-control vin"

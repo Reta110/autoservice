@@ -62,6 +62,7 @@
     @include('orders.modals.product-create-modal')
     @include('orders.modals.service-modal')
     @include('orders.modals.vehicle-edit-modal')
+    @include('orders.modals.client-edit-modal')
 
 @endsection
 

@@ -1,18 +1,18 @@
 <!-- Modal -->
-<div class="modal fade" id="myEditVehicleModal" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="myEditClientModal" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
-        {!! Form::model($vehicle, ['route' => ['vehicles.update', $vehicle], 'method' => 'PUT', 'id' => 'modal-edit-vehicle-form']) !!}
+        {!! Form::model($client, ['route' => ['clients.update', $client], 'method' => 'PUT', 'id' => 'modal-edit-client-form']) !!}
         <div class="row">
             <div class="col-md-12">
                 <div class="box">
                     <div class="box-header with-border">
                         @include('common.errors')
-                        <h3 class="box-title">Editar Producto</h3>
+                        <h3 class="box-title">Editar Cliente</h3>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
                         <div class="row">
-                            @include('vehicles.partials.fields')
+                            @include('clients.partials.fields')
                         </div>
                     </div>
                 </div>

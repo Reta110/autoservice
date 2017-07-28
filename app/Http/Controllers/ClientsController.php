@@ -52,9 +52,24 @@ class ClientsController extends Controller
     public function update(Request $request, $id)
     {
         $client = User::find($id);
-        $client->update($request->all());
 
-        return redirect()->route('clients.index')->with('success', 'Se ha actualizado de manera exitosa!');
+        if ($request->ajax()) {
+
+            $client->name = $request->get('name');
+            $client->last_name = $request->get('last_name');
+            $client->rut = $request->get('rut');
+            $client->phone = $request->get('phone');
+            $client->address = $request->get('address');
+            $client->email = $request->get('email');
+            $client->save();
+
+            $client = $client->toJson();
+
+            return response()->json(['success' => 'Se ha actualizado de manera exitosa!', 'client' => $client]);
+        } else {
+            $client->update($request->all());
+            return redirect()->route('clients.index')->with('success', 'Se ha actualizado de manera exitosa!');
+        }
     }
 
     public function destroy($id)

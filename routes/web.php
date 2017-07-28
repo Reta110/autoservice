@@ -66,4 +66,13 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::get('/stadistics/stock', 'StadisticsController@lowStock')->name('stadistics.stock');
     Route::get('/stadistics/demand', 'StadisticsController@demand')->name('stadistics.demand');
     Route::get('/stadistics/demand', 'StadisticsController@budget')->name('stadistics.budget');
+
+    Route::get('/export', 'ExportController@export')->name('stadistics.export');
+    Route::get('/export/orders', 'ExportController@exportOrders')->name('export.orders');
+    Route::get('/export/products', 'ExportController@exportProducts')->name('export.products');
+    Route::get('/export/vehicles', 'ExportController@exportVehicles')->name('export.vehicles');
+    Route::get('/export/clients', 'ExportController@exportClients')->name('export.clients');
+    Route::get('/export/services', 'ExportController@exportServices')->name('export.services');
+    Route::get('/export/debts', 'ExportController@exportDebts')->name('export.debts');
+    Route::get('/export/all', 'ExportController@exportAll')->name('export.all');
 });

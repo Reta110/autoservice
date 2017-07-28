@@ -11,8 +11,8 @@
     <meta content=" width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.6 -->
     <link href="{{asset('AdminLTE/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Font Awesome 4.7-->
+    <script src="https://use.fontawesome.com/a34fade05f.js"></script>
     <!-- Ionicons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
     <!-- Theme style -->
@@ -175,6 +175,9 @@ folder instead of downloading all of them to reduce the load. -->
                         </li>
                         <li>
                             <a href="{{route('stadistics.stock')}}"><i class="fa fa-circle-o"></i>Productos bajos</a>
+                        </li>
+                        <li>
+                            <a href="{{route('stadistics.export')}}"><i class="fa fa-circle-o"></i>Exportar</a>
                         </li>
                     </ul>
                 </li>

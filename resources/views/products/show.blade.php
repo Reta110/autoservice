@@ -85,7 +85,7 @@
                                 <td>{{ $product->stock }}</td>
                             </tr>
                             <tr>
-                                <td>Stock:</td>
+                                <td>Stock mínimo:</td>
                                 <td>{{ $product->stock_minimum }}</td>
                             </tr>
                             </tbody>
