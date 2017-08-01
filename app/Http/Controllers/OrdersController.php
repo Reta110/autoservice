@@ -315,6 +315,9 @@ class OrdersController extends Controller
         $order->type_pay = $request->get('type_pay');
         $order->pay_observations = $request->get('pay_observations');
         $order->pay_fees_quantity = $request->get('pay_fees_quantity');
+        if ($order->type_pay == 'Cheque' && $order->pay_fees_quantity == 0) {
+            $order->pay_fees_quantity = 1;
+        }
         $order->km = $request->get('km');
         $order->express_products = $request->get('express_products');
         $order->total_express = $request->get('total_express');

@@ -569,6 +569,7 @@
             var phone = $(this).closest('#myEditClientModal').find('.phone').val();
             var address = $(this).closest('#myEditClientModal').find('.address').val();
 
+            console.log(' var address'+  var address)
             $.ajax({
                 url: "{{route('clients.update', $client)}}",
                 method: 'PUT',
