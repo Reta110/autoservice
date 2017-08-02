@@ -149,7 +149,7 @@
                         </tbody>
                     </table>
                     @endif
-                    @if($order->status == 'budget' && $cells != '')
+                    @if($cells != '')
                         <table class="table table-striped table-condensed" id="example">
                             <thead>
                             <tr>

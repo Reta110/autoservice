@@ -34,7 +34,7 @@ class ExportController extends Controller
         Excel::create('Productos de Automec', function ($excel) {
             $excel->sheet('Productos', function ($sheet) {
 
-                $items = Product::all();
+                $items = Product::join('product_categories','product_categories.id','products.category_id')->get();
                 $sheet->fromArray($items);
             });
 
@@ -58,7 +58,7 @@ class ExportController extends Controller
         Excel::create('Vehículos de Automec', function ($excel) {
             $excel->sheet('Vehículos', function ($sheet) {
 
-                $items = Vehicle::join('users','users.id','orders.user_id')->get();
+                $items = Vehicle::join('users','users.id','vehicles.user_id')->get();
                 $sheet->fromArray($items);
             });
 
@@ -94,12 +94,12 @@ class ExportController extends Controller
         Excel::create('Todo de Automec', function ($excel) {
             $excel->sheet('Ordenes', function ($sheet) {
 
-                $items = Order::all();
+                $items = Order::join('users','users.id','orders.user_id')->join('vehicles','vehicles.id','orders.vehicle_id')->get();
                 $sheet->fromArray($items);
             });
             $excel->sheet('Productos', function ($sheet) {
 
-                $items = Product::all();
+                $items = Product::join('product_categories','product_categories.id','products.category_id')->get();
                 $sheet->fromArray($items);
             });
             $excel->sheet('Clientes', function ($sheet) {
@@ -109,7 +109,7 @@ class ExportController extends Controller
             });
             $excel->sheet('Vehículos', function ($sheet) {
 
-                $items = Vehicle::all();
+                $items = Vehicle::join('users','users.id','vehicles.user_id')->get();
                 $sheet->fromArray($items);
             });
             $excel->sheet('Servicios', function ($sheet) {
@@ -119,7 +119,7 @@ class ExportController extends Controller
             });
             $excel->sheet('Duedores', function ($sheet) {
 
-                $items = Order::where('status', 'ended')->where('paid', 'no')->get();
+                $items = Order::where('status', 'ended')->where('paid', 'no')->join('users','users.id','orders.user_id')->get();
                 $sheet->fromArray($items);
             });
 

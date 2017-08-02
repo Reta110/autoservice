@@ -5,6 +5,11 @@
         <div class="box-header with-border">
             <h3 class="box-title">Datos del cliente</h3>
             <div class="pull-right">
+                @if(Request::segment(4) == 'edit')
+                    <a type="button" href="{{route('select-change-client',$order->id)}}" class="btn btn-warning btn-sm">
+                        Cambiar cliente
+                    </a>
+                @endif
                 <button type="button" class="btn btn-success btn-sm" data-toggle="modal"
                         data-target="#myEditClientModal">
                     Editar

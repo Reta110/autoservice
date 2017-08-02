@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Mail;
 class OrdersController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing.
      *
      * @return \Illuminate\Http\Response
      */
@@ -38,6 +38,22 @@ class OrdersController extends Controller
         return view('orders.select_client', compact('clients'));
     }
 
+    public function selectClientToChange($order)
+    {
+        $clients = User::where('role', 'client')->get();
+
+        return view('orders.change_client', compact('clients','order'));
+    }
+
+    public function changeClient($order, $user)
+    {
+        $order = Order::find($order);
+        $order->user_id = $user;
+        $order->save();
+
+        return redirect()->to(route('orders.edit', $order));
+    }
+
     public function duplicateSelectClient($order)
     {
         $order_id = $order;
@@ -47,11 +63,6 @@ class OrdersController extends Controller
         return view('orders.select_client', compact('clients', 'order_id'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function selectVehicle($user)
     {
         $client = User::where('role', 'client')->find($user);
@@ -329,8 +340,6 @@ class OrdersController extends Controller
             }
             $order->delete_stock = 1;
             $order->ended_date = Carbon::now();
-
-
         }
         //Fin descontar productos del stock si estado es ended
 
@@ -354,7 +363,6 @@ class OrdersController extends Controller
 
             return response()->json(['options' => '']);
         }
-
     }
 
     public function addToStock($producto_id, $quantity)
@@ -364,9 +372,7 @@ class OrdersController extends Controller
         $product->stock = $product->stock + $quantity;
 
         $product->save();
-
     }
-
 
     public function removeAjax(Request $request)
     {
@@ -383,7 +389,6 @@ class OrdersController extends Controller
 
             return response()->json(['options' => '']);
         }
-
     }
 
     public function removeFromStock($producto_id, $quantity)
@@ -397,7 +402,6 @@ class OrdersController extends Controller
         }
 
         $product->save();
-
     }
 
     public function sendProductNotification($product)
@@ -416,11 +420,9 @@ class OrdersController extends Controller
         $cells = $this->getExpressProductsCellsWorkPaper($order);
 
         return view('orders.work_paper', compact('order', 'config', 'cells'));
-
     }
 
-    public
-    function selectBrandsAjax(Request $request)
+    public function selectBrandsAjax(Request $request)
     {
         //id categroy
         $id = request()->get('id');
@@ -433,8 +435,7 @@ class OrdersController extends Controller
         }
     }
 
-    public
-    function selectModelsAjax(Request $request)
+    public function selectModelsAjax(Request $request)
     {
         //id category
         $id = request()->get('id');
@@ -491,7 +492,6 @@ class OrdersController extends Controller
                 $cells = $cells . '["' . $cell[36] . "\",\"" . $cell[37] . "\",\"" . $cell[38] . "\",\"" . $cell[39] . '"],';
 
             return $cells;
-
         }
         return $cells = '';
     }
@@ -528,7 +528,6 @@ class OrdersController extends Controller
                 $cells = $cells . '["' . $cell[36] . "\",\"" . "\",\"" . $cell[38] . "\",\"" . '"],';
 
             return $cells;
-
         }
         return $cells = '';
     }

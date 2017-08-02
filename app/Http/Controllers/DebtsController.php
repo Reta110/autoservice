@@ -10,7 +10,7 @@ class DebtsController extends Controller
 {
     public function index()
     {
-        $orders = Order::where('status', 'ended')->where('paid', 'no')->where('type_pay','!=' ,'Cheque')->get();
+        $orders = Order::where('status', 'ended')->where('paid', 'no')->get();
         $total_orders = $this->totalOrder($orders);
 
         /* Mostras las ordenes pagadas con transkbank utilizando cuotas

@@ -166,7 +166,7 @@ folder instead of downloading all of them to reduce the load. -->
                 Estadísticas
                 </span>
                         <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
+                <i class="fa fa-angle-down pull-right"></i>
                 </span>
                     </a>
                     <ul class="treeview-menu">
@@ -178,6 +178,28 @@ folder instead of downloading all of them to reduce the load. -->
                         </li>
                         <li>
                             <a href="{{route('stadistics.export')}}"><i class="fa fa-circle-o"></i>Exportar</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="@if(request()->segment(2) == 'stadistics') active @endif treeview">
+                    <a href="">
+                        <i class="fa fa-money" aria-hidden="true"></i>
+                        <span>
+                Gastos
+                </span>
+                        <span class="pull-right-container">
+                <i class="fa fa-angle-down pull-right"></i>
+                </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li>
+                            <a href=""><i class="fa fa-circle-o"></i>Resumen</a>
+                        </li>
+                        <li>
+                            <a href="{{route('expenses.index')}}"><i class="fa fa-circle-o"></i>En insumos</a>
+                        </li>
+                        <li>
+                            <a href="{{route('fixed-expenses.index')}}"><i class="fa fa-circle-o"></i>Fijos</a>
                         </li>
                     </ul>
                 </li>
@@ -223,7 +245,7 @@ folder instead of downloading all of them to reduce the load. -->
                         <i class="fa fa-dashboard"></i>
                         <span>Productos</span>
                         <span class="pull-right-container">
-                            <i class="fa fa-angle-left pull-right"></i>
+                            <i class="fa fa-angle-down pull-right"></i>
                         </span>
                     </a>
                     <ul class="treeview-menu">
