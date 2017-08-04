@@ -21,7 +21,7 @@
                         <div class="input-group-addon">
                             <i class="fa fa-calendar"></i>
                         </div>
-                        {!! Form::text('date', \Carbon\Carbon::now()->format('d-m-Y'), ['class' => 'form-control pull-right', 'placeholder' => 'date', 'id' => 'date']) !!}
+                        {!! Form::text('date', null, ['class' => 'form-control pull-right', 'placeholder' => 'date', 'id' => 'date']) !!}
                     </div>
                     <!-- /.input group -->
                 </div>
@@ -49,5 +49,11 @@
             autoclose: true,
             showOnFocus: true,
         });
+
+        $(document).ready(function () {
+            var date = '{!! Carbon\Carbon::now()->format('d-m-Y')!!}'
+            $('#date').val(date);
+        });
+
     </script>
 @endsection

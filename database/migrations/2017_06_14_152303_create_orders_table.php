@@ -25,8 +25,9 @@ class CreateOrdersTable extends Migration
             $table->text('ot_observations')->nullable();
             $table->text('hh')->nullable();
 
-            $table->enum('paid',['si','no']);
+            $table->enum('paid',['si','no'])->default('no');
             $table->enum('type_pay', ['TransBank','Transferencia', 'Efectivo', 'Cheque'])->nullable();
+            $table->enum('card_type', ['Debito','Credito'])->default('Debito')->nullable();
             $table->text('pay_observations')->nullable();
             $table->text('pay_fees_quantity')->default(0)->nullable();
 

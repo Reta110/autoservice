@@ -30,7 +30,8 @@
             @include('common.success')
             <div class="box-header with-border">
                 <h3 class="box-title">
-                    Estadísticas de los últimos 7 días
+                    Estadísticas de los últimos 7 días<br>
+                    <small>Se han atendido <strong>{{count($orders)}}</strong> trabajos.</small>
                 </h3>
                 <div class="box-tools">
                     {{Form::open(['route' => 'stadistics.store', 'class'=>'form-inline','method' => 'POST'])}}

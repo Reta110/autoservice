@@ -350,94 +350,124 @@
 
                             <div class="col-sm-10">
                                 <label class="radio-inline">
-                                    <input type="radio" name="paid" value="no" @if($order->paid == 'no') checked @endif>No
+                                    <input type="radio" name="paid" class='paid' value="no"
+                                           @if($order->paid == 'no') checked @endif>No
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" name="paid" value="si" @if($order->paid == 'si') checked @endif>Si
+                                    <input type="radio" name="paid" class='paid' value="si"
+                                           @if($order->paid == 'si') checked @endif>Si
                                 </label>
                             </div>
                         </div>
                     </div>
-                    <div class="box-header">
-                        <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-4 control-label">Forma de pago:</label>
-                            <div class="col-sm-6">
-                                <select class="form-control select2" name="type_pay"
-                                        @if($order->type_pay == '') selected="selected" @endif>
-                                    <option value="">---
-                                        Tipo de pago ---
-                                    </option>
-                                    <option value="TransBank"
-                                            @if($order->type_pay == 'TransBank') selected="selected" @endif>
-                                        TransBank
-                                    </option>
-                                    <option value="Transferencia"
-                                            @if($order->type_pay == 'Transferencia') selected="selected" @endif>
-                                        Transferencia
-                                    </option>
-                                    <option value="Efectivo"
-                                            @if($order->type_pay == 'Efectivo') selected="selected" @endif>
-                                        Efectivo
-                                    </option>
-                                    <option value="Cheque" @if($order->type_pay == 'Cheque') selected="selected" @endif>
-                                        Cheque
-                                    </option>
-                                </select>
+                    <div id="order_paid">
+                        <div class="box-header">
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">Forma de pago:</label>
+                                <div class="col-sm-6">
+                                    <select class="form-control select2 type_pay" name="type_pay"
+                                            @if($order->type_pay == '') selected="selected" @endif>
+                                        <option value="">---
+                                            Tipo de pago ---
+                                        </option>
+                                        <option value="TransBank"
+                                                @if($order->type_pay == 'TransBank') selected="selected" @endif>
+                                            TransBank
+                                        </option>
+                                        <option value="Transferencia"
+                                                @if($order->type_pay == 'Transferencia') selected="selected" @endif>
+                                            Transferencia
+                                        </option>
+                                        <option value="Efectivo"
+                                                @if($order->type_pay == 'Efectivo') selected="selected" @endif>
+                                            Efectivo
+                                        </option>
+                                        <option value="Cheque"
+                                                @if($order->type_pay == 'Cheque') selected="selected" @endif>
+                                            Cheque
+                                        </option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="box-header">
-                        <div class="form-group " style="visibility: false">
-                            <label for="inputEmail3" class="col-sm-4 control-label">Nro de cuotas:</label>
-                            <div class="col-sm-6">
-                                <select class="form-control select2" name="pay_fees_quantity">
-                                    <option selected="selected" value="0">--- Nro de cuota ---</option>
-                                    <option value="1" @if($order->pay_feeds_quantity == '1') selected="selected" @endif>
-                                        1
-                                    </option>
-                                    <option value="2" @if($order->pay_feeds_quantity == '2') selected="selected" @endif>
-                                        2
-                                    </option>
-                                    <option value="3" @if($order->pay_feeds_quantity == '3') selected="selected" @endif>
-                                        3
-                                    </option>
-                                    <option value="4" @if($order->pay_feeds_quantity == '4') selected="selected" @endif>
-                                        4
-                                    </option>
-                                    <option value="5" @if($order->pay_feeds_quantity == '5') selected="selected" @endif>
-                                        5
-                                    </option>
-                                    <option value="6" @if($order->pay_feeds_quantity == '6') selected="selected" @endif>
-                                        6
-                                    </option>
-                                    <option value="7" @if($order->pay_feeds_quantity == '7') selected="selected" @endif>
-                                        7
-                                    </option>
-                                    <option value="8" @if($order->pay_feeds_quantity == '8') selected="selected" @endif>
-                                        8
-                                    </option>
-                                    <option value="9" @if($order->pay_feeds_quantity == '9') selected="selected" @endif>
-                                        9
-                                    </option>
-                                    <option value="10"
-                                            @if($order->pay_feeds_quantity == '10') selected="selected" @endif>10
-                                    </option>
-                                    <option value="11"
-                                            @if($order->pay_feeds_quantity == '11') selected="selected" @endif>11
-                                    </option>
-                                    <option value="12"
-                                            @if($order->pay_feeds_quantity == '12') selected="selected" @endif>12
-                                    </option>
-                                </select>
+                        <div class="box-header" id="card_type">
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">Tipo de tarjeta</label>
+
+                                <div class="col-sm-8">
+                                    <label class="radio-inline">
+                                        <input type="radio" name="card_type" value="debito"
+                                               @if($order->card_type == 'Debito') checked @endif>Debito
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="card_type" value="credito"
+                                               @if($order->card_type == 'Credito') checked @endif>Crédito
+                                    </label>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="box-header">
-                        <label>Observación de Pago:</label>
-                        <div class="form-group">
+                        <div class="box-header">
+                            <div class="form-group " style="visibility: false">
+                                <label for="inputEmail3" class="col-sm-4 control-label">Nro de cuotas:</label>
+                                <div class="col-sm-6">
+                                    <select class="form-control select2" name="pay_fees_quantity">
+                                        <option selected="selected" value="0">--- Nro de cuota ---</option>
+                                        <option value="1"
+                                                @if($order->pay_feeds_quantity == '1') selected="selected" @endif>
+                                            1
+                                        </option>
+                                        <option value="2"
+                                                @if($order->pay_feeds_quantity == '2') selected="selected" @endif>
+                                            2
+                                        </option>
+                                        <option value="3"
+                                                @if($order->pay_feeds_quantity == '3') selected="selected" @endif>
+                                            3
+                                        </option>
+                                        <option value="4"
+                                                @if($order->pay_feeds_quantity == '4') selected="selected" @endif>
+                                            4
+                                        </option>
+                                        <option value="5"
+                                                @if($order->pay_feeds_quantity == '5') selected="selected" @endif>
+                                            5
+                                        </option>
+                                        <option value="6"
+                                                @if($order->pay_feeds_quantity == '6') selected="selected" @endif>
+                                            6
+                                        </option>
+                                        <option value="7"
+                                                @if($order->pay_feeds_quantity == '7') selected="selected" @endif>
+                                            7
+                                        </option>
+                                        <option value="8"
+                                                @if($order->pay_feeds_quantity == '8') selected="selected" @endif>
+                                            8
+                                        </option>
+                                        <option value="9"
+                                                @if($order->pay_feeds_quantity == '9') selected="selected" @endif>
+                                            9
+                                        </option>
+                                        <option value="10"
+                                                @if($order->pay_feeds_quantity == '10') selected="selected" @endif>10
+                                        </option>
+                                        <option value="11"
+                                                @if($order->pay_feeds_quantity == '11') selected="selected" @endif>11
+                                        </option>
+                                        <option value="12"
+                                                @if($order->pay_feeds_quantity == '12') selected="selected" @endif>12
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-header">
+                            <label>Observación de Pago:</label>
+                            <div class="form-group">
 
-                            {!! Form::textarea('pay_observations', null, ['class' => 'form-control', 'placeholder' => 'Observaciones', 'rows' => '2']) !!}
+                                {!! Form::textarea('pay_observations', null, ['class' => 'form-control', 'placeholder' => 'Observaciones', 'rows' => '2']) !!}
 
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -765,6 +795,34 @@
             calculate()
         });
 
+        //Si cambian el tipo de pago se muetra el div de tipo de tarjeta
+        $(document).on('change', '.type_pay', function () {
+
+            if ($('.type_pay').val() == 'TransBank') {
+                $('#card_type').fadeIn(1000, function () {
+                });
+            } else {
+                $('#card_type').fadeOut(500);
+            }
+
+        });
+
+        //Si pagaron se muetra el div con datos para el pago
+        $(document).on('change', '.paid', function () {
+
+            $('input[name=paid]').mouseup(function () {
+            }).change(function () {
+            })
+
+            if ($("input[name='paid']:checked").val() == 'si') {
+                $('#order_paid').fadeIn(1000, function () {
+                });
+            } else {
+                $('#order_paid').fadeOut(500);
+            }
+
+        });
+
         //Si cambian el discount de la orden, se calculan los numeros nuevamente
         $(document).on('change', '.discount', function () {
             calculate()
@@ -1005,11 +1063,11 @@
 
             console.log($("input[name='status']:checked").val())
             //Si status  es presupuesto vamos a meter en la cuenta lo de total express
-            if ($(".status:checked").val() == 'budget') {
+//            if ($(".status:checked").val() == 'budget') {
                 if ($(".total_express").val() != '') {
                     productos_total = productos_total + eval($(".total_express").val());
                 }
-            }
+//            }
             //Fin status es presupuesto vamos a meter en la cuenta lo de total express
 
             if (isNaN(productos_total)) {
@@ -1111,7 +1169,12 @@
         $('.select2').select2()
         $('.product-saved').hide();
         $('.service-saved').hide();
-
+        if ($(".type_pay").val() != 'TransBank') {
+            $('#card_type').hide();
+        }
+        if ($("input[name='paid']:checked").val() == 'no') {
+            $('#order_paid').hide();
+        }
 
     </script>
 

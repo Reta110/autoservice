@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateConfigurationsTable extends Migration
+class CreateExpensesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class CreateConfigurationsTable extends Migration
      */
     public function up()
     {
-
-        Schema::create('configurations', function (Blueprint $table) {
+        Schema::create('expenses', function (Blueprint $table) {
             $table->increments('id');
-
-            $table->string('iva');
-            $table->string('price_hh');
-            $table->string('comision_tdd')->default(0);
-            $table->string('comision_tdc')->default(0);
+            $table->string('name');
+            $table->string('quantity')->default(0)->nullable();
+            $table->string('total')->default(0)->nullable();
+            $table->date('date')->nullable();
+            $table->string('category')->nullable();
 
             $table->timestamps();
         });
@@ -33,6 +32,6 @@ class CreateConfigurationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('configurations');
+        Schema::dropIfExists('expenses');
     }
 }

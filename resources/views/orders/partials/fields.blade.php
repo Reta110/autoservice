@@ -218,74 +218,74 @@
 
                         </div>
                     </div>
-                    <div class="box-header">
-                        <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-2 control-label">Pagado</label>
+                    {{--<div class="box-header">--}}
+                        {{--<div class="form-group">--}}
+                            {{--<label for="inputEmail3" class="col-sm-2 control-label">Pagado</label>--}}
 
-                            <div class="col-sm-10">
-                                <label class="radio-inline">
-                                    <input type="radio" name="paid" class='paid' value="no" checked>No
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="paid" class='paid' value="si">Si
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="box-header">
-                        <div class="form-group type_pay" style="visibility: false">
-                            <label for="inputEmail3" class="col-sm-4 control-label">Forma de pago:</label>
-                            <div class="col-sm-6">
-                                <select class="form-control select2" name="type_pay">
-                                    <option selected="selected" value="">---
-                                        Tipo de pago ---
-                                    </option>
-                                    <option value="TransBank">
-                                        TransBank
-                                    </option>
-                                    <option value="Transferencia">
-                                        Transferencia
-                                    </option>
-                                    <option value="Efectivo">
-                                        Efectivo
-                                    </option>
-                                    <option value="Cheque">
-                                        Cheque
-                                    </option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="box-header">
-                        <div class="form-group type_pay" style="visibility: false">
-                            <label for="inputEmail3" class="col-sm-4 control-label">Nro de cuotas:</label>
-                            <div class="col-sm-6">
-                                <select class="form-control select2" name="pay_fees_quantity">
-                                    <option selected="selected" value="0">--- Nro de cuota ---</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                    <option value="7">7</option>
-                                    <option value="8">8</option>
-                                    <option value="9">9</option>
-                                    <option value="10">10</option>
-                                    <option value="11">11</option>
-                                    <option value="12">12</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="box-header">
-                        <label>Observación de Pago:</label>
-                        <div class="form-group">
+                            {{--<div class="col-sm-10">--}}
+                                {{--<label class="radio-inline">--}}
+                                    {{--<input type="radio" name="paid" class='paid' value="no" checked>No--}}
+                                {{--</label>--}}
+                                {{--<label class="radio-inline">--}}
+                                    {{--<input type="radio" name="paid" class='paid' value="si">Si--}}
+                                {{--</label>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                    {{--<div class="box-header">--}}
+                        {{--<div class="form-group type_pay" style="visibility: false">--}}
+                            {{--<label for="inputEmail3" class="col-sm-4 control-label">Forma de pago:</label>--}}
+                            {{--<div class="col-sm-6">--}}
+                                {{--<select class="form-control select2" name="type_pay">--}}
+                                    {{--<option selected="selected" value="">-----}}
+                                        {{--Tipo de pago -----}}
+                                    {{--</option>--}}
+                                    {{--<option value="TransBank">--}}
+                                        {{--TransBank--}}
+                                    {{--</option>--}}
+                                    {{--<option value="Transferencia">--}}
+                                        {{--Transferencia--}}
+                                    {{--</option>--}}
+                                    {{--<option value="Efectivo">--}}
+                                        {{--Efectivo--}}
+                                    {{--</option>--}}
+                                    {{--<option value="Cheque">--}}
+                                        {{--Cheque--}}
+                                    {{--</option>--}}
+                                {{--</select>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                    {{--<div class="box-header">--}}
+                        {{--<div class="form-group type_pay" style="visibility: false">--}}
+                            {{--<label for="inputEmail3" class="col-sm-4 control-label">Nro de cuotas:</label>--}}
+                            {{--<div class="col-sm-6">--}}
+                                {{--<select class="form-control select2" name="pay_fees_quantity">--}}
+                                    {{--<option selected="selected" value="0">--- Nro de cuota ---</option>--}}
+                                    {{--<option value="1">1</option>--}}
+                                    {{--<option value="2">2</option>--}}
+                                    {{--<option value="3">3</option>--}}
+                                    {{--<option value="4">4</option>--}}
+                                    {{--<option value="5">5</option>--}}
+                                    {{--<option value="6">6</option>--}}
+                                    {{--<option value="7">7</option>--}}
+                                    {{--<option value="8">8</option>--}}
+                                    {{--<option value="9">9</option>--}}
+                                    {{--<option value="10">10</option>--}}
+                                    {{--<option value="11">11</option>--}}
+                                    {{--<option value="12">12</option>--}}
+                                {{--</select>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                    {{--<div class="box-header">--}}
+                        {{--<label>Observación de Pago:</label>--}}
+                        {{--<div class="form-group">--}}
 
-                            {!! Form::textarea('pay_observations', null, ['class' => 'form-control', 'placeholder' => 'Observaciones', 'rows' => '2']) !!}
+                            {{--{!! Form::textarea('pay_observations', null, ['class' => 'form-control', 'placeholder' => 'Observaciones', 'rows' => '2']) !!}--}}
 
-                        </div>
-                    </div>
+                        {{--</div>--}}
+                    {{--</div>--}}
                 </div>
             </div>
             <div class="col-md-4 pull-right">
@@ -914,11 +914,11 @@
 
             console.log($("input[name='status']:checked").val())
             //Si status  es presupuesto vamos a meter en la cuenta lo de total express
-            if ($(".status:checked").val() == 'budget') {
+//            if ($(".status:checked").val() == 'budget') {
                 if ($(".total_express").val() != '') {
                     productos_total = productos_total + eval($(".total_express").val());
                 }
-            }
+//            }
             //Fin status es presupuesto vamos a meter en la cuenta lo de total express
 
             if (isNaN(productos_total)) {

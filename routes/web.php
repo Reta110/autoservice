@@ -25,9 +25,11 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::resource('/products', 'ProductsController');
     Route::resource('/services', 'ServicesController');
     Route::resource('/configurations', 'ConfigurationsController');
+
+    Route::get('/expenses-resume', 'ExpensesController@resume')->name('expenses-resume');
     Route::resource('/expenses', 'ExpensesController');
     Route::resource('/fixed-expenses', 'FixedExpensesController');
-    Route::get('/expenses/resume', 'ExpensesController@resume');
+
 
    // Route::resource('/stadistics', 'StadisticsController');
     Route::resource('/product/categories', 'ProductCategoriesController');
@@ -45,6 +47,7 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::post('/orders/work/', 'OrdersController@printWorkPaper')->name('print-work-paper');
     Route::get('/orders/{id}/change-user', 'OrdersController@selectClientToChange')->name('select-change-client');
     Route::get('/orders/{id}/change-user/{user}', 'OrdersController@changeClient')->name('change-client');
+    Route::get('/orders/open/{id}', 'OrdersController@openOrder')->name('open-order');
     Route::post('add-ajax', ['as' => 'add-ajax', 'uses' => 'OrdersController@addAjax']);
     Route::post('remove-ajax', ['as' => 'remove-ajax', 'uses' => 'OrdersController@removeAjax']);
 

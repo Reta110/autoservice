@@ -42,7 +42,7 @@ class OrdersController extends Controller
     {
         $clients = User::where('role', 'client')->get();
 
-        return view('orders.change_client', compact('clients','order'));
+        return view('orders.change_client', compact('clients', 'order'));
     }
 
     public function changeClient($order, $user)
@@ -172,8 +172,9 @@ class OrdersController extends Controller
             'observations' => $request->get('observations'),
             'hh' => $request->get('hh'),
             'discount' => $request->get('discount'),
-            'paid' => $request->get('paid'),
+            'paid' => 'no',
             'type_pay' => $request->get('type_pay'),
+            'card_type' => $request->get('card_type'),
             'pay_observations' => $request->get('pay_observations'),
             'pay_fees_quantity' => $request->get('pay_fees_quantity'),
             'km' => $request->get('km'),
@@ -324,6 +325,7 @@ class OrdersController extends Controller
         $order->discount = $request->get('discount');
         $order->paid = $request->get('paid');
         $order->type_pay = $request->get('type_pay');
+        $order->card_type = $request->get('card_type');
         $order->pay_observations = $request->get('pay_observations');
         $order->pay_fees_quantity = $request->get('pay_fees_quantity');
         if ($order->type_pay == 'Cheque' && $order->pay_fees_quantity == 0) {
@@ -347,6 +349,16 @@ class OrdersController extends Controller
 
         return redirect()->route('orders.show', $order->id)->with('success', 'Se ha actualizado de manera exitosa!');
     }
+
+    public function openOrder($id)
+    {
+        $order = Order::find($id);
+        $order->status = 'started';
+        $order->save();
+
+        return redirect()->route('orders.edit', $order->id)->with('success', 'Se abrió la orden. Recuerde descontar o aumentar manualmente los productos que modifique en la orden!.');
+    }
+
 
     public function addAjax(Request $request)
     {

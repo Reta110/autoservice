@@ -10,8 +10,7 @@
 @section('contenido')
     <section class="content-header">
         <h1>
-            Orden Nr.
-            <small>#0{{$order->id }}</small>
+            Orden Nr. #0{{$order->id }} - {{$order->title }}
         </h1>
     </section>
 

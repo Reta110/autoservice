@@ -193,7 +193,7 @@ folder instead of downloading all of them to reduce the load. -->
                     </a>
                     <ul class="treeview-menu">
                         <li>
-                            <a href=""><i class="fa fa-circle-o"></i>Resumen</a>
+                            <a href="{{route('expenses-resume')}}"><i class="fa fa-circle-o"></i>Resumen del mes</a>
                         </li>
                         <li>
                             <a href="{{route('expenses.index')}}"><i class="fa fa-circle-o"></i>En insumos</a>

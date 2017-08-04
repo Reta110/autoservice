@@ -54,8 +54,19 @@
                 Cancelar
             </a>
             {!! Form::button('Enviar', ['class'=> 'btn btn-primary', 'onClick'=>'submit();']) !!}
+            @if($order->status == 'ended')
+                <div class="pull-right">
+                    <a class="btn btn-warning"
+                       title="¿{{Auth::user()->name}}, estás seguro de querer abrir esta orden?. Atención: Puedes causar daños en el stock."
+                       data-toggle="confirmation"
+                       href="{{ route('open-order',$order->id)}}">Abrir Orden
+                        <i class="fa fa-folder-open-o" aria-hidden="true"></i>
+                    </a>
+                </div>
+            @endif
         </div>
         {!! Form::close() !!}
+
     </section>
 
     @include('orders.modals.product-recommended-modal')

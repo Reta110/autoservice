@@ -50,6 +50,16 @@
                                     {!! Form::label('Precio HH', 'Precio HH referencia') !!}
                                     {!! Form::text('price_hh', null, ['class' => 'form-control', 'placeholder' => 'Precio de HH', 'required']) !!}
                                 </div>
+
+                                <div class="form-group">
+                                    {!! Form::label('comision_tdd', '% Comisión TDD') !!}
+                                    {!! Form::text('comision_tdd', null, ['class' => 'form-control', 'placeholder' => '% Comisión TDD', 'required']) !!}
+                                </div>
+
+                                <div class="form-group">
+                                    {!! Form::label('comision_tdc', '% Comisión TDC') !!}
+                                    {!! Form::text('comision_tdc', null, ['class' => 'form-control', 'placeholder' => '% Comisión TDC', 'required']) !!}
+                                </div>
                                 {{--<div class="form-group">--}}
                                 {{--{!! Form::label('email', 'Email - Notifications') !!}--}}
                                 {{--{!! Form::text('email', null, ['class' => 'form-control', 'placeholder' => 'Email para notificaciones', 'required']) !!}--}}
