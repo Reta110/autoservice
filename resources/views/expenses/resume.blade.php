@@ -50,11 +50,6 @@
                         <h2>Gastos fijos mensuales <p class="text-green money">{{$fixedExpenses}}</p></h2>
 
                     </div>
-                    <!-- /.box-body -->
-                    <div class="box-footer">
-                        <!-- footer-->
-                    </div>
-                    <!-- /.box-footer-->
                 </div>
                 <!-- /.box -->
                 <div class="row">
@@ -66,11 +61,6 @@
                         <h2>Comisión TDC <p class="text-green money">{{$credit_comision}}</p></h2>
 
                     </div>
-                    <!-- /.box-body -->
-                    <div class="box-footer">
-                        <!-- footer-->
-                    </div>
-                    <!-- /.box-footer-->
                 </div>
                 <!-- /.box -->
             </div>

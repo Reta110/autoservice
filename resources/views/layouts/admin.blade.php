@@ -82,8 +82,8 @@ folder instead of downloading all of them to reduce the load. -->
                             {{--<img alt="User Image" class="user-image" src="../../dist/img/user2-160x160.jpg">
                              </img>--}}
                             <span class="hidden-xs">
-                                            Automec
-                                        </span>
+                                  {{Auth::user()->name}}
+                            </span>
 
                         </a>
 
