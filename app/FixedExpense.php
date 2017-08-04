@@ -14,8 +14,8 @@ class FixedExpense extends Model
         return $date = \Carbon\Carbon::parse($date)->format('d-m-Y');
     }
 
-//    public function setDateAttribute($date)
-//    {
-//        return $date = \Carbon\Carbon::parse($date)->format('Y-m-d');
-//    }
+    public function setDateAttribute($date)
+    {
+        $this->attributes['date'] = \Carbon\Carbon::parse($date)->format('Y-m-d');
+    }
 }

@@ -26,7 +26,7 @@ class OrdersController extends Controller
      */
     public function index()
     {
-        $orders = Order::all();
+        $orders = Order::with(['user', 'vehicle'])->get();
 
         return view('orders.index', compact('orders'));
     }
@@ -95,7 +95,7 @@ class OrdersController extends Controller
         $services = Service::orderBy('name', 'ASC')->get();
         //dd($services->toArray());
 
-        $recommended = Product::orderBy('name', 'ASC')->orWhere('tags', 'like', '%' . $vehicle->model . '%')->get();
+        $recommended = Product::orderBy('name', 'ASC')->Where('tags', 'like', '%' . $vehicle->model . '%')->get();
         $serv = $services->toJson();
         $aux = Product::orderBy('name', 'ASC')->get();
         $prod = $aux->toJson();
@@ -262,7 +262,7 @@ class OrdersController extends Controller
         $services = Service::orderBy('name', 'ASC')->pluck('name', 'id', 'price')->all();
         $servi = Service::orderBy('name', 'ASC')->get();
 
-        $recommended = Product::orderBy('name', 'ASC')->where('tags', 'like', ' % ' . $order->vehicle->brand . ' % ')->orWhere('tags', 'like', ' % ' . $order->vehicle->model . ' % ')->get();
+        $recommended = Product::orderBy('name', 'ASC')->Where('tags', 'like', ' % ' . $order->vehicle->model . ' % ')->get();
 
         $serv = $servi->toJson();
         $aux = Product::orderBy('name', 'ASC')->get();

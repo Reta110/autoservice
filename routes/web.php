@@ -29,10 +29,12 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::get('/expenses-resume', 'ExpensesController@resume')->name('expenses-resume');
     Route::post('/expenses-search', 'ExpensesController@expensesSearch')->name('expenses.search');
     Route::resource('/expenses', 'ExpensesController');
+
+    Route::get('/fixed-expenses/close', 'FixedExpensesController@closeMonth')->name('close-month');
+    Route::post('/fixed-expenses/close', 'FixedExpensesController@closeMonth')->name('close-month');
     Route::resource('/fixed-expenses', 'FixedExpensesController');
 
-
-   // Route::resource('/stadistics', 'StadisticsController');
+    // Route::resource('/stadistics', 'StadisticsController');
     Route::resource('/product/categories', 'ProductCategoriesController');
 
     Route::resource('/vehicles', 'VehiclesController');

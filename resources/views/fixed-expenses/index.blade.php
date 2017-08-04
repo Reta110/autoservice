@@ -35,7 +35,7 @@
                 <div class="box-tools">
 
                     <div class="text-center">
-                        <a class="btn btn-warning btn-sm" href="{{ route('fixed-expenses.create') }}">
+                        <a class="btn btn-warning btn-sm" href="{{ route('close-month') }}">
                             CIERRE DE MES
                         </a>
                         <a class="btn btn-danger btn-sm" href="{{ route('fixed-expenses.create') }}">

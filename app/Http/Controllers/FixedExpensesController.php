@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Expense;
 use App\FixedExpense;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class FixedExpensesController extends Controller
@@ -30,6 +31,16 @@ class FixedExpensesController extends Controller
         return view('fixed-expenses.create');
     }
 
+    public function closeMonth()
+    {
+        $starM = Carbon::now()->subMonth(1)->startOfMonth()->toDateString();
+        $endM = Carbon::now()->subMonth(1)->endOfMonth()->toDateString();
+
+        $fixedExpenses = FixedExpense::whereBetween('date', [$starM, $endM])->get();
+
+        return view('fixed-expenses.close-month', compact('fixedExpenses'));
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -45,10 +56,8 @@ class FixedExpensesController extends Controller
         FixedExpense::create($request->all());
 
         if ($request->ajax()) {
-            $aux = FixedExpense::orderBy('id', 'ASC')->get();
-            $prod = $aux->toJson();
-            return response()->json(['success' => 'Se ha registrado de manera exitosa!','prod' => $prod]);
-        }else{
+            return response()->json(['success' => 'Se ha registrado de manera exitosa!']);
+        } else {
             return redirect()->route('fixed-expenses.index')->with('success', 'Se ha registrado de manera exitosa!');
         }
     }
