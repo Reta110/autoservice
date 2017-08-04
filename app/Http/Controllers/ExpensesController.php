@@ -36,7 +36,7 @@ class ExpensesController extends Controller
 
         list($expenses, $fixedExpenses, $debit_comision, $credit_comision) = $this->findExpensesAndCalculate($starM, $endM);
 
-        return view('expenses.resume', compact('expenses', 'fixedExpenses', 'debit_comision', 'credit_comision'));
+        return view('expenses.resume', compact('expenses', 'fixedExpenses', 'debit_comision', 'credit_comision','month','year'));
     }
 
     private function total($items)
@@ -196,7 +196,7 @@ class ExpensesController extends Controller
         $credit_comision = Order::whereBetween('ended_date', [$starM, $endM])
             ->where('type_pay', 'TransBank')->where('status', 'ended')->where('paid', 'si')->get();
         $credit_comision = $this->creditComision($credit_comision);
-        
+
         return array($expenses, $fixedExpenses, $debit_comision, $credit_comision);
     }
 }

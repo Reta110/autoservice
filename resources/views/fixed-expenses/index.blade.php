@@ -13,16 +13,13 @@
                 <a href="#">
                     <i class="fa fa-dashboard">
                     </i>
-                    Home
+                    Gastos fijos
                 </a>
             </li>
             <li>
                 <a href="#">
-                    Examples
+                    Listado
                 </a>
-            </li>
-            <li class="active">
-                Blank page
             </li>
         </ol>
     </section>
@@ -38,6 +35,9 @@
                 <div class="box-tools">
 
                     <div class="text-center">
+                        <a class="btn btn-warning btn-sm" href="{{ route('fixed-expenses.create') }}">
+                            CIERRE DE MES
+                        </a>
                         <a class="btn btn-danger btn-sm" href="{{ route('fixed-expenses.create') }}">
                             NUEVO REGISTRO
                         </a>

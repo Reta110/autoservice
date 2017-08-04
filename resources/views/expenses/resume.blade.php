@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Resumen de Gastos Administrativos del mes')
+@section('title', 'Resumen de Gastos Administrativos')
 
 @section('contenido')
     <section class="content-header">
@@ -30,9 +30,14 @@
             @include('common.success')
             <div class="box-header with-border">
                 <h3 class="box-title">
-                    Resumen de Gastos del mes: {{Carbon\Carbon::now()->format('F \\d\\e Y')}}
+                    @if(isset($month))
+                        Resumen de Gastos del
+                        mes: {{Carbon\Carbon::now()->year($year)->month($month)->format('F \\d\\e Y')}}
+                    @else
+                        Resumen de Gastos del mes: {{Carbon\Carbon::now()->format('F \\d\\e Y')}}
+                    @endif
                 </h3>
-                <div class="box-tools">
+                <div class="box-tools no-print">
                     {!! Form::open(['route' => ['expenses.search'], 'method' => 'POST']) !!}
                     <div class="pull-right">
                         <div class="form-group">
@@ -45,8 +50,9 @@
 
                         <select class="form-control" id='year' name="year">
                             @for($i=0;$i<5;$i++)
-                                <option value='{{Carbon\Carbon::now()->subYear($i)->format('Y')}}'>
-                                    {{Carbon\Carbon::now()->subYear($i)->format('Y')}}
+                                @php $option = Carbon\Carbon::now()->subYear($i)->format('Y')@endphp
+                                <option value='{{$option}}' @if(isset($year) && $option == $year)selected @endif>
+                                    {{$option}}
                                 </option>
                             @endfor
                         </select>
@@ -55,18 +61,18 @@
                     <div class="pull-right">
                         <select class="form-control" id='month' name="month">
                             <option value=''>--Seleccionar Mes--</option>
-                            <option selected value='1'>Enero</option>
-                            <option value='2'>Febrero</option>
-                            <option value='3'>Marzo</option>
-                            <option value='4'>Abril</option>
-                            <option value='5'>Mayo</option>
-                            <option value='6'>Junio</option>
-                            <option value='7'>Julio</option>
-                            <option value='8'>Agosto</option>
-                            <option value='9'>Septiembre</option>
-                            <option value='10'>Octubre</option>
-                            <option value='11'>Noviembre</option>
-                            <option value='12'>Diciembre</option>
+                            <option value='1' @if(isset($month) && $month == 1) selected @endif> Enero</option>
+                            <option value='2' @if(isset($month) && $month == 2) selected @endif>Febrero</option>
+                            <option value='3' @if(isset($month) && $month == 3) selected @endif>Marzo</option>
+                            <option value='4' @if(isset($month) && $month == 4) selected @endif>Abril</option>
+                            <option value='5' @if(isset($month) && $month == 5) selected @endif>Mayo</option>
+                            <option value='6' @if(isset($month) && $month == 6) selected @endif>Junio</option>
+                            <option value='7' @if(isset($month) && $month == 7) selected @endif>Julio</option>
+                            <option value='8' @if(isset($month) && $month == 8) selected @endif>Agosto</option>
+                            <option value='9' @if(isset($month) && $month == 9) selected @endif>Septiembre</option>
+                            <option value='10' @if(isset($month) && $month == 10) selected @endif>Octubre</option>
+                            <option value='11' @if(isset($month) && $month == 11) selected @endif>Noviembre</option>
+                            <option value='12' @if(isset($month) && $month == 12) selected @endif>Diciembre</option>
                         </select>
                     </div>
                     {!! Form::close() !!}
@@ -96,6 +102,12 @@
                 </div>
                 <!-- /.box -->
             </div>
+
+        </div>
+        <div class="row text-center no-print">
+            <button type="button" class="btn btn-success printer" id="print" title="Imprimir Boleta">Imprimir
+                <i class="glyphicon glyphicon-print"></i>
+            </button>
         </div>
     </section>
 
@@ -104,15 +116,8 @@
 @section('js')
 
     <script type="text/javascript">
-        $(document).ready(function () {
-            $('.table').DataTable({
-                "language": {
-                    "url": "{{ asset('AdminLTE/plugins/datatables/esp.lang') }}",
-                },
-                "order": [[0, "desc"]],
-                "paging": false,
-                "sScrollX": "100%"
-            });
+        $('.printer').on('click', function () {
+            window.print();
         });
     </script>
 @endsection
