@@ -38,9 +38,6 @@
                         <a class="btn btn-danger btn-sm" href="{{ route('select-client') }}">
                             NUEVO REGISTRO
                         </a>
-                        {{--  <a class="btn btn-success btn-sm" href="{{route('export')}}">
-                            IMPRIMIR REPORTE
-                        </a> --}}
                     </div>
 
                 </div>
@@ -55,10 +52,8 @@
                                     <th>ID</th>
                                     <th>TITULO</th>
                                     <th>CLIENTE</th>
-                                    <th>RUT</th>
                                     <th>MARCA</th>
                                     <th>MODELO</th>
-                                    <th>AÑO</th>
                                     <th>NETO</th>
                                     <th>IVA</th>
                                     <th>TOTAL</th>
@@ -79,16 +74,10 @@
                                             {{ $order->user->name.' '.$order->user->last_name}}
                                         </td>
                                         <td>
-                                            {{ $order->user->rut }}
-                                        </td>
-                                        <td>
                                             {{ $order->vehicle->brand }}
                                         </td>
                                         <td>
                                             {{ $order->vehicle->model }}
-                                        </td>
-                                        <td>
-                                            {{ $order->vehicle->year }}
                                         </td>
                                         <td>
                                             {{ $order->neto }}
@@ -149,7 +138,7 @@
                 "language": {
                     "url": "{{ asset('AdminLTE/plugins/datatables/esp.lang') }}",
                 },
-                "aaSorting": [ [10,'desc'],[0,'desc'] ],
+                "aaSorting": [ [8,'desc'],[0,'desc'] ],
             });
         });
     </script>

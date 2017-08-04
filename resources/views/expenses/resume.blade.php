@@ -30,14 +30,46 @@
             @include('common.success')
             <div class="box-header with-border">
                 <h3 class="box-title">
-                    Resumen de Gastos del mes
+                    Resumen de Gastos del mes: {{Carbon\Carbon::now()->format('F \\d\\e Y')}}
                 </h3>
                 <div class="box-tools">
+                    {!! Form::open(['route' => ['expenses.search'], 'method' => 'POST']) !!}
+                    <div class="pull-right">
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success btn-sm">
+                                VER
+                            </button>
+                        </div>
+                    </div>
+                    <div class="pull-right">
 
-                    <div class="text-center">
-
+                        <select class="form-control" id='year' name="year">
+                            @for($i=0;$i<5;$i++)
+                                <option value='{{Carbon\Carbon::now()->subYear($i)->format('Y')}}'>
+                                    {{Carbon\Carbon::now()->subYear($i)->format('Y')}}
+                                </option>
+                            @endfor
+                        </select>
                     </div>
 
+                    <div class="pull-right">
+                        <select class="form-control" id='month' name="month">
+                            <option value=''>--Seleccionar Mes--</option>
+                            <option selected value='1'>Enero</option>
+                            <option value='2'>Febrero</option>
+                            <option value='3'>Marzo</option>
+                            <option value='4'>Abril</option>
+                            <option value='5'>Mayo</option>
+                            <option value='6'>Junio</option>
+                            <option value='7'>Julio</option>
+                            <option value='8'>Agosto</option>
+                            <option value='9'>Septiembre</option>
+                            <option value='10'>Octubre</option>
+                            <option value='11'>Noviembre</option>
+                            <option value='12'>Diciembre</option>
+                        </select>
+                    </div>
+                    {!! Form::close() !!}
                 </div>
             </div>
             <div class="box-body">

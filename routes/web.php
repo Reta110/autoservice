@@ -27,6 +27,7 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::resource('/configurations', 'ConfigurationsController');
 
     Route::get('/expenses-resume', 'ExpensesController@resume')->name('expenses-resume');
+    Route::post('/expenses-search', 'ExpensesController@expensesSearch')->name('expenses.search');
     Route::resource('/expenses', 'ExpensesController');
     Route::resource('/fixed-expenses', 'FixedExpensesController');
 

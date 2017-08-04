@@ -17,19 +17,24 @@ class ExpensesController extends Controller
         $starM = Carbon::now()->startOfMonth()->toDateString();
         $endM = Carbon::now()->endOfMonth()->toDateString();
 
-        $expenses = Expense::whereBetween('date', [$starM, $endM])->get();
-        $expenses = $this->total($expenses);
+        list($expenses, $fixedExpenses, $debit_comision, $credit_comision) = $this->findExpensesAndCalculate($starM, $endM);
 
-        $fixedExpenses = FixedExpense::whereBetween('date', [$starM, $endM])->get();
-        $fixedExpenses = $this->total($fixedExpenses);
+        return view('expenses.resume', compact('expenses', 'fixedExpenses', 'debit_comision', 'credit_comision'));
+    }
 
-        $debit_comision = Order::whereBetween('ended_date', [$starM, $endM])
-            ->where('type_pay', 'TransBank')->where('status', 'ended')->where('paid', 'si')->get();
-        $debit_comision = $this->debitComision($debit_comision);
+    public function expensesSearch(Request $request)
+    {
+        $month = $request->get('month');
+        $year = $request->get('year');
 
-        $credit_comision = Order::whereBetween('ended_date', [$starM, $endM])
-            ->where('type_pay', 'TransBank')->where('status', 'ended')->where('paid', 'si')->get();
-        $credit_comision = $this->creditComision($credit_comision);
+        $c = Carbon::now();
+        $c->month = $month;
+        $c->year = $year;
+
+        $starM = $c->startOfMonth()->toDateString();
+        $endM = $c->endOfMonth()->toDateString();
+
+        list($expenses, $fixedExpenses, $debit_comision, $credit_comision) = $this->findExpensesAndCalculate($starM, $endM);
 
         return view('expenses.resume', compact('expenses', 'fixedExpenses', 'debit_comision', 'credit_comision'));
     }
@@ -74,8 +79,7 @@ class ExpensesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public
-    function index()
+    public function index()
     {
         $expenses = Expense::all();
         return view('expenses.index', compact('expenses'));
@@ -86,10 +90,8 @@ class ExpensesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public
-    function create()
+    public function create()
     {
-
         return view('expenses.create');
     }
 
@@ -172,5 +174,29 @@ class ExpensesController extends Controller
         Expense::destroy($id);
 
         return redirect()->route('expenses.index')->with('success', 'Se ha eleminado de manera exitosa!');
+    }
+
+    /**
+     * @param $starM
+     * @param $endM
+     * @return array
+     */
+    private function findExpensesAndCalculate($starM, $endM)
+    {
+        $expenses = Expense::whereBetween('date', [$starM, $endM])->get();
+        $expenses = $this->total($expenses);
+
+        $fixedExpenses = FixedExpense::whereBetween('date', [$starM, $endM])->get();
+        $fixedExpenses = $this->total($fixedExpenses);
+
+        $debit_comision = Order::whereBetween('ended_date', [$starM, $endM])
+            ->where('type_pay', 'TransBank')->where('status', 'ended')->where('paid', 'si')->get();
+        $debit_comision = $this->debitComision($debit_comision);
+
+        $credit_comision = Order::whereBetween('ended_date', [$starM, $endM])
+            ->where('type_pay', 'TransBank')->where('status', 'ended')->where('paid', 'si')->get();
+        $credit_comision = $this->creditComision($credit_comision);
+        
+        return array($expenses, $fixedExpenses, $debit_comision, $credit_comision);
     }
 }
