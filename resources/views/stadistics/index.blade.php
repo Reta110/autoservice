@@ -33,7 +33,7 @@
                     Estadísticas de los últimos 7 días<br>
                     <small>Se han atendido <strong>{{count($orders)}}</strong> trabajos.</small>
                 </h3>
-                <div class="box-tools">
+                <div class="box-tools no-print">
                     {{Form::open(['route' => 'stadistics.store', 'class'=>'form-inline','method' => 'POST'])}}
                     <div class="form-group">
                         <label>Rango de fechas:</label>
@@ -64,26 +64,20 @@
                 <br>
                 <div class="row">
                     <div class="col-xs-12">
-                        <div class="box-body table-responsive no-padding">
-                            <table class="table table-hover display table-responsive table-condensed" id="table">
+                            <table class="table table-condensed" id="table">
                                 <thead>
                                 <tr>
                                     <th>ID</th>
                                     <th>FECHA</th>
                                     <th>CLIENTE</th>
-                                    <th>MARCA</th>
                                     <th>MODELO</th>
-                                    <th>KM</th>
                                     <th>TITLE</th>
                                     <th>NETO</th>
                                     <th>IVA</th>
                                     <th>TOTAL</th>
                                     <th>COSTOS</th>
-                                    <th>GANANCIAS</th>
-                                    <th>STATUS</th>
-                                    <th>PAGADO</th>
+                                    <th>PAGO</th>
                                     <th>TIPO</th>
-                                    <th>OBSERVACION</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -99,13 +93,7 @@
                                             {{ $order->user->name.' '.$order->user->last_name}}
                                         </td>
                                         <td>
-                                            {{ $order->vehicle->brand }}
-                                        </td>
-                                        <td>
                                             {{ $order->vehicle->model }}
-                                        </td>
-                                        <td>
-                                            {{ $order->km }}
                                         </td>
                                         <td>
                                             {{ $order->title }}
@@ -114,23 +102,20 @@
                                         <td class="money">{{ $order->iva }}</td>
                                         <td class="money">{{ $order->total }}</td>
                                         <td class="money">{{ $order->total_cost }}</td>
-                                        <td class="money">{{ $order->total - $order->total_cost}}</td>
-                                        <td>
-                                            {{ $order->status }}
-                                        </td>
                                         <td>
                                             {{ $order->paid }}
                                         </td>
                                         <td>
                                             {{ $order->type_pay }}
                                         </td>
-                                        <td>
-                                            {{ $order->pay_observations }}
-                                        </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
                             </table>
+                        <div class="row text-center no-print">
+                            <button type="button" class="btn btn-success printer" id="print" title="Imprimir Boleta">Imdprimir
+                                <i class="glyphicon glyphicon-print"></i>
+                            </button>
                         </div>
                         <hr>
                     </div>
@@ -144,7 +129,7 @@
                         <h4 class="text-success bg-success">Ganancia: <span
                                     class="money">{{$total - $total_cost}}</span></h4>
                     </div>
-                    <div class="col-xs-5">
+                    <div class="col-xs-5 no-print">
                         <p class="text-center">
                             <strong>Costos vs Ganancias</strong>
                         </p>
@@ -153,7 +138,7 @@
                             <canvas id="pieChart" style="height: 180px" ;></canvas>
                         </div>
                     </div>
-                    <div class=" col-md-4">
+                    <div class=" col-md-4 no-print">
                         <p class="text-center">
                             <strong>Estadísticas globales</strong>
                         </p>
@@ -217,28 +202,27 @@
                     </div>
                 </div>
                 <hr>
-                <div class="box-header with-border">
+                <div class="box-header with-border no-print">
                     <h3 class="box-title"><span class="text-danger">Costos</span> vs <span class="text-primary">Ganancias</span>
                     </h3>
                 </div>
                 <!-- /.box-header -->
 
 
-                <div class="chart">
+                <div class="chart no-print">
                     <!-- Sales Chart Canvas -->
                     <canvas id="salesChart" style="height: 180px" ;></canvas>
                 </div>
 
-                <div class="box-header with-border">
+                <div class="box-header with-border no-print">
                     <h3 class="box-title"><span class="text-danger">Costos</span> vs <span class="text-primary">Ganancias</span>
                     </h3>
                 </div>
 
-                <div class="chart">
+                <div class="chart no-print">
                     <!-- Sales Chart Canvas -->
                     <canvas id="barChart" style="height: 180px" ;></canvas>
                 </div>
-
 
             </div>
             <!-- /.box -->
@@ -434,6 +418,10 @@
                     }
                 }
         )
+
+        $('.printer').on('click', function () {
+            window.print();
+        });
 
     </script>
 

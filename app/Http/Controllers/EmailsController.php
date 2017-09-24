@@ -10,41 +10,36 @@ use App\Mail\OrderShipped;
 
 class EmailsController extends Controller
 {
-    public function sendOrderByEmail($id)
+    public function sendOrderByEmail($id, $email = null)
     {
-
-//        $plate		= "FGKZ61"; //Patente
-//        $key		= env('MULTIDATA_APP_ID'); //Se otorga en el portal de desarrolladores
-//        $api		= "cars"; //persons, cars, services
-//        $method		= "jsongetplateinfo"; //Ver catalogo de APIs
-//        $headr		= array();
-//        $headr[]	= 'Content-length: 0';
-//        $headr[]	= 'Content-type: application/json';
-//        $headr[]	= 'Authorization: '.$key;
-//        $url		= "http://api.multidatachile.com/".$api."/".$method."/".$plate;
-//        $crl		= curl_init();
-//        curl_setopt($crl, CURLOPT_HTTPHEADER, $headr);
-//        curl_setopt($crl, CURLOPT_URL, $url);
-//        curl_setopt($crl, CURLOPT_POST, false);
-//        $rest		= curl_exec($crl);
-//        curl_close($crl);
-//        print_r($rest);
 
         $order = Order::find($id);
         $config = Configuration::first();
+        $name = str_replace_last(' ', '-', $order->user->name);
+        $path = public_path() . '/pdf/Order-'.$name.'-'. $id .'.pdf';
+
+        if (file_exists($path)){
+            unlink($path);
+        }
 
         $view = view('orders.pdf_view', compact('order', 'config'))->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
-        $pdf->save(public_path() . '/pdf/Order-' . $id . '.pdf');
+        $pdf->save($path);
 
-        $mail = $order->user->mail;
-        $automec = env('MAIL_FROM_ADDRESS');
+         // $mail = $order->user->mail;
+        // $automec = webautomec@gmail.com;
 
-        while (file_exists(public_path() . '/pdf/Order-' . $id . '.pdf') == false) {
-            Mail::to($automec)->send(new OrderShipped($order));
+        while (file_exists($path) == false) {
+            sleep(2);
         }
 
-        return redirect()->to(route('orders.show', $order))->with('success', 'Se ha enviado de manera exitosa!');
+        if($email == null){
+            Mail::to('webautomec@gmail.com')->send(new OrderShipped($order));
+            return redirect()->to(route('orders.show', $order))->with('success', 'Se ha enviado de manera exitosa!');
+        }else{
+            Mail::to($email)->send(new OrderShipped($order));
+            return redirect()->to(route('orders.show', $order))->with('success', 'Se ha enviado al cliente de manera exitosa!');
+        }
     }
 }

@@ -28,10 +28,13 @@ class OrderShipped extends Mailable
      */
     public function build()
     {
-        return $this->from(env('MAIL_FROM_ADDRESS'))
-            ->subject('Automec Servicio Automotriz')
+        $name = str_replace_last(' ', '-', $this->order->user->name);
+        $path = public_path() . '/pdf/Order-'.$name.'-'. $this->order->id .'.pdf';
+
+        return $this->from('contacto@automec.cl')
+            ->subject('Automec Servicio Automotriz - Resumen de '. $this->order->user->fullname)
             ->view('emails.orders')->with([
                 'order' => $this->order,
-            ])->attach(public_path() . '/pdf/Order-' . $this->order->id . '.pdf');
+            ])->attach($path);
     }
 }

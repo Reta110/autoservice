@@ -55,7 +55,7 @@
                     <b>Fecha registro: </b>{{ $order->created_at }}<br>
                     <b>Orden Nro:</b> {{ $order->id }}<br>
                     <b>Telf:</b> 232666335<br>
-                    <b>Email: </b>contacto@automec.cl
+                    <b>Email: </b>pagos@automec.cl
                 </address>
             </div>
             <!-- /.col -->
@@ -252,6 +252,12 @@
                 Enviar al mail
                 <i class="glyphicon glyphicon-send"></i>
             </a>
+            @if($order->user->email != '')
+            <a class="btn btn-info" href="{{ route('email-order-client', [$order->id, $order->user->email])}}" title="Enviar al mail">
+                Enviar al mail del cliente
+                <i class="glyphicon glyphicon-send"></i>
+            </a>
+            @endif
             <div class="pull-right">
                 <a class="btn btn-warning" title="Duplicar Orden"
                    href="{{ route('duplicate-select-client',$order->id)}}">Duplicar Orden

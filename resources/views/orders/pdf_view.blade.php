@@ -4,11 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Example 2</title>
     <style>
-        /*!
- * Bootstrap v3.3.7 (http://getbootstrap.com)
- * Copyright 2011-2016 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
- *//*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
+
         html {
             font-family: sans-serif;
             -webkit-text-size-adjust: 100%;
@@ -7218,19 +7214,22 @@
     </style>
 </head>
 <body>
-<section class="invoice">
+<!-- Main content -->
+<section class="invoice  FontSmaller">
     <!-- title row -->
     <div class="row">
         <div class="col-xs-12">
-            <h1 class="page-header">
+            @include('common.errors')
+            <h3 class="page-header">
                 <img alt="User Image" src="{{ asset ('images/logo.png') }}">
-            </h1>
+                {{--<small class="pull-right">Fecha: {{ $order->created_at }}</small>--}}
+            </h3>
 
         </div>
     </div>
     <div class="row no-print">
         <div class="col-xs-12">
-            <table class="table table-bordered">
+            <table class="table table-bordered" cellpadding="0" cellspacing="0">
                 <tr>
                     <td><b>Estatus:</b></td>
                     <td>{{$order->status }}</td>
@@ -7250,47 +7249,38 @@
     </div>
     <!-- info row -->
     <div class="row invoice-info">
-        <table>
-            <tr>
-                <td>
-                    <div class="col-sm-4 invoice-col">
-                        <address>
-                            <strong>Automec</strong><br>
-                            <b>Fecha registro: </b>{{ $order->created_at }}<br>
-                            <b>Orden Nro:</b> {{ $order->id }}<br>
-                            <b>Telf:</b> 232666335<br>
-                            <b>Email:</b>contacto@automec.cl
-                        </address>
-                    </div>
-                </td>
-                <td>
-                    <!-- /.col -->
-                    <div class="col-sm-4 invoice-col">
-                        <address>
-                            <strong>Datos del cliente</strong><br>
-                            <b>Nombre:</b> {{ $order->user->fullname }}<br>
-                            <b>Rut:</b> {{ $order->user->rut }}<br>
-                            <b>Telf:</b> {{ $order->user->phone }}<br>
-                            <b>Email:</b> {{ $order->user->email }}<br>
-                        </address>
-                    </div>
-                </td>
-                <td>
-                    <!-- /.col -->
-                    <div class="col-sm-4 invoice-col">
-                        <address>
-                            <strong>Datos del vehículo</strong><br>
-                            <b>Marca:</b> {{ $order->vehicle->brand }}<br>
-                            <b>Modelo:</b> {{ $order->vehicle->model }}<br>
-                            <b>Motor:</b> {{ $order->vehicle->motor }}<br>
-                            <b>Vin:</b> {{ $order->vehicle->vin }}<br>
-                            <b>Km:</b> {{ $order->km }}<br>
-                        </address>
-                    </div>
-                </td>
-
-            </tr>
-        </table>
+        <div class="col-sm-4 invoice-col">
+            <address>
+                <strong>Automec</strong><br>
+                <b>Fecha registro: </b>{{ $order->created_at }}<br>
+                <b>Orden Nro:</b> {{ $order->id }}<br>
+                <b>Telf:</b> 232666335<br>
+                <b>Email: </b>pagos@automec.cl
+            </address>
+        </div>
+        <!-- /.col -->
+        <div class="col-sm-4 invoice-col">
+            <address>
+                <strong>Datos del cliente</strong><br>
+                <b>Nombre:</b> {{ $order->user->fullname }}<br>
+                <b>Rut:</b> {{ $order->user->rut }}<br>
+                <b>Telf:</b> {{ $order->user->phone }}<br>
+                <b>Email:</b> {{ $order->user->email }}<br>
+            </address>
+        </div>
+        <!-- /.col -->
+        <div class="col-sm-4 invoice-col">
+            <address>
+                <strong>Datos del vehículo</strong><br>
+                <b>Marca:</b> {{ $order->vehicle->brand }}<br>
+                <b>Modelo:</b> {{ $order->vehicle->model }}<br>
+                <b>Motor:</b> {{ $order->vehicle->motor }}<br>
+                <b>Vin:</b> {{ $order->vehicle->vin }}<br>
+                <b>Patente:</b> {{ $order->vehicle->patente }}<br>
+                <b>Km:</b> {{ $order->km }}<br>
+            </address>
+        </div>
+        <!-- /.col -->
     </div>
     <!-- /.row -->
 
@@ -7298,7 +7288,7 @@
     <!-- Table row -->
         <div class="row">
             <div class="col-xs-12 table-responsive">
-                <h3>Servicios</h3>
+                <h4>Servicios</h4>
                 <table class="table table-striped table-condensed">
                     <thead>
                     <tr>
@@ -7312,9 +7302,13 @@
                         <tr>
                             <td>{{$service->name}}</td>
                             <td>{{$service->pivot->hh}}</td>
-                            <td>{{$service->pivot->hh * $order->hh }}</td>
+                            <td class="money">{{$service->pivot->hh * $order->hh }}</td>
                         </tr>
                     @endforeach
+                    <tr>
+                        <td colspan="2" class="text-right"><strong>Total:</strong></td>
+                        <td class="money">{{$total_services}}</td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
@@ -7322,15 +7316,16 @@
         </div>
         <!-- /.row -->
 @endif
-@if(count($order->products)>0)
-    <!-- Table row -->
-        <div class="row">
-            <div class="col-xs-12">
-                <h3>Productos</h3>
+<!-- Table row -->
+    <div class="row">
+        <div class="col-xs-12">
+            <h4>Productos</h4>
+            @if(count($order->products)>0)
                 <table class="table table-striped table-condensed">
                     <thead>
                     <tr>
                         <th>DESCRIPCION</th>
+                        <th class="no-print">COSTO UNITARIO</th>
                         <th>PRECIO UNITARIO</th>
                         <th>CANTIDAD</th>
                         <th>TOTAL</th>
@@ -7340,22 +7335,51 @@
                     @foreach($order->products as $product)
                         <tr>
                             <td>{{ $product->name }}</td>
-                            <td>{{ $product->pivot->price }}</td>
+                            <td class="money no-print">{{ $product->cost }}</td>
+                            <td class="money">{{ $product->pivot->price }}</td>
                             <td>{{ $product->pivot->quantity }}</td>
                             <td class="money">{{ $product->pivot->quantity * $product->pivot->price }}</td>
                         </tr>
                     @endforeach
+                    {{--<tr>--}}
+                    {{--<td colspan="3" class="text-right"><strong>Total:</strong></td>--}}
+                    {{--<td class="money">{{$total_products}}</td>--}}
+                    {{--</tr>--}}
                     </tbody>
                 </table>
-            </div>
-            <!-- /.col -->
+            @endif
+            @if($cells != '')
+                <table class="table table-striped table-condensed" id="example">
+                    <thead>
+                    <tr>
+                        <th>DESCRIPCION</th>
+                        <th>PRECIO UNITARIO</th>
+                        <th>CANTIDAD</th>
+                        <th>TOTAL</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            @endif
         </div>
-        <!-- /.row -->
-    @endif
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+
 
     <div class="row">
-        <!-- accepted payments column -->
+        @php($sum = count($order->products)+count($order->services))
+        @if($sum == 10 || $sum == 11 || $sum == 12 || $sum == 13)
+            <br><br>
+            <br><br>
+            <br><br>
+            <br><br>
+        @endif
+    <!-- accepted payments column -->
         @if($order->observations != '')
+            <br><br>
             <div class="col-xs-6">
                 <p class="lead">Observaciones:</p>
                 <p class="text-muted well well-sm " style="margin-top: 10px;">
@@ -7363,14 +7387,17 @@
                 </p>
             </div>
     @endif
+
+
     <!-- /.col -->
-        <div class="col-xs-4 pull-right">
+        <div class="col-xs-5 pull-right">
 
             <div class="form-group">
 
                 <table class="table">
-                    <br>
+
                     @if($order->discount > 0)
+                        <br><br>
                         <tr>
                             <td>Descuento:</td>
                             <td><b>{{$order->discount}} %</b></td>
@@ -7393,23 +7420,6 @@
                 </table>
             </div>
         </div>
-    </div>
-
-    <br>
-    <div class="row">
-        <div class="col-xs-11">
-
-            <p class="FontSmall text-right pull-right">
-                Servicio Automotriz Automec Limitada. Rut: 76.525.647-K
-                <br>
-                C.Corriente 70541017, Banco Santander.
-            </p>
-
-        </div>
-    </div>
-
-</section>
-<!-- /.content -->
 <div class="clearfix"></div>
 
 </body>

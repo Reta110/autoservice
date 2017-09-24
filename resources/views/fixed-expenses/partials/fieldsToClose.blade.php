@@ -61,7 +61,7 @@
         });
 
         $(document).ready(function () {
-            var date = '{!! Carbon\Carbon::now()->addMonth(1)->format('d-m-Y')!!}'
+            var date = '{!! Carbon\Carbon::now()->format('d-m-Y')!!}'
             $('.date').val(date);
         });
 

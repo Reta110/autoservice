@@ -30,6 +30,7 @@ class CreateOrdersTable extends Migration
             $table->enum('card_type', ['Debito','Credito'])->default('Debito')->nullable();
             $table->text('pay_observations')->nullable();
             $table->text('pay_fees_quantity')->default(0)->nullable();
+            $table->text('check_charged')->default(0)->nullable();
 
             $table->text('km')->nullable();
             $table->boolean('delete_stock')->default(0);

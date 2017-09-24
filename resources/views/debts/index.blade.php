@@ -97,8 +97,9 @@
                                     <tbody>
                                     @foreach($transbanks as $transbank)
                                         @for($i=$transbank->pay_fees_quantity;$i>0;$i--)
-                                            <tr @if(\Carbon\Carbon::parse($transbank->ended_date)
-                                                    ->addMonth($i) < \Carbon\Carbon::now()) class="success" @endif>
+                                            @if(\Carbon\Carbon::parse($transbank->ended_date)
+                                                    ->addMonth($i) > \Carbon\Carbon::now())
+                                            <tr>
                                                 <td>
                                                     {{ $transbank->user->name.' '.$transbank->user->last_name}}
                                                 </td>
@@ -116,6 +117,7 @@
                                                     </div>
                                                 </td>
                                             </tr>
+                                            @endif
                                         @endfor
                                     @endforeach
                                     </tbody>
