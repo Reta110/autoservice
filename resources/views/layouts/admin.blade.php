@@ -215,9 +215,9 @@ folder instead of downloading all of them to reduce the load. -->
                 </span>
                     </a>
                 </li>
-                <li class="@if(request()->segment(2) == 'orders') active @endif treeview">
+                <li class="@if(request()->segment(2) == 'orders') active @endif treeview menu-open">
 
-                    <a href="{{route('orders.index')}}">
+                    <a href="">
                         <i class="fa fa-car">
                         </i>
                         <span>
@@ -227,6 +227,14 @@ folder instead of downloading all of them to reduce the load. -->
                                     <i class="fa fa-angle-left pull-right"></i>
                                 </span>
                     </a>
+                    <ul class="treeview-menu">
+                        <li>
+                            <a href="{{route('orders.resume')}}"><i class="fa fa-circle-o"></i>Resumen</a>
+                        </li>
+                        <li>
+                            <a href="{{route('orders.index')}}"><i class="fa fa-circle-o"></i>Todos</a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="@if(request()->segment(2) == 'clients') active @endif treeview">
                     <a href="{{route('clients.index')}}">

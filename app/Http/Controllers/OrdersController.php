@@ -31,6 +31,18 @@ class OrdersController extends Controller
         return view('orders.index', compact('orders'));
     }
 
+    /**
+     * Display a resumen.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function resume()
+    {
+        $orders = Order::where('status', '!=', 'ended')->with(['user', 'vehicle'])->get();
+
+        return view('orders.index', compact('orders'));
+    }
+
     public function selectClient()
     {
         $clients = User::where('role', 'client')->get();
