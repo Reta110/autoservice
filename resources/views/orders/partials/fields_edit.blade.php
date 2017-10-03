@@ -335,6 +335,10 @@
                                         <input type="radio" name="status" value="started" class="status"
                                                @if($order->status == 'started')checked="true" @endif>Iniciado
                                     </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="status" value="plantilla" class="status"
+                                               @if($order->status == 'plantilla')checked="true" @endif>Plantilla
+                                    </label>
                                 @endif
                                 <label class="radio-inline">
                                     <input type="radio" name="status" value="ended" class="status"

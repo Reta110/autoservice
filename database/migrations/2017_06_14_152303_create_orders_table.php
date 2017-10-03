@@ -35,7 +35,7 @@ class CreateOrdersTable extends Migration
             $table->text('km')->nullable();
             $table->boolean('delete_stock')->default(0);
 
-            $table->enum('status', ['budget','started', 'template', 'ended']);
+            $table->enum('status', ['budget','started', 'template', 'ended', 'plantilla']);
 
             $table->mediumText('express_products')->nullable();
             $table->text('total_express')->default(0)->nullable();

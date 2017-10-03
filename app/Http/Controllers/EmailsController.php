@@ -7,14 +7,22 @@ use App\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\OrderShipped;
+use App\Http\Controllers\OrdersController;
 
 class EmailsController extends Controller
 {
     public function sendOrderByEmail($id, $email = null)
     {
+        $o = new OrdersController();
 
         $order = Order::find($id);
         $config = Configuration::first();
+
+        $total_products = $o->countTotalProducts($order);
+        $total_services = $o->countTotalServices($order);
+
+        $cells = $o->getExpressProductsCells($order);
+
         $name = str_replace_last(' ', '-', $order->user->name);
         $path = public_path() . '/pdf/Order-'.$name.'-'. $id .'.pdf';
 
@@ -22,7 +30,8 @@ class EmailsController extends Controller
             unlink($path);
         }
 
-        $view = view('orders.pdf_view', compact('order', 'config'))->render();
+        return view('orders.pdf_view', compact('order', 'config','total_products','total_services','cells'));
+
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
         $pdf->save($path);

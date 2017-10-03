@@ -10,11 +10,8 @@ use App\ProductCategory;
 use App\Service;
 use App\User;
 use App\Vehicle;
-use Barryvdh\DomPDF\PDF;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use PhpParser\Node\Stmt\DeclareDeclare;
 use Illuminate\Support\Facades\Mail;
 
 class OrdersController extends Controller
@@ -39,6 +36,18 @@ class OrdersController extends Controller
     public function resume()
     {
         $orders = Order::where('status', '!=', 'ended')->with(['user', 'vehicle'])->get();
+
+        return view('orders.index', compact('orders'));
+    }
+
+    /**
+     * Display the plantillas.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function plantillas()
+    {
+        $orders = Order::where('status', '==', 'plantilla')->with(['user', 'vehicle'])->get();
 
         return view('orders.index', compact('orders'));
     }
@@ -105,7 +114,7 @@ class OrdersController extends Controller
         $products = Product::orderBy('name', 'ASC')->get();
         //$products = array_unique($products);
         $services = Service::orderBy('name', 'ASC')->get();
-        //dd($services->toArray());
+
 
         $recommended = Product::orderBy('name', 'ASC')->Where('tags', 'like', '%' . $vehicle->model . '%')->get();
         $serv = $services->toJson();
@@ -113,13 +122,11 @@ class OrdersController extends Controller
         $prod = $aux->toJson();
 
         $config = Configuration::first();
-//        $marcas = Product::orderBy('name', 'ASC')->pluck('brand')->all();
-//        $modelos = Product::orderBy('name', 'ASC')->pluck('model')->all();
+
         $marcas = [];
         $modelos = [];
         $categories = ProductCategory::orderBy('name', 'ASC')->pluck('name', 'id')->all();
 
-        //TEST
         return view('orders.create', compact('client', 'vehicle', 'products', 'services', 'serv', 'prod', 'config', 'marcas', 'modelos', 'categories', 'recommended'));
     }
 
@@ -484,7 +491,7 @@ class OrdersController extends Controller
      * @param $order
      * @return array|string
      */
-    private function getExpressProductsCells($order)
+    public function getExpressProductsCells($order)
     {
         $order->express_products = str_replace(",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,", "", $order->express_products);
         $order->express_products = str_replace(",,,,", "", $order->express_products);

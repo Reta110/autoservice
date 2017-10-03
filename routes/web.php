@@ -62,6 +62,7 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     //End duplicate order
 
     Route::get('/orders/resumen', 'OrdersController@resume')->name('orders.resume');
+    Route::get('/orders/plantillas', 'OrdersController@plantillas')->name('orders.plantillas');
     Route::resource('/orders', 'OrdersController');
 
     Route::post('/user/register/{order?}', 'ClientsController@store')->name('user-store');

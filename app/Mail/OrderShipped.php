@@ -29,7 +29,8 @@ class OrderShipped extends Mailable
     public function build()
     {
         $name = str_replace_last(' ', '-', $this->order->user->name);
-        $path = public_path() . '/pdf/Order-'.$name.'-'. $this->order->id .'.pdf';
+
+        $path = public_path().'/pdf/Order-'.$name.'-'. $this->order->id .'.pdf';
 
         return $this->from('contacto@automec.cl')
             ->subject('Automec Servicio Automotriz - Resumen de '. $this->order->user->fullname)

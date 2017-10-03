@@ -232,6 +232,9 @@ folder instead of downloading all of them to reduce the load. -->
                             <a href="{{route('orders.resume')}}"><i class="fa fa-circle-o"></i>Resumen</a>
                         </li>
                         <li>
+                            <a href="{{route('orders.plantillas')}}"><i class="fa fa-circle-o"></i>Plantillas</a>
+                        </li>
+                        <li>
                             <a href="{{route('orders.index')}}"><i class="fa fa-circle-o"></i>Todos</a>
                         </li>
                     </ul>
