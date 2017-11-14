@@ -185,6 +185,7 @@ class OrdersController extends Controller
             'status' => $request->get('status'),
             'start_date' => Carbon::now(),
             'total_cost' => $request->get('total_cost'),
+            'extra_cost' => $request->get('extra_cost'),
             'neto' => $request->get('neto'),
             'iva' => $request->get('iva'),
             'total' => $request->get('total'),
@@ -339,6 +340,7 @@ class OrdersController extends Controller
         $order->neto = $request->get('neto');
         $order->iva = $request->get('iva');
         $order->total = $request->get('total');
+        $order->extra_cost = $request->get('extra_cost');
         $order->observations = $request->get('observations');
         $order->ot_observations = $request->get('ot_observations');
         $order->discount = $request->get('discount');

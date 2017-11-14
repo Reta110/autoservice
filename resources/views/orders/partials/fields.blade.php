@@ -212,12 +212,13 @@
                                     <input type="radio" name="status" value="started" class="status">Iniciado
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" name="status" value="ended" class="status">Finalizado
-                                </label>
-                                <label class="radio-inline">
                                     <input type="radio" name="status" value="plantilla" class="status">Plantilla
                                 </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="status" value="ended" class="status">Finalizado
+                                </label>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -233,6 +234,10 @@
                     <p class="text-right">
                         <label>Descuento</label>
                         {!! Form::text('discount', null, ['class' => 'form-control discount', 'placeholder' => 'Descuento']) !!}
+                    </p>
+                    <p class="text-right">
+                        <label>Costo Extra</label>
+                        {!! Form::text('extra_cost', null, ['class' => 'form-control extra_cost', 'placeholder' => 'Costo Extra']) !!}
                     </p>
                     <p class="text-right">
                         <label>Neto</label>
@@ -571,6 +576,10 @@
 
         //Si cambian el discount de la orden, se calculan los numeros nuevamente
         $(document).on('change', '.discount', function () {
+            calculate()
+        });
+        //Si cambian el extra_cost de la orden, se calculan los numeros nuevamente
+        $(document).on('change', '.extra_cost', function () {
             calculate()
         });
         //Si cambian el alguna hora de algun servicio de la orden, se calculan los numeros nuevamente
@@ -934,12 +943,22 @@
             }
 
             var iva = eval(sum * (conf_iva / 100))
-            var neto = eval(sum)
+
+            var extra_cost = eval($(".extra_cost").val())
+
+            if(extra_cost > 0){
+                var neto = eval(sum + extra_cost)
+            }else{
+                var neto = eval(sum)
+            }
+
 
             $(".neto").val(neto)
             $(".iva").val(iva)
 
+
             $(".total").val(neto + iva)
+
 
         }
         //Fin calculate

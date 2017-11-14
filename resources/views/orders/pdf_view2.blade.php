@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.email')
 
 @if($order->status == 'budget')
     @section('title', 'PRESUPUESTO')
@@ -15,38 +15,18 @@
     </section>
 
     <!-- Main content -->
-    <section class="invoice  FontSmaller">
+    <section class="invoice">
         <!-- title row -->
         <div class="row">
             <div class="col-xs-12">
                 @include('common.errors')
                 <h3 class="page-header">
                     <img alt="User Image" src="{{ asset ('images/logo.png') }}">
-                    {{--<small class="pull-right">Fecha: {{ $order->created_at }}</small>--}}
                 </h3>
 
             </div>
         </div>
-        <div class="row no-print">
-            <div class="col-xs-12">
-                <table class="table table-bordered" cellpadding="0" cellspacing="0">
-                    <tr>
-                        <td><b>Estatus:</b></td>
-                        <td>{{$order->status }}</td>
-                        <td><b>Pagado:</b></td>
-                        <td>{{$order->paid }}</td>
-                        @if($order->paid == 'si')
-                            <td><b>Forma de pago Pago:</b></td>
-                            <td>{{$order->type_pay }}</td>
-                        @endif
-                        <td><b>Observación de pago:</b></td>
-                        <td>{{$order->pay_observations}}</td>
-                        <td><b>HH:</b></td>
-                        <td>{{$order->hh}}</td>
-                    </tr>
-                </table>
-            </div>
-        </div>
+
         <!-- info row -->
         <div class="row invoice-info">
             <div class="col-sm-4 invoice-col">
@@ -125,7 +105,6 @@
                         <thead>
                         <tr>
                             <th>DESCRIPCION</th>
-                            <th class="no-print">COSTO UNITARIO</th>
                             <th>PRECIO UNITARIO</th>
                             <th>CANTIDAD</th>
                             <th>TOTAL</th>
@@ -135,16 +114,13 @@
                         @foreach($order->products as $product)
                             <tr>
                                 <td>{{ $product->name }}</td>
-                                <td class="money no-print">{{ $product->cost }}</td>
+
                                 <td class="money">{{ $product->pivot->price }}</td>
                                 <td>{{ $product->pivot->quantity }}</td>
                                 <td class="money">{{ $product->pivot->quantity * $product->pivot->price }}</td>
                             </tr>
                         @endforeach
-                        {{--<tr>--}}
-                        {{--<td colspan="3" class="text-right"><strong>Total:</strong></td>--}}
-                        {{--<td class="money">{{$total_products}}</td>--}}
-                        {{--</tr>--}}
+
                         </tbody>
                     </table>
                 @endif
@@ -203,12 +179,6 @@
                                 <td><b>{{$order->discount}} %</b></td>
                             </tr>
                         @endif
-                        @if($order->extra_cost > 0)
-                            <tr class="no-print">
-                                <td>Costo Extra:</td>
-                                <td><b class="money">{{ $order->extra_cost }} </b></td>
-                            </tr>
-                        @endif
                         <tr>
                             <td>Neto:</td>
                             <td><b class="money">{{ $order->neto }} </b></td>
@@ -226,64 +196,15 @@
                     </table>
                 </div>
             </div>
-            <!-- /.col -->
-            <div class="col-xs-3 no-print">
-                <h3>Ganancias:</h3>
-                <h4 class="text-info bg-info">Total: <span class="money">{{$order->total}}</span></h4>
-                <h4 class="text-danger bg-danger">Costo total:
-                    @php 
-                        $total_cost = ($order->total_cost + (($order->total_cost * $order->iva) / 100) / 1000) 
-                    @endphp
-                    <span class="money">{{$total_cost}}</span>
-                </h4>
-                <h4 class="text-success bg-success">Ganancia: 
-                 @php $total = $order->total - $total_cost @endphp
-                <span class="money">{{$total}}</span></h4>
-            </div>
 
         </div>
-        <!-- /.row -->
-        <div class="row text-center no-print">
-            {!! Form::open(['route' => 'print-work-paper', 'method' => 'POST', 'class' => 'pull-left']) !!}
-            {!! Form::hidden('id', $order->id, ['class' => 'form-control']) !!}
-            <button type="submit" class="btn btn-primary" id="print" title="Hoja de trabajo">Hoja de trabajo
-                <i class="glyphicon glyphicon-file"></i>
-            </button>
-            {!! Form::close() !!}
-            <a class="btn btn-info" title="Editar Orden" href="{{ route('orders.edit',$order->id)}}">Editar Orden
-                <i class="glyphicon glyphicon-edit" aria-hidden="true"></i>
-            </a>
-            <button type="button" class="btn btn-success printer" id="print" title="Imprimir Boleta">Imprimir Boleta
-                <i class="glyphicon glyphicon-print"></i>
-            </button>
-            <a class="btn btn-danger" href="{{ route('orders.index')}}" title="Volver">
-                Volver al listado
-                <i class="glyphicon glyphicon-backward"></i>
-            </a>
-            <a class="btn btn-info" href="{{ route('email-order', $order->id)}}" title="Enviar al mail">
-                Enviar al mail
-                <i class="glyphicon glyphicon-send"></i>
-            </a>
-            @if($order->user->email != '')
-                <a class="btn btn-info" href="{{ route('email-order-client', [$order->id, $order->user->email])}}"
-                   title="Enviar al mail">
-                    Enviar al mail del cliente
-                    <i class="glyphicon glyphicon-send"></i>
-                </a>
-            @endif
-            <div class="pull-right">
-                <a class="btn btn-warning" title="Duplicar Orden"
-                   href="{{ route('duplicate-select-client',$order->id)}}">Duplicar Orden
-                    <i class="glyphicon glyphicon-duplicate" aria-hidden="true"></i>
-                </a>
-            </div>
-        </div>
+
 
         <br>
         <div class="row">
             <div class="col-xs-11">
 
-                <p class="FontSmall text-right pull-right">
+                <p class="text-right pull-right">
                     Servicio Automotriz Automec Limitada. Rut: 76.525.647-K
                     <br>
                     C.Corriente 70541017, Banco Santander.

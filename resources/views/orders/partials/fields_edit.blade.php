@@ -489,6 +489,10 @@
                         {!! Form::text('discount', $order->discount, ['class' => 'form-control discount', 'placeholder' => 'Descuento']) !!}
                     </p>
                     <p class="text-right">
+                        <label>Costo Extra</label>
+                        {!! Form::text('extra_cost', $order->extra_cost, ['class' => 'form-control extra_cost', 'placeholder' => 'Costo Extra']) !!}
+                    </p>
+                    <p class="text-right">
                         <label>Neto</label>
                         {!! Form::text('neto_show', null, ['class' => 'form-control neto', 'placeholder' => 'Neto', 'disabled' => 'true']) !!}
                         {!! Form::hidden('neto', null, ['class' => 'form-control neto', 'placeholder' => 'Neto']) !!}
@@ -831,6 +835,10 @@
         $(document).on('change', '.discount', function () {
             calculate()
         });
+        //Si cambian el extra_cost de la orden, se calculan los numeros nuevamente
+        $(document).on('change', '.extra_cost', function () {
+            calculate()
+        });
         //Si cambian el alguna hora de algun servicio de la orden, se calculan los numeros nuevamente
         $(document).on('change', '.hh-service', function () {
             calculate()
@@ -1157,10 +1165,18 @@
             }
 
             var iva = eval(sum * (conf_iva / 100))
-            var neto = eval(sum)
+
+            var extra_cost = eval($(".extra_cost").val())
+
+            if(extra_cost > 0){
+                var neto = eval(sum + extra_cost)
+            }else{
+                var neto = eval(sum)
+            }
 
             $(".neto").val(neto)
             $(".iva").val(iva)
+
 
             $(".total").val(neto + iva)
         }
