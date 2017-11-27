@@ -473,7 +473,7 @@ class OrdersController extends Controller
         $product->stock = $product->stock - $quantity;
 
         if ($product->stock <= $product->stock_minimum) {
-            // $this->sendProductNotification($product);
+            $this->sendProductNotification($product);
         }
 
         $product->save();
@@ -481,9 +481,7 @@ class OrdersController extends Controller
 
     public function sendProductNotification($product)
     {
-        $automec = env('MAIL_FROM_ADDRESS');
-
-        Mail::to($automec)->send(new SendProductStockMinimum($product));
+        Mail::to('webautomec@gmail.com')->send(new SendProductStockMinimum($product));
     }
 
     public function printWorkPaper(Request $request)

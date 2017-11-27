@@ -30,12 +30,13 @@ class OrderShipped extends Mailable
     {
         $name = str_replace_last(' ', '-', $this->order->user->name);
 
-        $path = public_path().'/pdf/Order-'.$name.'-'. $this->order->id .'.pdf';
+        $path = 'admin.automec.cl/pdf/Order-'.$name.'-'.date('d-m-Y').'.pdf';
 
         return $this->from('contacto@automec.cl')
             ->subject('Automec Servicio Automotriz - Resumen de '. $this->order->user->fullname)
             ->view('emails.orders')->with([
                 'order' => $this->order,
-            ])->attach($path);
+                'path' => $path
+            ]);
     }
 }

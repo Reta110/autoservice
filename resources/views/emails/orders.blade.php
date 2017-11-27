@@ -1,6 +1,6 @@
 <h2>Hola {{$order->user->name}},</h2>
 
-<p>Se adjunto: archivo pdf con los detalles del servicio.</p>
+<p>Se ha generado la orden de trabajo, puede <a href="{{$path}}" download>descargarla</a> para ver los detalles del servicio.</p>
 
 <!-- left column -->
 <div class="col-md-6">
