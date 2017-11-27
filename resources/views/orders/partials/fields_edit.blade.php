@@ -203,7 +203,7 @@
                                 </div>
                                 <div class="col-md-2">
                                     <label>Costo</label>
-                                    {!! Form::text('product_cost[]', $oproduct->cost, ['class' => 'form-control producto-cost', 'placeholder' => 'costo', 'disabled' => 'true']) !!}
+                                    {!! Form::text('product_cost[]', $oproduct->cost, ['class' => 'form-control producto-cost', 'placeholder' => 'costo', 'readonly' => 'readonly']) !!}
                                 </div>
                                 <div class="col-md-2">
                                     <label>Precio</label>
@@ -1076,9 +1076,9 @@
             console.log($("input[name='status']:checked").val())
             //Si status  es presupuesto vamos a meter en la cuenta lo de total express
 //            if ($(".status:checked").val() == 'budget') {
-                if ($(".total_express").val() != '') {
-                    productos_total = productos_total + eval($(".total_express").val());
-                }
+            if ($(".total_express").val() != '') {
+                productos_total = productos_total + eval($(".total_express").val());
+            }
 //            }
             //Fin status es presupuesto vamos a meter en la cuenta lo de total express
 
@@ -1142,6 +1142,8 @@
                 costos = 0
             }
 
+            console.log('total_cost: ' + costos)
+
             //retornar valor, directo al field
             $(".costo_total").val(costos)
         }
@@ -1166,13 +1168,14 @@
 
             var iva = eval(sum * (conf_iva / 100))
 
-            var extra_cost = eval($(".extra_cost").val())
-
-            if(extra_cost > 0){
-                var neto = eval(sum + extra_cost)
-            }else{
-                var neto = eval(sum)
-            }
+//            var extra_cost = eval($(".extra_cost").val())
+//
+//            if(extra_cost > 0){
+//                var neto = eval(sum + extra_cost)
+//            }else{
+//                var neto = eval(sum)
+//            }
+            var neto = eval(sum)
 
             $(".neto").val(neto)
             $(".iva").val(iva)

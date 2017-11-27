@@ -12,7 +12,7 @@ class Order extends Model
 
     public function products()
     {
-        return $this->belongsToMany('App\Product')->withPivot('price', 'quantity');
+        return $this->belongsToMany('App\Product')->withPivot('price', 'quantity','unit_cost');
     }
 
     public function user()
@@ -52,4 +52,6 @@ class Order extends Model
             ->where('pay_fees_quantity', '>', '0')
             ->orderBy('ended_date', 'DESC');
     }
+
+
 }

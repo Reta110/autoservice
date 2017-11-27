@@ -13,16 +13,13 @@
                 <a href="#">
                     <i class="fa fa-dashboard">
                     </i>
-                    Home
+                    Ordenes
                 </a>
             </li>
             <li>
                 <a href="#">
-                    Examples
+                    Crear
                 </a>
-            </li>
-            <li class="active">
-                Blank page
             </li>
         </ol>
     </section>
@@ -35,7 +32,11 @@
                 <div class="box">
                     <div class="box-header with-border">
                         @include('common.errors')
+                        @if(isset($express))
+                            <h3 class="box-title">Nuevo Trabajo - Express</h3>
+                        @else
                         <h3 class="box-title">Nuevo Trabajo - Presupuesto</h3>
+                        @endif
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Order;
 use App\Product;
 use App\ProductCategory;
 use App\Service;
@@ -22,13 +23,34 @@ class ProductsController extends Controller
     }
 
     /**
+     * Display a historic list.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function historic()
+    {
+        $orders = Order::where('status', '!=', ['budget', 'plantilla'])->with('products')->get();
+
+        $i = 0;
+        foreach ($orders as $order) {
+            foreach ($order->products as $product) {
+
+                $products[$i] = $product;
+                $i++;
+            }
+        }
+
+        return view('products.historic', compact('products'));
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        $categories = ProductCategory::orderBy('name','ASC')->pluck('name', 'id')->all();
+        $categories = ProductCategory::orderBy('name', 'ASC')->pluck('name', 'id')->all();
 
         return view('products.create', compact('categories'));
     }
@@ -54,8 +76,8 @@ class ProductsController extends Controller
         if ($request->ajax()) {
             $aux = Product::orderBy('id', 'ASC')->get();
             $prod = $aux->toJson();
-            return response()->json(['success' => 'Se ha registrado de manera exitosa!','prod' => $prod]);
-        }else{
+            return response()->json(['success' => 'Se ha registrado de manera exitosa!', 'prod' => $prod]);
+        } else {
             return redirect()->route('products.index')->with('success', 'Se ha registrado de manera exitosa!');
         }
     }
@@ -81,9 +103,9 @@ class ProductsController extends Controller
     public function edit($id)
     {
         $product = Product::find($id);
-        $categories = ProductCategory::orderBy('name','ASC')->pluck('name', 'id')->all();
+        $categories = ProductCategory::orderBy('name', 'ASC')->pluck('name', 'id')->all();
 
-        return view('products.edit', compact('product','categories'));
+        return view('products.edit', compact('product', 'categories'));
     }
 
     /**

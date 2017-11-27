@@ -917,6 +917,7 @@
                             costos = costos + (eval($(this).val()) * eval($(this).closest('.multiple-form-group').find('.producto-quantity').val()));
                         }
                     });
+            console.log('total_cost: ' + costos)
 
             if (isNaN(costos)) {
                 costos = 0
@@ -944,14 +945,14 @@
 
             var iva = eval(sum * (conf_iva / 100))
 
-            var extra_cost = eval($(".extra_cost").val())
-
-            if(extra_cost > 0){
-                var neto = eval(sum + extra_cost)
-            }else{
-                var neto = eval(sum)
-            }
-
+//            var extra_cost = eval($(".extra_cost").val())
+//
+//            if(extra_cost > 0){
+//                var neto = eval(sum + extra_cost)
+//            }else{
+//                var neto = eval(sum)
+//            }
+            var neto = eval(sum)
 
             $(".neto").val(neto)
             $(".iva").val(iva)

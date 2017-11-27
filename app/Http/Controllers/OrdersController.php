@@ -35,7 +35,19 @@ class OrdersController extends Controller
      */
     public function resume()
     {
-        $orders = Order::where('status', '!=', 'ended')->with(['user', 'vehicle'])->get();
+        $orders = Order::where('status', 'started')->with(['user', 'vehicle'])->get();
+
+        return view('orders.index', compact('orders'));
+    }
+
+    /**
+     * Display lasts.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function lasts()
+    {
+        $orders = Order::OrderBy('id', 'DESC')->with(['user', 'vehicle'])->limit(50)->get();
 
         return view('orders.index', compact('orders'));
     }
@@ -47,11 +59,16 @@ class OrdersController extends Controller
      */
     public function plantillas()
     {
-        $orders = Order::where('status', '==', 'plantilla')->with(['user', 'vehicle'])->get();
+        $orders = Order::where('status', 'plantilla')->with(['user', 'vehicle'])->get();
 
         return view('orders.index', compact('orders'));
     }
 
+    /**
+     * Select Client to create new order.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function selectClient()
     {
         $clients = User::where('role', 'client')->get();
@@ -84,6 +101,11 @@ class OrdersController extends Controller
         return view('orders.select_client', compact('clients', 'order_id'));
     }
 
+    /**
+     * Select vehicle´s client.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function selectVehicle($user)
     {
         $client = User::where('role', 'client')->find($user);
@@ -112,9 +134,7 @@ class OrdersController extends Controller
         $vehicle = Vehicle::find($vehicle);
 
         $products = Product::orderBy('name', 'ASC')->get();
-        //$products = array_unique($products);
         $services = Service::orderBy('name', 'ASC')->get();
-
 
         $recommended = Product::orderBy('name', 'ASC')->Where('tags', 'like', '%' . $vehicle->model . '%')->get();
         $serv = $services->toJson();
@@ -128,6 +148,30 @@ class OrdersController extends Controller
         $categories = ProductCategory::orderBy('name', 'ASC')->pluck('name', 'id')->all();
 
         return view('orders.create', compact('client', 'vehicle', 'products', 'services', 'serv', 'prod', 'config', 'marcas', 'modelos', 'categories', 'recommended'));
+    }
+
+    public function express()
+    {
+        //hack to select client and vehicle express
+        $client = User::where('role', 'client')->find(557);
+        $vehicle = Vehicle::find(633);
+        $express = true;
+
+        $products = Product::orderBy('name', 'ASC')->get();
+        $services = Service::orderBy('name', 'ASC')->get();
+
+        $recommended = Product::orderBy('name', 'ASC')->Where('tags', 'like', '%' . $vehicle->model . '%')->get();
+        $serv = $services->toJson();
+        $aux = Product::orderBy('name', 'ASC')->get();
+        $prod = $aux->toJson();
+
+        $config = Configuration::first();
+
+        $marcas = [];
+        $modelos = [];
+        $categories = ProductCategory::orderBy('name', 'ASC')->pluck('name', 'id')->all();
+
+        return view('orders.create', compact('client', 'vehicle', 'products', 'services', 'serv', 'prod', 'config', 'marcas', 'modelos', 'categories', 'recommended','express'));
     }
 
     public function duplicateOrder($order, $user, $vehicle)
@@ -205,7 +249,7 @@ class OrdersController extends Controller
 
         if (count($request->product_id) > 0) {
             for ($i = 0; $i < count($request->product_id); $i++) {
-                $order->products()->attach($request->product_id[$i], ['quantity' => $request->product_quantity[$i], 'price' => $request->product_price[$i]]);
+                $order->products()->attach($request->product_id[$i], ['quantity' => $request->product_quantity[$i], 'price' => $request->product_price[$i], 'unit_cost' => $request->product_cost[$i]]);
             }
         }
 
@@ -309,7 +353,6 @@ class OrdersController extends Controller
      */
     public function update(Request $request, $id)
     {
-
         //Limpiar servicios y productos relacionandos a la orden
         $order = Order::find($id);
         if ($order->products()->count() > 0) {
@@ -324,8 +367,7 @@ class OrdersController extends Controller
         //FIN Limpiar servicios y productos relacionandos a la orden
 
         for ($i = 0; $i < count($request->product_id); $i++) {
-            $order->products()->attach($request->product_id[$i], ['quantity' => $request->product_quantity[$i], 'price' => $request->product_price[$i]]);
-
+            $order->products()->attach($request->product_id[$i], ['quantity' => $request->product_quantity[$i], 'price' => $request->product_price[$i], 'unit_cost' => $request->product_cost[$i]]);
         }
 
         for ($i = 0; $i < count($request->service_id); $i++) {
@@ -431,7 +473,7 @@ class OrdersController extends Controller
         $product->stock = $product->stock - $quantity;
 
         if ($product->stock <= $product->stock_minimum) {
-            $this->sendProductNotification($product);
+            // $this->sendProductNotification($product);
         }
 
         $product->save();
@@ -481,8 +523,7 @@ class OrdersController extends Controller
         }
     }
 
-    public
-    function destroy($id)
+    public function destroy($id)
     {
         Order::destroy($id);
 

@@ -76,6 +76,16 @@ folder instead of downloading all of them to reduce the load. -->
             </a>
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
+                    <li>
+                        <a class="btn btn-success btn-sm" href="{{ route('select-client') }}">
+                            Nuevo Trabajo
+                        </a>
+                    </li>
+                    <li>
+                        <a class="btn btn-warning btn-sm" href="{{ route('add-order-express') }}">
+                            Trabajo express
+                        </a>
+                    </li>
                     <!-- User Account: style can be found in dropdown.less -->
                     <li class="dropdown user user-menu">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -229,7 +239,10 @@ folder instead of downloading all of them to reduce the load. -->
                     </a>
                     <ul class="treeview-menu">
                         <li>
-                            <a href="{{route('orders.resume')}}"><i class="fa fa-circle-o"></i>Resumen</a>
+                            <a href="{{route('orders.lasts')}}"><i class="fa fa-circle-o"></i>Ultimos 50</a>
+                        </li>
+                        <li>
+                            <a href="{{route('orders.resume')}}"><i class="fa fa-circle-o"></i>Comenzados</a>
                         </li>
                         <li>
                             <a href="{{route('orders.plantillas')}}"><i class="fa fa-circle-o"></i>Plantillas</a>
@@ -266,6 +279,9 @@ folder instead of downloading all of them to reduce the load. -->
                         <li>
                             <a href="{{route('categories.index')}}"><i class="fa fa-circle-o"></i>Categorias</a>
                         </li>
+                        <li>
+                            <a href="{{route('products.historic')}}"><i class="fa fa-circle-o"></i>Histórico</a>
+                        </li>
                     </ul>
                 </li>
 
@@ -273,9 +289,7 @@ folder instead of downloading all of them to reduce the load. -->
                     <a href="{{route('services.index')}}">
                         <i class="fa fa-server">
                         </i>
-                        <span>
-                                    Servicios
-                                </span>
+                        <span>Servicios</span>
                         <span class="pull-right-container">
                                     <i class="fa fa-angle-left pull-right">
                                     </i>
@@ -286,9 +300,7 @@ folder instead of downloading all of them to reduce the load. -->
                     <a href="{{route('vehicles.index')}}">
                         <i class="fa fa-car">
                         </i>
-                        <span>
-                                    Vehículos
-                                </span>
+                        <span>Vehículos</span>
                         <span class="pull-right-container">
                                     <i class="fa fa-angle-left pull-right">
                                     </i>

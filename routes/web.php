@@ -23,6 +23,8 @@ Route::middleware('auth')->prefix('admin')->group(function () {
 
     Route::resource('/clients', 'ClientsController');
     Route::resource('/products', 'ProductsController');
+    Route::get('/product/historic', 'ProductsController@historic')->name('products.historic');
+
     Route::resource('/services', 'ServicesController');
     Route::resource('/configurations', 'ConfigurationsController');
 
@@ -62,7 +64,9 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     //End duplicate order
 
     Route::get('/orders/resumen', 'OrdersController@resume')->name('orders.resume');
+    Route::get('/orders/ultimos', 'OrdersController@lasts')->name('orders.lasts');
     Route::get('/orders/plantillas', 'OrdersController@plantillas')->name('orders.plantillas');
+    Route::get('/orders/express/', 'OrdersController@express')->name('add-order-express');
     Route::resource('/orders', 'OrdersController');
 
     Route::post('/user/register/{order?}', 'ClientsController@store')->name('user-store');

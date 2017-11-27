@@ -135,16 +135,16 @@
                         @foreach($order->products as $product)
                             <tr>
                                 <td>{{ $product->name }}</td>
-                                <td class="money no-print">{{ $product->cost }}</td>
+                                @if($order->status = 'ended' && $product->pivot->unit_cost > 0)
+                                    <td class="money no-print">{{ $product->pivot->unit_cost }}</td>
+                                @else
+                                    <td class="money no-print">{{ $product->cost }}</td>
+                                @endif
                                 <td class="money">{{ $product->pivot->price }}</td>
                                 <td>{{ $product->pivot->quantity }}</td>
                                 <td class="money">{{ $product->pivot->quantity * $product->pivot->price }}</td>
                             </tr>
                         @endforeach
-                        {{--<tr>--}}
-                        {{--<td colspan="3" class="text-right"><strong>Total:</strong></td>--}}
-                        {{--<td class="money">{{$total_products}}</td>--}}
-                        {{--</tr>--}}
                         </tbody>
                     </table>
                 @endif
@@ -229,16 +229,16 @@
             <!-- /.col -->
             <div class="col-xs-3 no-print">
                 <h3>Ganancias:</h3>
-                <h4 class="text-info bg-info">Total: <span class="money">{{$order->total}}</span></h4>
+                <h4 class="text-info bg-info">Total: <span class="money">{{$order->neto}}</span></h4>
                 <h4 class="text-danger bg-danger">Costo total:
-                    @php 
-                        $total_cost = ($order->total_cost + (($order->total_cost * $order->iva) / 100) / 1000) 
+                    @php
+                        $total_cost = ($order->total_cost + $order->extra_cost)
                     @endphp
                     <span class="money">{{$total_cost}}</span>
                 </h4>
-                <h4 class="text-success bg-success">Ganancia: 
-                 @php $total = $order->total - $total_cost @endphp
-                <span class="money">{{$total}}</span></h4>
+                <h4 class="text-success bg-success">Ganancia:
+                    @php $total = $order->neto - $total_cost @endphp
+                    <span class="money">{{$total}}</span></h4>
             </div>
 
         </div>
