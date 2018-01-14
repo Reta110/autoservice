@@ -23,6 +23,7 @@ class OrdersController extends Controller
      */
     public function index()
     {
+        session(['back' => 'orders.index']);
         $orders = Order::with(['user', 'vehicle'])->get();
 
         return view('orders.index', compact('orders'));
@@ -35,6 +36,8 @@ class OrdersController extends Controller
      */
     public function resume()
     {
+        session(['back' => 'orders.resume']);
+
         $orders = Order::where('status', 'started')->with(['user', 'vehicle'])->get();
 
         return view('orders.index', compact('orders'));
@@ -47,6 +50,8 @@ class OrdersController extends Controller
      */
     public function lasts()
     {
+        session(['back' => 'orders.lasts']);
+
         $orders = Order::OrderBy('id', 'DESC')->with(['user', 'vehicle'])->limit(50)->get();
 
         return view('orders.index', compact('orders'));
@@ -59,6 +64,8 @@ class OrdersController extends Controller
      */
     public function plantillas()
     {
+        session(['back' => 'orders.plantillas']);
+
         $orders = Order::where('status', 'plantilla')->with(['user', 'vehicle'])->get();
 
         return view('orders.index', compact('orders'));

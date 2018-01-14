@@ -11,8 +11,10 @@ use App\Http\Controllers\OrdersController;
 
 class EmailsController extends Controller
 {
-    public function sendOrderByEmail($id, $email = null)
+    public function sendOrderByEmail($id, Request $request)
     {
+        $email = $request->get('email');
+        $text_email_order = $request->get('text_email_order');
         $o = new OrdersController();
 
         $order = Order::find($id);
@@ -47,8 +49,8 @@ class EmailsController extends Controller
             Mail::to('webautomec@gmail.com')->send(new OrderShipped($order));
             return redirect()->to(route('orders.show', $order))->with('success', 'Se ha enviado de manera exitosa!');
         }else{
-            Mail::to($email)->send(new OrderShipped($order));
-            return redirect()->to(route('orders.show', $order))->with('success', 'Se ha enviado al cliente de manera exitosa! - ('.$order->user->email.')');
+            Mail::to($email)->send(new OrderShipped($order, $text_email_order));
+            return redirect()->to(route('orders.show', $order))->with('success', 'Se ha enviado al cliente de manera exitosa! - ('.$email.')');
         }
     }
 }

@@ -50,7 +50,7 @@
             </div>
         </div>
         <div class="for text-center">
-            <a class="btn btn-danger" href="{{ route('orders.index')}}">
+            <a class="btn btn-danger" href="{{ URL::previous() }}">
                 Cancelar
             </a>
             {!! Form::button('Enviar', ['class'=> 'btn btn-primary', 'onClick'=>'submit();']) !!}

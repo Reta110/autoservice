@@ -1,6 +1,9 @@
 <h2>Hola {{$order->user->name}},</h2>
 
-<p>Se ha generado la orden de trabajo, puede <a href="{{$path}}" download>descargarla</a> para ver los detalles del servicio.</p>
+<p>@if(isset($text_email_order)){{$text_email_order}}@endif</p>
+
+<p>Puedes descargar <a href="http://{{$path}}" download>aquí</a> la orden para ver los detalles
+    del servicio.</p>
 
 <!-- left column -->
 <div class="col-md-6">

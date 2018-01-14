@@ -60,6 +60,10 @@
                                     {!! Form::label('comision_tdc', '% Comisión TDC') !!}
                                     {!! Form::text('comision_tdc', null, ['class' => 'form-control', 'placeholder' => '% Comisión TDC', 'required']) !!}
                                 </div>
+                                <div class="form-group">
+                                    {!! Form::label('text_email_order', 'Texto estándar para correo') !!}
+                                    {!! Form::textarea('text_email_order', null, ['class' => 'form-control']) !!}
+                                </div>
                                 {{--<div class="form-group">--}}
                                 {{--{!! Form::label('email', 'Email - Notifications') !!}--}}
                                 {{--{!! Form::text('email', null, ['class' => 'form-control', 'placeholder' => 'Email para notificaciones', 'required']) !!}--}}

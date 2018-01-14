@@ -176,10 +176,13 @@ folder instead of downloading all of them to reduce the load. -->
                 Estadísticas
                 </span>
                         <span class="pull-right-container">
-                <i class="fa fa-angle-down pull-right"></i>
+                <i class="fa fa-angle-left pull-right"></i>
                 </span>
                     </a>
                     <ul class="treeview-menu">
+                        {{--<li>--}}
+                            {{--<a href="{{route('stadistics.searcher')}}"><i class="fa fa-circle-o"></i>Buscador</a>--}}
+                        {{--</li>--}}
                         <li>
                             <a href="{{route('stadistics.index')}}"><i class="fa fa-circle-o"></i>Generales</a>
                         </li>
@@ -191,14 +194,14 @@ folder instead of downloading all of them to reduce the load. -->
                         </li>
                     </ul>
                 </li>
-                <li class="@if(request()->segment(2) == 'stadistics') active @endif treeview">
+                <li class="@if(request()->segment(2) == 'expenses-resume') active @endif treeview">
                     <a href="">
                         <i class="fa fa-money" aria-hidden="true"></i>
                         <span>
                 Gastos
                 </span>
                         <span class="pull-right-container">
-                <i class="fa fa-angle-down pull-right"></i>
+                <i class="fa fa-angle-left pull-right"></i>
                 </span>
                     </a>
                     <ul class="treeview-menu">
@@ -252,8 +255,8 @@ folder instead of downloading all of them to reduce the load. -->
                         </li>
                     </ul>
                 </li>
-                <li class="@if(request()->segment(2) == 'clients') active @endif treeview">
-                    <a href="{{route('clients.index')}}">
+                <li class="@if(request()->segment(2) == 'clients') active @endif treeview menu-open">
+                    <a href="#">
                         <i class="fa fa-user">
                         </i>
                         <span>
@@ -263,13 +266,18 @@ folder instead of downloading all of them to reduce the load. -->
                                     <i class="fa fa-angle-left pull-right"></i>
                                 </span>
                     </a>
+                    <ul class="treeview-menu">
+                        <li>
+                            <a href="{{route('clients.index')}}"><i class="fa fa-circle-o"></i>Listado</a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="@if(request()->segment(2) == 'products') active @endif treeview menu-open">
                     <a href="#">
                         <i class="fa fa-dashboard"></i>
                         <span>Productos</span>
                         <span class="pull-right-container">
-                            <i class="fa fa-angle-down pull-right"></i>
+                            <i class="fa fa-angle-left pull-right"></i>
                         </span>
                     </a>
                     <ul class="treeview-menu">
@@ -285,8 +293,8 @@ folder instead of downloading all of them to reduce the load. -->
                     </ul>
                 </li>
 
-                <li class="@if(request()->segment(2) == 'services') active @endif treeview">
-                    <a href="{{route('services.index')}}">
+                <li class="@if(request()->segment(2) == 'services') active @endif treeview menu-open">
+                    <a href="#">
                         <i class="fa fa-server">
                         </i>
                         <span>Servicios</span>
@@ -295,9 +303,14 @@ folder instead of downloading all of them to reduce the load. -->
                                     </i>
                                 </span>
                     </a>
+                    <ul class="treeview-menu">
+                        <li>
+                            <a href="{{route('services.index')}}"><i class="fa fa-circle-o"></i>Listado</a>
+                        </li>
+                    </ul>
                 </li>
-                <li class="@if(request()->segment(2) == 'vehicles') active @endif treeview">
-                    <a href="{{route('vehicles.index')}}">
+                <li class="@if(request()->segment(2) == 'vehicles') active @endif treeview menu-open">
+                    <a href="#">
                         <i class="fa fa-car">
                         </i>
                         <span>Vehículos</span>
@@ -306,20 +319,33 @@ folder instead of downloading all of them to reduce the load. -->
                                     </i>
                                 </span>
                     </a>
+                    <ul class="treeview-menu">
+                        <li>
+                            <a href="{{route('vehicles.index')}}"><i class="fa fa-circle-o"></i>Listado</a>
+                        </li>
+                        {{--<li>--}}
+                            {{--<a href="{{route('maintenances.index')}}"><i class="fa fa-circle-o"></i>Avisos para--}}
+                                {{--mantención</a>--}}
+                        {{--</li>--}}
+                    </ul>
                 </li>
-                <li class="@if(request()->segment(2) == 'configurations') active @endif">
-                    <a href="{{route('configurations.index')}}">
-                        <i class="fa fa-gear">
-                        </i>
-                        <span>
-                                    Configuración
-                                </span>
-                        <span class="pull-right-container">
 
-                                    <i class="fa fa-angle-left pull-right">
-                                    </i>
-                                </span>
+                <li class="@if(request()->segment(2) == 'configurations') active @endif treeview menu-open">
+                    <a href="#">
+                        <i class="fa fa-dashboard"></i>
+                        <span>Configuraciones</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
                     </a>
+                    <ul class="treeview-menu">
+                        <li>
+                            <a href="{{route('users.index')}}"><i class="fa fa-circle-o"></i>Administradores</a>
+                        </li>
+                        <li>
+                            <a href="{{route('configurations.index')}}"><i class="fa fa-circle-o"></i>Generales</a>
+                        </li>
+                    </ul>
                 </li>
             </ul>
         </section>

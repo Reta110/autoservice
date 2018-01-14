@@ -21,6 +21,7 @@ class CreateConfigurationsTable extends Migration
             $table->string('price_hh');
             $table->string('comision_tdd')->default(0);
             $table->string('comision_tdc')->default(0);
+            $table->text('text_email_order')->default(0);
 
             $table->timestamps();
         });

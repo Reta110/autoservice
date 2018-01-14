@@ -256,8 +256,8 @@
             <button type="button" class="btn btn-success printer" id="print" title="Imprimir Boleta">Imprimir Boleta
                 <i class="glyphicon glyphicon-print"></i>
             </button>
-            <a class="btn btn-danger" href="{{ route('orders.index')}}" title="Volver">
-                Volver al listado
+            <a class="btn btn-danger" href="{{ route(session()->get('back')) }}" title="Volver">
+                Volver
                 <i class="glyphicon glyphicon-backward"></i>
             </a>
             <a class="btn btn-info" href="{{ route('email-order', $order->id)}}" title="Enviar al mail">
@@ -265,11 +265,16 @@
                 <i class="glyphicon glyphicon-send"></i>
             </a>
             @if($order->user->email != '')
-                <a class="btn btn-info" href="{{ route('email-order-client', [$order->id, $order->user->email])}}"
-                   title="Enviar al mail">
+            <!-- Button trigger modal -->
+                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">
                     Enviar al mail del cliente
                     <i class="glyphicon glyphicon-send"></i>
-                </a>
+                </button>
+                {{--<a class="btn " href="{{ route('email-order-client', [$order->id, $order->user->email])}}"--}}
+                {{--title="Enviar al mail">--}}
+                {{--Enviar al mail del cliente--}}
+                {{--<i class="glyphicon glyphicon-send"></i>--}}
+                {{--</a>--}}
             @endif
             <div class="pull-right">
                 <a class="btn btn-warning" title="Duplicar Orden"
@@ -296,10 +301,50 @@
     <!-- /.content -->
     <div class="clearfix"></div>
 
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Enviando correo al cliente</h4>
+                </div>
+                <div class="modal-body">
+                    <h4>Hola {{$order->user->name}},</h4>
+                    {!! Form::open(['route' => ['email-order', $order->id], 'method' => 'GET']) !!}
+                    <div class="form-group">
+                        <label>Texto (opcional):</label>
+                        {!! Form::textarea('text_email_order', $config->text_email_order, ['class' => 'form-control']) !!}
+                    </div>
+                    <p>Puedes descargar <strong>aquí</strong> la orden para ver los detalles
+                        del servicio.</p>
+                    <div class="form-group">
+                        <label>Email a enviar:</label>
+                        {!! Form::text('email', $order->user->email, ['class' => 'form-control']) !!}
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary send-email"
+                            data-loading-text="<i class='fa fa-spinner fa-spin '></i> Enviando">Enviar
+                    </button>
+                </div>
+                {!! Form::close() !!}
+            </div>
+        </div>
+    </div>
+
 @endsection
 
 @section('js')
     <script type="text/javascript">
+
+        $('#myModal').on('shown.bs.modal', function () {
+            $('#email').focus()
+        })
+
         $('.printer').on('click', function () {
             window.print();
         });
@@ -322,6 +367,14 @@
                     {"width": "32%", "targets": 3}
                 ]
             });
+        });
+
+        $('.send-email').on('click', function () {
+            var $this = $(this);
+            $this.button('loading');
+            setTimeout(function () {
+                $this.button('reset');
+            }, 80000);
         });
 
     </script>

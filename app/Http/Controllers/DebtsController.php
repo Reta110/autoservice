@@ -10,6 +10,7 @@ class DebtsController extends Controller
 {
     public function index()
     {
+        session(['back' => 'debts.index']);
         $orders = Order::where('status', 'ended')->where('paid', 'no')->get();
         $total_orders = $this->totalOrder($orders);
 

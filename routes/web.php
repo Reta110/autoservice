@@ -78,7 +78,7 @@ Route::middleware('auth')->prefix('admin')->group(function () {
 
     //Emails
     Route::get('/email/order/{id}', 'EmailsController@sendOrderByEmail')->name('email-order');
-    Route::get('/email/order/{id}/{email}', 'EmailsController@sendOrderByEmail')->name('email-order-client');
+    //Route::get('/email/order/{id}/', 'EmailsController@sendOrderByEmail')->name('email-order-client');
 
     //Deudas por cobrar
     Route::get('/debts/', 'DebtsController@index')->name('debts.index');
@@ -86,6 +86,7 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     //Stadistics
     Route::get('/stadistics', 'StadisticsController@index')->name('stadistics.index');
     Route::post('/stadistics', 'StadisticsController@store')->name('stadistics.store');
+    Route::get('/stadistics/searcher', 'StadisticsController@searcher')->name('stadistics.searcher');
     Route::get('/stadistics/stock', 'StadisticsController@lowStock')->name('stadistics.stock');
     Route::get('/stadistics/demand', 'StadisticsController@demand')->name('stadistics.demand');
     Route::get('/stadistics/demand', 'StadisticsController@budget')->name('stadistics.budget');
@@ -98,4 +99,10 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::get('/export/services', 'ExportController@exportServices')->name('export.services');
     Route::get('/export/debts', 'ExportController@exportDebts')->name('export.debts');
     Route::get('/export/all', 'ExportController@exportAll')->name('export.all');
+
+    Route::resource('/users', 'UsersController');
+    Route::post('/users/store-admin', 'UsersController@storeAdmin')->name('users.store.admin');
+
+    Route::get('/maintenances', 'MaintenancesController@index')->name('maintenances.index');
+
 });

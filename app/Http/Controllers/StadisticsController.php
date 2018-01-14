@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Order;
 use App\Product;
+use App\User;
 use App\Vehicle;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -76,6 +77,15 @@ class StadisticsController extends Controller
 //            }
 
         return $total;
+    }
+
+    public function searcher()
+    {
+        $marcas = Product::orderBy('brand', 'ASC')->pluck('brand', 'id')->all();
+        $modelos = Product::orderBy('model', 'ASC')->pluck('model', 'id')->all();
+        $clients = User::where('role','client')->orderBy('name', 'ASC')->pluck('name', 'id')->all();
+
+        return view('stadistics.searcher');
     }
 
     public function store(Request $request)
