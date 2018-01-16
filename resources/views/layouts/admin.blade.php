@@ -323,10 +323,10 @@ folder instead of downloading all of them to reduce the load. -->
                         <li>
                             <a href="{{route('vehicles.index')}}"><i class="fa fa-circle-o"></i>Listado</a>
                         </li>
-                        {{--<li>--}}
-                            {{--<a href="{{route('maintenances.index')}}"><i class="fa fa-circle-o"></i>Avisos para--}}
-                                {{--mantención</a>--}}
-                        {{--</li>--}}
+                        <li>
+                            <a href="{{route('maintenances.index')}}"><i class="fa fa-circle-o"></i>Avisos para
+                                mantención</a>
+                        </li>
                     </ul>
                 </li>
 

@@ -63,7 +63,7 @@ class VehiclesController extends Controller
     public
     function show($id)
     {
-        $vehicle = Vehicle::find($id);
+        $vehicle = Vehicle::with('user')->find($id);
         return view('vehicles.show', compact('vehicle'));
     }
 

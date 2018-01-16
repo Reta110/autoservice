@@ -84,6 +84,10 @@
                                 <td>Km:</td>
                                 <td>{{ $vehicle->km }}</td>
                             </tr>
+                            <tr>
+                                <td>Cliente:</td>
+                                <td>{{ $vehicle->user->name .' '. $vehicle->user->last_name }}</td>
+                            </tr>
                             </tbody>
                         </table>
 
@@ -92,7 +96,7 @@
             </div>
         </div>
         <div class="for text-center">
-            <a class="btn btn-success btn-sm" href="{{ route('vehicles.index') }}">
+            <a class="btn btn-success btn-sm" href="{{ URL::previous() }}">
                 Regresar
             </a>
         </div>
