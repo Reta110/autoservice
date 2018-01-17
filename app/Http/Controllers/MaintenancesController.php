@@ -26,8 +26,7 @@ class MaintenancesController extends Controller
                 $vehicle->last = $vehicle->last[0]->ended_date;
             }
         }
-
-
+        
         return view('maintenance.index', compact('vehicles'));
     }
 

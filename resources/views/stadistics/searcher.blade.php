@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 
-@section('title', 'Estadisticas de Automec')
+@section('title', '                    Búsqueda avanzada de órdenes
+')
 
 @section('contenido')
     <section class="content-header">
@@ -13,12 +14,12 @@
                 <a href="#">
                     <i class="fa fa-dashboard">
                     </i>
-                    Home
+                    Estadísticas
                 </a>
             </li>
             <li>
                 <a href="#">
-                    Estadísticas
+                    Búsqueda avanzada
                 </a>
             </li>
         </ol>
@@ -30,7 +31,7 @@
             @include('common.success')
             <div class="box-header with-border">
                 <h3 class="box-title">
-                    Búsqueda avanzada
+                    Búsqueda avanzada de órdenes
                 </h3>
                 <div class="box-tools no-print">
 
@@ -39,7 +40,7 @@
             <div class="box-body">
                 <div class="row">
 
-                    {{Form::open(['route' => 'stadistics.store', 'method' => 'POST'])}}
+                    {{Form::open(['route' => 'stadistics.search', 'method' => 'POST'])}}
                     <div class="col-md-4 form-group">
                         <label>Rango de fechas:</label>
 
@@ -53,20 +54,19 @@
                     </div>
                     <div class="col-md-2 form-group">
                         <label>Marca</label>
-                        {!! Form::text('brand', null, ['class' => 'form-control producto-cost', 'placeholder' => 'Marca']) !!}
+                        {!! Form::select('brand', $brands, null, ['class' => 'form-control', 'placeholder' => '-- Marca --']) !!}
                     </div>
                     <div class="col-md-2 form-group">
                         <label>Cliente</label>
-                        {!! Form::text('user', null, ['class' => 'form-control', 'placeholder' => 'Cliente']) !!}
+                        {!! Form::select('client', $clients, null, ['class' => 'form-control', 'placeholder' => '-- Cliente --']) !!}
                     </div>
                     <div class="col-md-2 form-group">
                         <label>Modelo</label>
-                        {!! Form::text('model', null, ['class' => 'form-control', 'placeholder' => 'Modelo']) !!}
+                        {!! Form::select('model', $models, null, ['class' => 'form-control', 'placeholder' => '-- Modelo --']) !!}
                     </div>
-                    <div class="col-md-2 form-group">
-                        <label>Estatus</label>
-                        {!! Form::text('status', null, ['class' => 'form-control', 'placeholder' => 'Estatus']) !!}
-                    </div>
+
+                </div>
+                <div class="row">
                     <div class="col-md-4 form-group">
                         <label>Rango de Km:</label>
                         <div class="row">
@@ -78,7 +78,40 @@
                             </div>
                         </div>
                     </div>
-
+                    <div class="col-md-4">
+                        <h4>Estatus</h4>
+                        <div class="form-group pull-left">
+                            <label>Presupuesto</label>
+                            {!! Form::radio('status', 'budget', ['class' => 'form-control']) !!}
+                        </div>
+                        <div class="form-group pull-left">
+                            <label>Iniciado</label>
+                            {!! Form::radio('status', 'pending', ['class' => 'form-control']) !!}
+                        </div>
+                        <div class="form-group pull-left">
+                            <label>Finalizado</label>
+                            {!! Form::radio('status', 'ended', ['class' => 'form-control']) !!}
+                        </div>
+                        <div class="form-group pull-left">
+                            <label>Todos</label>
+                            {!! Form::radio('status', 'all', ['class' => 'form-control']) !!}
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <h4>Pagadas</h4>
+                        <div class="form-group pull-left">
+                            <label>Si</label>
+                            {!! Form::radio('paid', 'si', ['class' => 'form-control']) !!}
+                        </div>
+                        <div class="form-group pull-left">
+                            <label>No</label>
+                            {!! Form::radio('paid', 'no', ['class' => 'form-control']) !!}
+                        </div>
+                        <div class="form-group pull-left">
+                            <label>Todas</label>
+                            {!! Form::radio('paid', 'all', ['class' => 'form-control']) !!}
+                        </div>
+                    </div>
                 </div>
                 <br>
                 <div class="row">

@@ -81,11 +81,67 @@ class StadisticsController extends Controller
 
     public function searcher()
     {
-        $marcas = Product::orderBy('brand', 'ASC')->pluck('brand', 'id')->all();
-        $modelos = Product::orderBy('model', 'ASC')->pluck('model', 'id')->all();
-        $clients = User::where('role','client')->orderBy('name', 'ASC')->pluck('name', 'id')->all();
+        session(['back' => 'stadistics.searcher']);
 
-        return view('stadistics.searcher');
+        $brands = Vehicle::orderBy('brand', 'ASC')->pluck('brand', 'brand')->all();
+        $models = Vehicle::orderBy('model', 'ASC')->pluck('model', 'model')->all();
+        $clients = User::where('role', 'client')->orderBy('name', 'ASC')->pluck('name', 'id')->all();
+
+        return view('stadistics.searcher', compact('brands', 'models', 'clients'));
+    }
+
+    public function search(Request $request)
+    {
+        $brand = $request->get('brand');
+        $model = $request->get('model');
+        $status = $request->get('status');
+        $km_min = $request->get('km_min');
+        $km_max = $request->get('km_max');
+        $paid = $request->get('paid');
+
+        $query = DB::table('orders')->select('*');
+
+        if ($brand != null || $model != null) {
+
+            $query->join('vehicles', 'orders.vehicle_id', '=', 'vehicles.id');
+        }
+
+        if ($model != null) {
+
+            $query->where('vehicles.model', $model);
+        }
+
+        if ($brand != null) {
+
+            $query->where('vehicles.brand', $brand);
+        }
+
+        if ($status != 'all') {
+
+            $query->where('status', $status);
+        }
+
+        if ($km_min != null) {
+
+            $query->where('orders.km','>', $km_min);
+        }
+
+        if ($km_max != null) {
+
+            $query->where('orders.km','<', $km_max);
+        }
+
+        if ($paid != 'all') {
+
+            $query->where('orders.paid', $paid);
+        }
+
+        $query->join('users', 'orders.user_id', '=', 'users.id');
+
+
+        $orders = $query->get();
+
+        return view('stadistics.searched', compact('orders'));
     }
 
     public function store(Request $request)

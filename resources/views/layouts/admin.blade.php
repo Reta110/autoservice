@@ -180,9 +180,9 @@ folder instead of downloading all of them to reduce the load. -->
                 </span>
                     </a>
                     <ul class="treeview-menu">
-                        {{--<li>--}}
-                            {{--<a href="{{route('stadistics.searcher')}}"><i class="fa fa-circle-o"></i>Buscador</a>--}}
-                        {{--</li>--}}
+                        <li>
+                            <a href="{{route('stadistics.searcher')}}"><i class="fa fa-circle-o"></i>Buscador</a>
+                        </li>
                         <li>
                             <a href="{{route('stadistics.index')}}"><i class="fa fa-circle-o"></i>Generales</a>
                         </li>

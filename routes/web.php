@@ -87,6 +87,7 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::get('/stadistics', 'StadisticsController@index')->name('stadistics.index');
     Route::post('/stadistics', 'StadisticsController@store')->name('stadistics.store');
     Route::get('/stadistics/searcher', 'StadisticsController@searcher')->name('stadistics.searcher');
+    Route::post('/stadistics/search', 'StadisticsController@search')->name('stadistics.search');
     Route::get('/stadistics/stock', 'StadisticsController@lowStock')->name('stadistics.stock');
     Route::get('/stadistics/demand', 'StadisticsController@demand')->name('stadistics.demand');
     Route::get('/stadistics/demand', 'StadisticsController@budget')->name('stadistics.budget');
