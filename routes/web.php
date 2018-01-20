@@ -19,6 +19,10 @@ Route::get('/home', function () {
     return redirect('/admin');
 });
 
+Route::get('/register', function () {
+    return abort(404);
+});
+
 Auth::routes();
 
 Route::middleware('auth')->prefix('admin')->group(function () {
@@ -105,5 +109,8 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::post('/users/store-admin', 'UsersController@storeAdmin')->name('users.store.admin');
 
     Route::get('/maintenances', 'MaintenancesController@index')->name('maintenances.index');
+    Route::post('/maintenances', 'MaintenancesController@send')->name('maintenances.send');
+
+    Route::get('/standards/activate', 'StandardsController@index')->name('standards.index');
 
 });

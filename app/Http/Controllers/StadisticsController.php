@@ -98,8 +98,10 @@ class StadisticsController extends Controller
         $km_min = $request->get('km_min');
         $km_max = $request->get('km_max');
         $paid = $request->get('paid');
+        $dates = $request->get('date');
 
         $query = DB::table('orders')->select('*');
+
 
         if ($brand != null || $model != null) {
 
@@ -123,18 +125,28 @@ class StadisticsController extends Controller
 
         if ($km_min != null) {
 
-            $query->where('orders.km','>', $km_min);
+            $query->where('orders.km', '>', $km_min);
         }
 
         if ($km_max != null) {
 
-            $query->where('orders.km','<', $km_max);
+            $query->where('orders.km', '<', $km_max);
         }
 
         if ($paid != 'all') {
 
             $query->where('orders.paid', $paid);
         }
+
+        if ($dates != null) {
+            //Otener fecha inicio y fin
+            $dates = explode(' - ', $dates);
+            $ini_date = Carbon::createFromFormat('d/m/Y', $dates[0]);
+            $end_date = Carbon::createFromFormat('d/m/Y', $dates[1]);
+            //fin
+                $query->whereBetween('orders.created_at', [$ini_date, $end_date]);
+        }
+
 
         $query->join('users', 'orders.user_id', '=', 'users.id');
 

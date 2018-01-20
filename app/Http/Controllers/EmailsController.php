@@ -32,18 +32,16 @@ class EmailsController extends Controller
             unlink($path);
         }
 
-        $view = view('orders.pdf_view', compact('order', 'config','total_products','total_services','cells'))->render();
+        if($email == null){
+            $view = view('orders.pdf_view', compact('order', 'config','total_products','total_services','cells'))->render();
+        }else{
+            $view = view('orders.pdf_view_client', compact('order', 'config','total_products','total_services','cells'))->render();
+        }
 
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
         $pdf->save($path);
 
-         //$mail = $order->user->mail;
-        // $automec = 'webautomec@gmail.com';
-
-//     while (file_exists($path) == false) {
-//            sleep(2);
-//        }
 
         if($email == null){
             Mail::to('webautomec@gmail.com')->send(new OrderShipped($order));

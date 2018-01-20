@@ -51,6 +51,13 @@
                                     {!! Form::text('price_hh', null, ['class' => 'form-control', 'placeholder' => 'Precio de HH', 'required']) !!}
                                 </div>
 
+
+                                <div class="form-group">
+                                    {!! Form::label('text_email_order', 'Texto estándar para correo') !!}
+                                    {!! Form::textarea('text_email_order', null, ['class' => 'form-control']) !!}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     {!! Form::label('comision_tdd', '% Comisión TDD') !!}
                                     {!! Form::text('comision_tdd', null, ['class' => 'form-control', 'placeholder' => '% Comisión TDD', 'required']) !!}
@@ -61,25 +68,20 @@
                                     {!! Form::text('comision_tdc', null, ['class' => 'form-control', 'placeholder' => '% Comisión TDC', 'required']) !!}
                                 </div>
                                 <div class="form-group">
-                                    {!! Form::label('text_email_order', 'Texto estándar para correo') !!}
-                                    {!! Form::textarea('text_email_order', null, ['class' => 'form-control']) !!}
+                                    {!! Form::label('text_email_notification', 'Texto estándar para Notificationes') !!}
+                                    {!! Form::textarea('text_email_notification', null, ['class' => 'form-control']) !!}
                                 </div>
-                                {{--<div class="form-group">--}}
-                                {{--{!! Form::label('email', 'Email - Notifications') !!}--}}
-                                {{--{!! Form::text('email', null, ['class' => 'form-control', 'placeholder' => 'Email para notificaciones', 'required']) !!}--}}
-                                {{--</div>--}}
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="for text-center">
-            {!! Form::submit('Actualizar', ['class'=> 'btn btn-primary']) !!}
-            {{--<a class="btn btn-danger" href="{{ route('.index')}}">--}}
-            {{--Cancelar--}}
-            {{--</a>--}}
-        </div>
+            <div class="for text-center">
+                {!! Form::submit('Actualizar', ['class'=> 'btn btn-primary']) !!}
+                {{--<a class="btn btn-danger" href="{{ route('.index')}}">--}}
+                {{--Cancelar--}}
+                {{--</a>--}}
+            </div>
         {!! Form::close() !!}
     </section>
 

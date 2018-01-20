@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Vehicle;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 class MaintenancesController extends Controller
 {
@@ -16,8 +17,8 @@ class MaintenancesController extends Controller
     public function index()
     {
         $year = Carbon::now()->format('Y');
-        $vehicles = Vehicle::with('user')->select('id', 'km', 'model', 'brand', 'year', DB::raw('(km * 1000) / (' . $year . ' - year) as drived'))
-            ->orderBy('drived', 'DESC')->get(100);
+        $vehicles = Vehicle::with('user')->select('id', 'km', 'model', 'brand', 'year', 'user_id', DB::raw('(km  / (' . $year . ' - year))/12 as drived'))
+            ->orderBy('drived', 'DESC')->get(30);
 
         foreach ($vehicles as $vehicle) {
 
@@ -26,7 +27,7 @@ class MaintenancesController extends Controller
                 $vehicle->last = $vehicle->last[0]->ended_date;
             }
         }
-        
+
         return view('maintenance.index', compact('vehicles'));
     }
 
@@ -36,10 +37,16 @@ class MaintenancesController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public
-    function show($id)
+    public function show($id)
     {
         $vehicle = Vehicle::find($id);
         return view('maintenance.show', compact('vehicle'));
+    }
+
+    public function send(Request $request)
+    {
+        $users = explode(',', $request->get('users'));
+
+        dd($users);
     }
 }

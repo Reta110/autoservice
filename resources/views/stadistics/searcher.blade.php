@@ -157,13 +157,15 @@
 //                        'Mes anterior': [moment().subtract(1, 'month').startOf('month'),
 //                            moment().subtract(1, 'month').endOf('month')]
 //                    },
-                    autoUpdateInput: true,
+                    autoUpdateInput: false,
                     locale: {
+                        cancelLabel: 'Clear',
                         format: 'DD/MM/YYYY',
                         applyLabel: 'Aplicar',
                         cancelLabel: 'Limpiar',
                         fromLabel: 'Desde',
                         toLabel: 'Hasta',
+                        default: null,
                         customRangeLabel: 'Seleccionar rango',
                         daysOfWeek: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
                         monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',

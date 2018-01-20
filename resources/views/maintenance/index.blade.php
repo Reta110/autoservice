@@ -37,18 +37,21 @@
                 </h3>
                 <div class="box-tools">
 
-                    {{--<div class="text-center">--}}
-                    {{--<a class="btn btn-danger btn-sm" href="{{ route('products.create') }}">--}}
-                    {{--NUEVO REGISTRO--}}
-                    {{--</a>--}}
-                    {{--</div>--}}
-
+                    <div class="text-center">
+                        {!! Form::open(['route' => ['maintenances.send'], 'method' => 'POST']) !!}
+                        <input type="hidden" name="users" id="checkedUsers">
+                        <button type="submit" class="btn btn-danger btn-sm" href="{{ route('maintenances.send') }}">
+                            ENVIAR NOTIFICACIONES
+                        </button>
+                        {!! Form::close() !!}
+                    </div>
                 </div>
             </div>
             <div class="box-body">
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="box-body table-responsive no-padding">
+
                             <table class="table table-hover display table-responsive table-condensed" id="table">
                                 <thead>
                                 <tr>
@@ -57,9 +60,14 @@
                                     <th>MODELO</th>
                                     <th>AÑO</th>
                                     <th>KM</th>
-                                    <th>RECORRE ANUAL</th>
+                                    <th>RECORRE MENSUAL</th>
                                     <th>ULTIMA VISITA</th>
                                     <th>ACCIONES</th>
+                                    <th><i class="fa fa-envelope" aria-hidden="true"></i> Todas: <input type="checkbox"
+                                                                                                        name="notification"
+                                                                                                        value="all"
+                                                                                                        id="checkAll">
+                                    </th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -81,7 +89,7 @@
                                             {{ $vehicle->km }}
                                         </td>
                                         <td>
-                                            {{ $vehicle->drived }}
+                                            {{ number_format($vehicle->drived , 0, '.', '')}}
                                         </td>
                                         <td>
                                             {{ $vehicle->last }}
@@ -105,6 +113,11 @@
                                                 </button>
                                             </div>
                                             {!! Form::close() !!}
+                                        </td>
+
+
+                                        <td>
+                                            <input type="checkbox" name="notification" value="{{ $vehicle->user_id }}">
                                         </td>
                                     </tr>
                                 @endforeach
@@ -133,6 +146,18 @@
                 "language": {
                     "url": "{{ asset('AdminLTE/plugins/datatables/esp.lang') }}"
                 }
+            });
+        });
+
+        $("#checkAll").change(function () {
+            $("input:checkbox").prop('checked', $(this).prop("checked"));
+        });
+
+        $(":checkbox").change(function () {
+            var selected = new Array();
+            $("input:checkbox:checked").each(function () {
+                selected.push($(this).val());
+                $('#checkedUsers').val(selected)
             });
         });
     </script>
