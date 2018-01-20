@@ -36,6 +36,7 @@ class OrderShipped extends Mailable
             ->subject('Automec Servicio Automotriz - Resumen de '. $this->order->user->fullname)
             ->view('emails.orders')->with([
                 'order' => $this->order,
+                'text_email_order' => $this->text_email_order,
                 'path' => $path
             ]);
     }

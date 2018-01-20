@@ -1,9 +1,6 @@
-<h2>Hola {{$order->user->name}},</h2>
+<h2>Hola {{$vehicle->user->name}},</h2>
 
-<p>@if(isset($text_email_order)){{$text_email_order}}@endif</p>
-
-<p>Puedes descargar <a href="http://{{$path}}" download>aquí</a> la orden para ver los detalles
-    del servicio.</p>
+<p>@if(isset($text_email_notification)){{$text_email_notification}}@endif</p>
 
 <!-- left column -->
 <div class="col-md-6">
@@ -20,38 +17,38 @@
 
                 <div class="col-sm-10">
                     <strong>Nombre:</strong>
-                    {{$order->user->name}}
+                    {{$vehicle->user->name}}
                 </div>
 
             </div>
             <div class="form-group">
                 <div class="col-sm-10">
                     <strong>Apellido:</strong>
-                    {{$order->user->last_name }}
+                    {{$vehicle->user->last_name }}
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-sm-10">
                     <strong>Rut:</strong>
-                    {{$order->user->rut }}
+                    {{$vehicle->user->rut }}
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-sm-10">
                     <strong>Teléfono:</strong>
-                    {{$order->user->phone }}
+                    {{$vehicle->user->phone }}
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-sm-10">
                     <strong>Correo:</strong>
-                    {{$order->user->email }}
+                    {{$vehicle->user->email }}
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-sm-10">
                     <strong>Dirección:</strong>
-                    {{$order->user->address }}
+                    {{$vehicle->user->address }}
                 </div>
             </div>
         </div>
@@ -75,17 +72,17 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <strong>Marca:</strong>
-                    {{$order->vehicle->brand}}
+                    {{$vehicle->brand}}
                 </div>
                 <div class="form-group">
 
                     <strong>Model:</strong>
-                    {{$order->vehicle->model}}
+                    {{$vehicle->model}}
                 </div>
                 <div class="form-group">
 
                     <strong>Vin:</strong>
-                    {{$order->vehicle->vin}}
+                    {{$vehicle->vin}}
 
                 </div>
             </div>
@@ -94,22 +91,22 @@
                 <div class="form-group">
 
                     <strong>Patente:</strong>
-                    {{$order->vehicle->patente}}
+                    {{$vehicle->patente}}
                 </div>
                 <div class="form-group">
 
                     <strong>Motor:</strong>
-                    {{$order->vehicle->motor}}
+                    {{$vehicle->motor}}
                 </div>
                 <div class="form-group">
 
                     <strong>Año:</strong>
-                    {{$order->vehicle->year}}
+                    {{$vehicle->year}}
                 </div>
                 <div class="form-group">
 
                     <strong>Km:</strong>
-                    {{$order->vehicle->km}}
+                    {{$vehicle->km}}
                 </div>
             </div>
         </div>
@@ -122,6 +119,6 @@
 </div>
 
 
-<p>Saludos,</p>
+<p>Gracias,</p>
 <p>Automec</p>
 <img src="{{ $message->embed(asset("images/logo2.png")) }}">

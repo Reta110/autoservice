@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Configuration;
+use App\Mail\SendMaintenaceNotification;
 use App\Vehicle;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -21,14 +23,14 @@ class MaintenancesController extends Controller
             ->orderBy('drived', 'DESC')->get(30);
 
         foreach ($vehicles as $vehicle) {
-
             $vehicle->last = $vehicle->orders->sortByDesc('ended_date');
             if (count($vehicle->last) > 0) {
                 $vehicle->last = $vehicle->last[0]->ended_date;
             }
         }
 
-        return view('maintenance.index', compact('vehicles'));
+        $config = Configuration::first();
+        return view('maintenance.index', compact('vehicles','config'));
     }
 
     /**
@@ -45,8 +47,13 @@ class MaintenancesController extends Controller
 
     public function send(Request $request)
     {
-        $users = explode(',', $request->get('users'));
+        $vehicles = explode(',', $request->get('users'));
+        $text_email_notification = $request->get('text_email_notification');
 
-        dd($users);
+        foreach ($vehicles as $vehicle){
+            Mail::to($vehicle->user->email)->send(new SendMaintenaceNotification($vehicle, $text_email_notification));
+        }
+
+        return redirect()->to(route('maintenances.index')->with('success', 'Se ha enviado de manera exitosa!');
     }
 }

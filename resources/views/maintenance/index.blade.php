@@ -13,16 +13,16 @@
                 <a href="#">
                     <i class="fa fa-dashboard">
                     </i>
-                    Home
+                    Vehículos
                 </a>
             </li>
             <li>
                 <a href="#">
-                    Examples
+                    Mantención
                 </a>
             </li>
             <li class="active">
-                Blank page
+                Notificaciones
             </li>
         </ol>
     </section>
@@ -38,12 +38,11 @@
                 <div class="box-tools">
 
                     <div class="text-center">
-                        {!! Form::open(['route' => ['maintenances.send'], 'method' => 'POST']) !!}
-                        <input type="hidden" name="users" id="checkedUsers">
-                        <button type="submit" class="btn btn-danger btn-sm" href="{{ route('maintenances.send') }}">
-                            ENVIAR NOTIFICACIONES
+                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">
+                            Enviar notificaciones
+                            <i class="glyphicon glyphicon-send"></i>
                         </button>
-                        {!! Form::close() !!}
+
                     </div>
                 </div>
             </div>
@@ -59,9 +58,11 @@
                                     <th>MARCA</th>
                                     <th>MODELO</th>
                                     <th>AÑO</th>
-                                    <th>KM</th>
-                                    <th>RECORRE MENSUAL</th>
+                                    <th>KM total</th>
+                                    <th>KM x MES</th>
                                     <th>ULTIMA VISITA</th>
+                                    <th>CLIENTE</th>
+                                    <th>TELEFONO</th>
                                     <th>ACCIONES</th>
                                     <th><i class="fa fa-envelope" aria-hidden="true"></i> Todas: <input type="checkbox"
                                                                                                         name="notification"
@@ -95,6 +96,12 @@
                                             {{ $vehicle->last }}
                                         </td>
                                         <td>
+                                            {{ $vehicle->owner }}
+                                        </td>
+                                        <td>
+                                            {{ $vehicle->user->phone }}
+                                        </td>
+                                        <td>
                                             {!! Form::open(['route' => ['vehicles.destroy',$vehicle ], 'method' => 'DELETE']) !!}
                                             <div class="form-group">
                                                 <a href="{{ route('vehicles.show', $vehicle) }}">
@@ -117,7 +124,10 @@
 
 
                                         <td>
-                                            <input type="checkbox" name="notification" value="{{ $vehicle->user_id }}">
+                                            @if($vehicle->user->email != null)
+                                                <input type="checkbox" name="notification"
+                                                       value="{{ $vehicle->id }}">
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach
@@ -137,6 +147,7 @@
         </div>
     </section>
 
+    @include('maintenance.modal.send-notification')
 @endsection
 
 @section('js')
@@ -145,7 +156,10 @@
             $('#table').DataTable({
                 "language": {
                     "url": "{{ asset('AdminLTE/plugins/datatables/esp.lang') }}"
-                }
+                },
+                "columnDefs": [
+                    { "orderable": false, "targets": [9,10] }
+                ]
             });
         });
 
@@ -159,6 +173,16 @@
                 selected.push($(this).val());
                 $('#checkedUsers').val(selected)
             });
+
+            var quantity = selected.length;
+            if ($(".all:checked")) {
+                quantity = quantity - 1;
+            }
+            $('.counter').html(quantity);
         });
+
+        $('#myModal').on('shown.bs.modal', function () {
+            $('#email').focus()
+        })
     </script>
 @endsection

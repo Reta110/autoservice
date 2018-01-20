@@ -14,7 +14,7 @@ class Vehicle extends Model
         return $this->belongsTo('App\User');
     }
 
-    public function orderS()
+    public function orders()
     {
         return $this->hasMany('App\Order');
 
@@ -25,7 +25,7 @@ class Vehicle extends Model
         return $this->belongsTo('App\User');
     }
 
-    public function owner()
+    public function getOwnerAttribute()
     {
         return $this->user->name . ' ' . $this->user->last_name;
 
