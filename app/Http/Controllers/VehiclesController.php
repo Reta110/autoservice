@@ -15,6 +15,8 @@ class VehiclesController extends Controller
      */
     public function index()
     {
+        session(['back' => 'vehicles.index']);
+
         $vehicles = Vehicle::all();
         return view('vehicles.index', compact('vehicles'));
     }

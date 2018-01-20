@@ -13,16 +13,13 @@
                 <a href="#">
                     <i class="fa fa-dashboard">
                     </i>
-                    Home
+                    Vehículo
                 </a>
             </li>
             <li>
                 <a href="#">
-                    Examples
+                    Editar
                 </a>
-            </li>
-            <li class="active">
-                Blank page
             </li>
         </ol>
     </section>
@@ -48,7 +45,7 @@
         </div>
         <div class="for text-center">
             {!! Form::submit('Actualizar', ['class'=> 'btn btn-primary']) !!}
-            <a class="btn btn-danger" href="{{ route('vehicles.index')}}">
+            <a class="btn btn-danger" href="{{ route(session()->get('back')) }}">
                 Cancelar
             </a>
         </div>

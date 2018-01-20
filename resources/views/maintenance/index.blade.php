@@ -96,7 +96,7 @@
                                             {{ $vehicle->last }}
                                         </td>
                                         <td>
-                                            {{ $vehicle->owner }}
+                                            <a href="{{route('clients.edit', $vehicle->user->id)}}"> {{ $vehicle->owner }}</a>
                                         </td>
                                         <td>
                                             {{ $vehicle->user->phone }}

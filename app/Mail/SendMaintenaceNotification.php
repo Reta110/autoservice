@@ -16,9 +16,10 @@ class SendMaintenaceNotification extends Mailable
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($vehicle, $text_email_notification)
     {
-        //
+        $this->vehicle = $vehicle;
+        $this->text_email_notification = $text_email_notification;
     }
 
     /**

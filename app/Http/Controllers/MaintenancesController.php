@@ -8,6 +8,8 @@ use App\Vehicle;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+
 
 class MaintenancesController extends Controller
 {
@@ -18,9 +20,11 @@ class MaintenancesController extends Controller
      */
     public function index()
     {
+        session(['back' => 'maintenances.index']);
+
         $year = Carbon::now()->format('Y');
         $vehicles = Vehicle::with('user')->select('id', 'km', 'model', 'brand', 'year', 'user_id', DB::raw('(km  / (' . $year . ' - year))/12 as drived'))
-            ->orderBy('drived', 'DESC')->get(30);
+            ->orderBy('drived', 'DESC')->get(25);
 
         foreach ($vehicles as $vehicle) {
             $vehicle->last = $vehicle->orders->sortByDesc('ended_date');
@@ -50,10 +54,11 @@ class MaintenancesController extends Controller
         $vehicles = explode(',', $request->get('users'));
         $text_email_notification = $request->get('text_email_notification');
 
-        foreach ($vehicles as $vehicle){
+        foreach ($vehicles as $v_id){
+            $vehicle = Vehicle::find($v_id);
             Mail::to($vehicle->user->email)->send(new SendMaintenaceNotification($vehicle, $text_email_notification));
         }
 
-        return redirect()->to(route('maintenances.index')->with('success', 'Se ha enviado de manera exitosa!');
+        return redirect()->to(route('maintenances.index'))->with('success', 'Se ha enviado de manera exitosa!');
     }
 }

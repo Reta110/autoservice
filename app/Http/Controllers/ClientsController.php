@@ -12,6 +12,8 @@ class ClientsController extends Controller
 
     public function index()
     {
+        session(['back' => 'clients.index']);
+
         $clients = User::where('role', 'client')->get();
 
         return view('clients.index', compact('clients'));
@@ -68,7 +70,7 @@ class ClientsController extends Controller
             return response()->json(['success' => 'Se ha actualizado de manera exitosa!', 'client' => $client]);
         } else {
             $client->update($request->all());
-            return redirect()->route('clients.index')->with('success', 'Se ha actualizado de manera exitosa!');
+            return redirect()->route(session()->get('back'))->with('success', 'Se ha actualizado de manera exitosa!');
         }
     }
 

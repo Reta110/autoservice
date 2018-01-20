@@ -16,9 +16,10 @@ class OrderShipped extends Mailable
      *
      * @return void
      */
-    public function __construct($order)
+    public function __construct($order,$text_email_order)
     {
         $this->order = $order;
+        $this->text_email_order = $text_email_order;
     }
 
     /**

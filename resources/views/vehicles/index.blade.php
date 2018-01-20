@@ -13,16 +13,13 @@
                 <a href="#">
                     <i class="fa fa-dashboard">
                     </i>
-                    Home
+                    Vehicles
                 </a>
             </li>
             <li>
                 <a href="#">
-                    Examples
+                    List
                 </a>
-            </li>
-            <li class="active">
-                Blank page
             </li>
         </ol>
     </section>
@@ -38,9 +35,9 @@
                 <div class="box-tools">
 
                     {{--<div class="text-center">--}}
-                        {{--<a class="btn btn-danger btn-sm" href="{{ route('products.create') }}">--}}
-                            {{--NUEVO REGISTRO--}}
-                        {{--</a>--}}
+                    {{--<a class="btn btn-danger btn-sm" href="{{ route('products.create') }}">--}}
+                    {{--NUEVO REGISTRO--}}
+                    {{--</a>--}}
                     {{--</div>--}}
 
                 </div>
@@ -92,7 +89,7 @@
                                             {{ $vehicle->km }}
                                         </td>
                                         <td class="text-info">
-                                            {{ $vehicle->owner() }}
+                                            <a href="{{route('clients.edit', $vehicle->user->id)}}"> {{ $vehicle->owner }}</a>
                                         </td>
                                         <td>
                                             {!! Form::open(['route' => ['vehicles.destroy',$vehicle ], 'method' => 'DELETE']) !!}
@@ -107,7 +104,8 @@
                                                 </a>
                                             </div>
                                             <div class="form-group">
-                                                <button type="submit" class="btn btn-link" title="Eliminar" data-toggle="confirmation">
+                                                <button type="submit" class="btn btn-link" title="Eliminar"
+                                                        data-toggle="confirmation">
                                                     <i class="fa fa-trash" aria-hidden="true"></i>
                                                 </button>
                                             </div>
