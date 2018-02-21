@@ -164,6 +164,7 @@
                     <div class="col-md-1 text-center">$ Precio</div>
                     <div class="col-md-1 text-center">Cantidad</div>
                     <div class="col-md-1 text-center">$ Total</div>
+                    <div class="col-md-1 text-center">$ Costo</div>
                     <div class="col-md-4 text-center"></div>
                 </div>
                 {{--- Tabla ---}}
@@ -287,9 +288,9 @@
         //Table xtab jquery
         $("#t1").xtab("init", {
             rows: 10,
-            cols: 4,
+            cols: 5,
             headers: true,
-            width: [450, 100, 100, 100],
+            width: [450, 100, 100, 100, 100],
         });
         $(document).on('change', '#t1 td', function () {
             console.log($('#t1').xtab("get"))

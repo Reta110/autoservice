@@ -7337,7 +7337,7 @@
                     </tbody>
                 </table>
             @endif
-            @if($cells != '')
+            @if(count($cells)>0)
                 <table class="table table-striped table-condensed" id="example">
                     <thead>
                     <tr>
@@ -7348,7 +7348,17 @@
                     </tr>
                     </thead>
                     <tbody>
-
+                    @php $c = 0; @endphp
+                    @foreach($cells as $key => $cell)
+                        @if($c ==0) <tr>@endif
+                            <td>{{$cell}}</td>
+                            @if((($c+1) % 4) == 0)
+                        </tr>
+                        @php $c=0; @endphp
+                        @else
+                            @php $c++; @endphp
+                        @endif
+                    @endforeach
                     </tbody>
                 </table>
             @endif
@@ -7433,30 +7443,30 @@
         src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"
         ></script>
 
-<script type="text/javascript">
+{{--<script type="text/javascript">--}}
 
 
-    $(document).ready(function () {
-        var dataSet = [
-            {!! $cells!!}
-        ];
+    {{--$(document).ready(function () {--}}
+        {{--var dataSet = [--}}
+            {{--{!! $cells!!}--}}
+        {{--];--}}
 
-        $('#example').DataTable({
-            data: dataSet,
-            "paging": false,
-            "ordering": false,
-            "info": false,
-            "searching": false,
-            "columnDefs": [
-                {"width": "28%", "targets": 0},
-                {"width": "24%", "targets": 1},
-                {"width": "16%", "targets": 2},
-                {"width": "32%", "targets": 3}
-            ]
-        });
-    });
+        {{--$('#example').DataTable({--}}
+            {{--data: dataSet,--}}
+            {{--"paging": false,--}}
+            {{--"ordering": false,--}}
+            {{--"info": false,--}}
+            {{--"searching": false,--}}
+            {{--"columnDefs": [--}}
+                {{--{"width": "28%", "targets": 0},--}}
+                {{--{"width": "24%", "targets": 1},--}}
+                {{--{"width": "16%", "targets": 2},--}}
+                {{--{"width": "32%", "targets": 3}--}}
+            {{--]--}}
+        {{--});--}}
+    {{--});--}}
 
-</script>
+{{--</script>--}}
 
 </body>
 </html>

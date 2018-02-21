@@ -23,7 +23,7 @@ class EmailsController extends Controller
         $total_products = $o->countTotalProducts($order);
         $total_services = $o->countTotalServices($order);
 
-        $cells = $o->getExpressProductsCells($order);
+        $cells = $this->getExpressProductsCellsShow($order);
 
         $name = str_replace_last(' ', '-', $order->user->name);
         $path = public_path().'/pdf/Order-'.$name.'-'.date('d-m-Y').'.pdf';
@@ -50,5 +50,19 @@ class EmailsController extends Controller
             Mail::to($email)->send(new OrderShipped($order, $text_email_order));
             return redirect()->to(route('orders.show', $order))->with('success', 'Se ha enviado al cliente de manera exitosa! - ('.$email.')');
         }
+    }
+
+    public function getExpressProductsCellsShow($order)
+    {
+        $cells = explode(",", $order->express_products);
+
+        foreach ($cells as $key => $cell) {
+            //|| (($key+1) % 5) == 0
+            if ($cell == '' || (($key+1) % 5) == 0){
+                array_forget($cells, $key);
+            }
+        }
+        return $cells;
+
     }
 }

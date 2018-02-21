@@ -178,7 +178,7 @@ class OrdersController extends Controller
         $modelos = [];
         $categories = ProductCategory::orderBy('name', 'ASC')->pluck('name', 'id')->all();
 
-        return view('orders.create', compact('client', 'vehicle', 'products', 'services', 'serv', 'prod', 'config', 'marcas', 'modelos', 'categories', 'recommended','express'));
+        return view('orders.create', compact('client', 'vehicle', 'products', 'services', 'serv', 'prod', 'config', 'marcas', 'modelos', 'categories', 'recommended', 'express'));
     }
 
     public function duplicateOrder($order, $user, $vehicle)
@@ -229,6 +229,11 @@ class OrdersController extends Controller
      */
     public function store(Request $request)
     {
+        session(['back' => 'orders.index']);
+
+//        $express = preg_replace('/\,+/i', ',', $request->get('total_express'));
+//        $express = substr($express, 0, -1);
+
         $order = Order::create([
             'title' => $request->get('title'),
             'user_id' => $request->get('user_id'),
@@ -297,7 +302,7 @@ class OrdersController extends Controller
         $total_products = $this->countTotalProducts($order);
         $total_services = $this->countTotalServices($order);
 
-        $cells = $this->getExpressProductsCells($order);
+        $cells = $this->getExpressProductsCellsShow($order);
 
         return view('orders.show', compact('order', 'config', 'total_services', 'total_products', 'cells'));
     }
@@ -324,6 +329,8 @@ class OrdersController extends Controller
 
     public function edit($id)
     {
+        session(['back' => 'orders.index']);
+
         $order = Order::find($id);
 
         $client = $order->user;
@@ -402,6 +409,11 @@ class OrdersController extends Controller
             $order->pay_fees_quantity = 1;
         }
         $order->km = $request->get('km');
+
+//        $express = preg_replace('/\,+/i', ',', $order->express_products);
+//        $express = substr($express, 0, -1);
+//        $order->express_products = $express;
+
         $order->express_products = $request->get('express_products');
         $order->total_express = $request->get('total_express');
 
@@ -541,73 +553,88 @@ class OrdersController extends Controller
      */
     public function getExpressProductsCells($order)
     {
-        $order->express_products = str_replace(",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,", "", $order->express_products);
-        $order->express_products = str_replace(",,,,", "", $order->express_products);
-        $order->express_products = str_replace(",,", "", $order->express_products);
+        $cells = explode(",", $order->express_products);
 
-        $cell = explode(",", $order->express_products);
-
-        $count = count($cell) - 1;
-
-        if ($count > 0) {
-            $cells = '["' . $cell[0] . "\",\"" . $cell[1] . "\",\"" . $cell[2] . "\",\"" . $cell[3] . '"],';
-            if ($count > 3)
-                $cells = $cells . '["' . $cell[4] . "\",\"" . $cell[5] . "\",\"" . $cell[6] . "\",\"" . $cell[7] . '"],';
-            if ($count > 7)
-                $cells = $cells . '["' . $cell[8] . "\",\"" . $cell[9] . "\",\"" . $cell[10] . "\",\"" . $cell[11] . '"],';
-            if ($count > 11)
-                $cells = $cells . '["' . $cell[12] . "\",\"" . $cell[13] . "\",\"" . $cell[14] . "\",\"" . $cell[15] . '"],';
-            if ($count > 15)
-                $cells = $cells . '["' . $cell[16] . "\",\"" . $cell[17] . "\",\"" . $cell[18] . "\",\"" . $cell[19] . '"],';
-            if ($count > 19)
-                $cells = $cells . '["' . $cell[20] . "\",\"" . $cell[21] . "\",\"" . $cell[22] . "\",\"" . $cell[23] . '"],';
-            if ($count > 23)
-                $cells = $cells . '["' . $cell[24] . "\",\"" . $cell[25] . "\",\"" . $cell[26] . "\",\"" . $cell[27] . '"],';
-            if ($count > 27)
-                $cells = $cells . '["' . $cell[28] . "\",\"" . $cell[29] . "\",\"" . $cell[30] . "\",\"" . $cell[31] . '"],';
-            if ($count > 31)
-                $cells = $cells . '["' . $cell[32] . "\",\"" . $cell[33] . "\",\"" . $cell[34] . "\",\"" . $cell[35] . '"],';
-            if ($count > 35)
-                $cells = $cells . '["' . $cell[36] . "\",\"" . $cell[37] . "\",\"" . $cell[38] . "\",\"" . $cell[39] . '"],';
-
-            return $cells;
+        $f = 0;
+        $c = 0;
+        foreach ($cells as $cell) {
+            $aux[$f][$c] = $cell;
+            if ($c > 0 && $c % 4 == 0) {
+                $f++;
+                $c = -1;
+            }
+            $c++;
         }
-        return $cells = '';
+        return json_encode($aux);
+
     }
+
+    /**
+     * @param $order
+     * @return array|string
+     */
+    public function getExpressProductsCellsShow($order)
+    {
+        $cells = explode(",", $order->express_products);
+
+        foreach ($cells as $key => $cell) {
+
+            $c = $key + 1;
+
+            if ($cell == '' || ($c % 5 == 0)){
+                array_forget($cells, $key);
+            }
+        }
+
+        $f = 0;
+        $c = 1;
+        $aux = [];
+        foreach ($cells as $cell) {
+            $aux[$f][$c] = $cell;
+            if ($c % 4 == 0) {
+                $f++;
+                $c = 0;
+            }
+            $c++;
+        }
+
+        return json_encode($aux);
+
+    }
+
 
     private function getExpressProductsCellsWorkPaper($order)
     {
-        $order->express_products = str_replace(",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,", "", $order->express_products);
-        $order->express_products = str_replace(",,,,", "", $order->express_products);
-        $order->express_products = str_replace(",,", "", $order->express_products);
+        $cells = explode(",", $order->express_products);
 
-        $cell = explode(",", $order->express_products);
+        //quitar las innecesarias
+        $e = 0;
+        foreach ($cells as $cell) {
 
-        $count = count($cell) - 1;
+            $i = 1 + $e;
+            unset($cells[$i]);
+            $j = 3 + $e;
+            unset($cells[$j]);
+            $k = 4 + $e;
+            unset($cells[$k]);
 
-        if ($count > 0) {
-            $cells = '["' . $cell[0] . "\",\"" . $cell[2] . "\",\"" . '"],';
-            if ($count > 3)
-                $cells = $cells . '["' . $cell[4] . "\",\"" . $cell[6] . "\",\"" . '"],';
-            if ($count > 7)
-                $cells = $cells . '["' . $cell[8] . "\",\"" . "\",\"" . $cell[10] . "\",\"" . '"],';
-            if ($count > 11)
-                $cells = $cells . '["' . $cell[12] . "\",\"" . "\",\"" . $cell[14] . "\",\"" . '"],';
-            if ($count > 15)
-                $cells = $cells . '["' . $cell[16] . "\",\"" . "\",\"" . $cell[18] . "\",\"" . '"],';
-            if ($count > 19)
-                $cells = $cells . '["' . $cell[20] . "\",\"" . "\",\"" . $cell[22] . "\",\"" . '"],';
-            if ($count > 23)
-                $cells = $cells . '["' . $cell[24] . "\",\"" . "\",\"" . $cell[26] . "\",\"" . '"],';
-            if ($count > 27)
-                $cells = $cells . '["' . $cell[28] . "\",\"" . "\",\"" . $cell[30] . "\",\"" . '"],';
-            if ($count > 31)
-                $cells = $cells . '["' . $cell[32] . "\",\"" . "\",\"" . $cell[34] . "\",\"" . '"],';
-            if ($count > 35)
-                $cells = $cells . '["' . $cell[36] . "\",\"" . "\",\"" . $cell[38] . "\",\"" . '"],';
-
-            return $cells;
+            $e = $i + 4;
         }
-        return $cells = '';
+
+        $f = 0;
+        $c = 0;
+
+        foreach ($cells as $cell) {
+            if($cell != ''){
+            $aux[$f][$c] = $cell;
+            if ($c > 0 && $c % 1 == 0) {
+                $f++;
+                $c = -1;
+            }
+            $c++;
+            }
+        }
+        return json_encode($aux);
+
     }
 }

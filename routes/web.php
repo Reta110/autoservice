@@ -112,5 +112,7 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::post('/maintenances', 'MaintenancesController@send')->name('maintenances.send');
 
     Route::get('/standards/activate', 'StandardsController@index')->name('standards.index');
+    Route::get('/standards/express', 'StandardsController@express')->name('standards.express');
+    Route::get('/standards/expressComma', 'StandardsController@expressComma')->name('standards.expressComma');
 
 });

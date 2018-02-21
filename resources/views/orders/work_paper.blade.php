@@ -154,9 +154,7 @@
         });
 
         $(document).ready(function () {
-            var dataSet = [
-                {!! $cells!!}
-            ];
+            var dataSet = {!! $cells!!};
 
             $('#example').DataTable({
                 data: dataSet,

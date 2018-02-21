@@ -350,12 +350,16 @@
         });
 
         $(document).ready(function () {
-            var dataSet = [
-                {!! $cells!!}
-            ];
+            var dataSet = {!!$cells!!};
 
             $('#example').DataTable({
                 data: dataSet,
+                columns: [
+                    { data: '1' },
+                    { data: '2' },
+                    { data: '3' },
+                    { data: '4' }
+                ],
                 "paging": false,
                 "ordering": false,
                 "info": false,
@@ -364,7 +368,7 @@
                     {"width": "28%", "targets": 0},
                     {"width": "24%", "targets": 1},
                     {"width": "16%", "targets": 2},
-                    {"width": "32%", "targets": 3}
+                    {"width": "15%", "targets": 3},
                 ]
             });
         });
